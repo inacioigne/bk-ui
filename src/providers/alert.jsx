@@ -8,7 +8,7 @@ export const AlertProvider = ({ children }) => {
   const [message, setMessage] = useState(null);
   const [typeAlert, setTypeAlert] = useState("success");
 
-  return (
+  return ( 
     <AlertContext.Provider
       value={{
         openSnack, 

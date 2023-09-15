@@ -86,6 +86,8 @@ function a11yProps(index: number) {
 }
 
 
+
+
 export default function Authority() {
 
   const { paramsAuthority } = useParmasAutority()

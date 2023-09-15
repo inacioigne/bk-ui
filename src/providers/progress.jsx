@@ -6,10 +6,11 @@ export const ProgressContext = createContext({});
 export const ProgressProvider = ({ children }) => {
   const [progress, setProgress] = useState(false);
 
-  const initProgress = () => setProgress(true) 
+  // const initProgress = () => setProgress(true) 
 
   return (
-    <ProgressContext.Provider value={{ progress, setProgress, initProgress }}>
+    <ProgressContext.Provider value={{ progress, setProgress, //initProgress 
+    }}>
       {children}
     </ProgressContext.Provider>
   );

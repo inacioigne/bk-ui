@@ -7,8 +7,11 @@ import { ProgressProvider } from "src/providers/progress";
 // import { BfProvider } from "src/providers/bibframe";
 import { AlertProvider } from "src/providers/alert";
 import { ModeProvider } from "src/providers/mode"
-// import { ParamsAuthorityProvider } from "src/providers/paramsAuthority"
 import { ParamsAuthorityProvider } from "src/providers/paramsAuthority"
+
+
+
+import {Box, LinearProgress} from '@mui/material/';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,13 +25,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  
   return (
     <html lang="en">
       <ProgressProvider>
         <ModeProvider>
           <AlertProvider>
             <ParamsAuthorityProvider>
-            <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+            
+              {children}</body>
             </ParamsAuthorityProvider>
           </AlertProvider>
         </ModeProvider>

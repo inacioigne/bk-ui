@@ -33,7 +33,6 @@ export function SearchNames(
     .then(function (response) { 
       const docs = response.data.response.docs;
       setRowCount(response.data.response.numFound)
-      // console.log(response)
       const r = docs.map((doc: any, index: number) => {
         return { id: doc.id, authority: doc.authority[0], type: doc.type[0] };
       });

@@ -9,7 +9,7 @@ import {
   GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { Button, Avatar, Box } from "@mui/material";
-import { GridRowParams, MuiEvent, GridCallbackDetails} from '@mui/x-data-grid';
+import { GridRowParams, MuiEvent, GridCallbackDetails } from '@mui/x-data-grid';
 
 // React Icons
 import { TbUserSearch } from "react-icons/tb";
@@ -18,10 +18,12 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 // BiblioKeia Services
 import { SearchNames } from "@/services/searchNames";
 
-interface Label {
-  name: string;
-  image: string;
-}
+// interface Label {
+//   name: string;
+//   image: string;
+// }
+
+import { useRouter } from 'next/navigation'
 
 function RenderLabel(props: GridRenderCellParams<any, Object>) {
   const { hasFocus, value } = props;
@@ -92,14 +94,16 @@ function RenderType(props: GridRenderCellParams<any, String>) {
 // Providers BiblioKeia
 import { useParmasAutority } from "src/providers/paramsAuthority"
 
-// TESTE GRID
-import { createFakeServer } from '@mui/x-data-grid-generator';
+// // TESTE GRID
+// import { createFakeServer } from '@mui/x-data-grid-generator';
 
-const SERVER_OPTIONS = {
-  useCursorPagination: false,
-};
+// const SERVER_OPTIONS = {
+//   useCursorPagination: false,
+// };
 
 export function TabName({ rows, rowCount, setRows, setRowCount, setFacetType, setFacetAffiliation, setOccupation }) {
+
+  const router = useRouter() 
 
   const { paramsAuthority } = useParmasAutority()
 
@@ -118,18 +122,21 @@ export function TabName({ rows, rowCount, setRows, setRowCount, setFacetType, se
       renderCell: RenderType,
     },
   ];
- 
+
 
   const [paginationModel, setPaginationModel] = useState({
-      page: 0,
-      pageSize: 3,
-    });
+    page: 0,
+    pageSize: 3,
+  });
 
   return <DataGrid
     rows={rows}
     rowCount={rowCount}
     onRowClick={(params: GridRowParams, event: MuiEvent, details: GridCallbackDetails) => {
-      console.log(params.id)}}
+      router.push(`/admin/authority/${params.id}`)
+
+      console.log(params.id)
+    }}
     columns={columns}
     paginationModel={paginationModel}
     paginationMode="server"
@@ -138,7 +145,8 @@ export function TabName({ rows, rowCount, setRows, setRowCount, setFacetType, se
       paramsAuthority.set('start', page)
       SearchNames(paramsAuthority, setRows, setRowCount, setFacetType, setFacetAffiliation, setOccupation);
       setPaginationModel(paginationModel)
-      console.log(page)}}
+      console.log(page)
+    }}
     pageSizeOptions={[3]}
   />;
 

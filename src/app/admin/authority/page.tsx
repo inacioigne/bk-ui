@@ -239,10 +239,14 @@ export default function Authority() {
                   >
                     Limpar
                   </Button>
+                  <Link href={'/admin/authority/create'}>
                   <Button variant="outlined" size="large" startIcon={<BsPersonPlus />} sx={{ lineHeight: 2.65, textTransform: 'none' }}
                   >
                     Novo
                   </Button>
+
+                  </Link>
+                  
                   <Link href={'/admin/authority/importation'}>
                   <Button variant="outlined" size="large" startIcon={<CiImport />} sx={{ lineHeight: 2.65, textTransform: 'none' }}
                   >

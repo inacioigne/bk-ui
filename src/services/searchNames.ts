@@ -6,6 +6,8 @@ import { solr } from "@/services/solr";
 // Types BiblioKeia
 import Facet from "@/utils/types"
 
+import { useProgress } from "src/providers/progress";
+
 
 function TransformFacet(facets: Facet[]) { 
   const listFacets = [];
@@ -27,7 +29,6 @@ export function SearchNames(
   setFacetAffiliation: Function,
   setOccupation: Function
 ) {
-
 
   solr.get("authority/query?", {params: params})
     .then(function (response) { 
@@ -56,6 +57,6 @@ export function SearchNames(
       console.error(error);
     })
     .finally(function () {
-      // sempre será executado
+      // setProgress(false)
     });
 }

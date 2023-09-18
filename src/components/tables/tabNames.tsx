@@ -18,12 +18,9 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 // BiblioKeia Services
 import { SearchNames } from "@/services/searchNames";
 
-// interface Label {
-//   name: string;
-//   image: string;
-// }
-
+// Nextjs
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 function RenderLabel(props: GridRenderCellParams<any, Object>) {
   const { hasFocus, value } = props;
@@ -92,21 +89,15 @@ function RenderType(props: GridRenderCellParams<any, String>) {
 }
 
 // Providers BiblioKeia
+import { useProgress } from "src/providers/progress";
 import { useParmasAutority } from "src/providers/paramsAuthority"
-
-// // TESTE GRID
-// import { createFakeServer } from '@mui/x-data-grid-generator';
-
-// const SERVER_OPTIONS = {
-//   useCursorPagination: false,
-// };
 
 export function TabName({ rows, rowCount, setRows, setRowCount, setFacetType, setFacetAffiliation, setOccupation }) {
 
   const router = useRouter() 
 
   const { paramsAuthority } = useParmasAutority()
-
+  const { setProgress } = useProgress();
 
   const columns: GridColDef[] = [
     {
@@ -123,7 +114,6 @@ export function TabName({ rows, rowCount, setRows, setRowCount, setFacetType, se
     },
   ];
 
-
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 3,
@@ -133,9 +123,8 @@ export function TabName({ rows, rowCount, setRows, setRowCount, setFacetType, se
     rows={rows}
     rowCount={rowCount}
     onRowClick={(params: GridRowParams, event: MuiEvent, details: GridCallbackDetails) => {
+      setProgress(true)
       router.push(`/admin/authority/${params.id}`)
-
-      console.log(params.id)
     }}
     columns={columns}
     paginationModel={paginationModel}
@@ -145,7 +134,6 @@ export function TabName({ rows, rowCount, setRows, setRowCount, setFacetType, se
       paramsAuthority.set('start', page)
       SearchNames(paramsAuthority, setRows, setRowCount, setFacetType, setFacetAffiliation, setOccupation);
       setPaginationModel(paginationModel)
-      console.log(page)
     }}
     pageSizeOptions={[3]}
   />;

@@ -43,6 +43,12 @@ import Occupations from "src/components/facets/occupations";
 
 // Providers BiblioKeia
 import { useParmasAutority } from "src/providers/paramsAuthority"
+import { useProgress } from "src/providers/progress";
+
+// Nextjs
+import { usePathname, useSearchParams, useRouter } from 'next/navigation'
+import Link from "next/link";
+
 
 const previousPaths = [
   {
@@ -85,12 +91,15 @@ function a11yProps(index: number) {
   };
 }
 
-
-
-
 export default function Authority() {
 
+  // const router = useRouter() 
+
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
   const { paramsAuthority } = useParmasAutority()
+  // const { setProgress } = useProgress();
 
   const [value, setValue] = useState(0);
 
@@ -102,11 +111,15 @@ export default function Authority() {
   const [facetAffiliation, setFacetAffiliation] = useState([]);
   const [facetOccupation, setOccupation] = useState([]);
 
-
   useEffect(() => {
+    // setProgress(true)
+    const url = `${pathname}?${searchParams}`
+    // console.log(url)
+    
     paramsAuthority.set('rows', "3")
     SearchNames(paramsAuthority, setRows, setRowCount, setFacetType, setFacetAffiliation, setOccupation);
-  }, []);
+    // setProgress(false)
+  }, [pathname, searchParams]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -138,6 +151,7 @@ export default function Authority() {
     SearchNames(paramsAuthority, setRows, setRowCount, setFacetType, setFacetAffiliation, setOccupation);
 
   };
+
 
   return (
     <Container maxWidth="xl">
@@ -229,10 +243,13 @@ export default function Authority() {
                   >
                     Novo
                   </Button>
+                  <Link href={'/admin/authority/importation'}>
                   <Button variant="outlined" size="large" startIcon={<CiImport />} sx={{ lineHeight: 2.65, textTransform: 'none' }}
                   >
                     Importar
                   </Button>
+                  </Link>
+                  
 
                 </Grid>
 

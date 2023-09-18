@@ -7,7 +7,7 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Paper,
+  Skeleton,
   DialogActions,
   DialogContentText,
   DialogContent,
@@ -48,6 +48,10 @@ import { useEffect, useState } from "react";
 import { useProgress } from "src/providers/progress";
 import { useAlert } from "@/providers/alert"
 
+import { useRouter } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
+
+
 const previousPaths = [
   {
     link: "/admin",
@@ -62,10 +66,13 @@ const previousPaths = [
 ];
 
 export default function Page({ params }: { params: { id: string } }) {
+  const router = useRouter() 
   const [doc, setDoc] = useState(null)
   const [open, setOpen] = useState(false);
-
-  const { setProgress } = useProgress();
+  const { progress, setProgress } = useProgress();
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  
   const {
     openSnack, 
     setOpenSnack, 
@@ -75,17 +82,17 @@ export default function Page({ params }: { params: { id: string } }) {
     setTypeAlert,
   } = useAlert()
 
+  // setProgress(true)
+
   const handleClose = () => {
     setOpen(false);
-    setOpenSnack(true)
+    // setOpenSnack(true)
   };
 
   const handleDelete = () => {
 
     setOpen(false);
     setProgress(true)
-    
-
 
     const data = {
       "id": doc.id,
@@ -101,10 +108,10 @@ export default function Page({ params }: { params: { id: string } }) {
         console.log(response)
         if (response.status === 200) {
           setMessage("Registro excluido com sucesso!")
+          router.push(`/admin/authority/`)
         }
       })
       .catch(function (error) {
-        // manipula erros da requisição
         console.error(error);
       })
       .finally(function () {
@@ -116,7 +123,7 @@ export default function Page({ params }: { params: { id: string } }) {
   }
 
   useEffect(() => {
-    // console.log("params", params.id)
+    // setProgress(true)
 
     solr.get(`authority/select?fl=*,[child]&q=id:${params.id}`)
       .then(function (response) {
@@ -134,7 +141,17 @@ export default function Page({ params }: { params: { id: string } }) {
 
   }, [])
 
-  // if (isLoading) return <p>Loading...</p>
+  if (progress) return (
+    <Container maxWidth="xl">
+       <Box my={"1rem"}>
+       <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+
+       </Box>
+
+    </Container>
+
+  )
+
   if (!doc) return <p>No profile data</p>
 
 

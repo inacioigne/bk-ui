@@ -11,6 +11,7 @@ import { useState } from "react";
 
 import { useProgress } from "src/providers/progress";
 import { useAlert } from "@/providers/alert"
+import { NavigationEvents } from "@/app/navigation-events";
 
 export default function AdminLayout({ children }) {
 
@@ -36,6 +37,7 @@ export default function AdminLayout({ children }) {
     <Box sx={{ display: "flex" }}>
       <Box sx={{ position: "absolute", zIndex: 2200, width: '100%' }}>
         {progress && <LinearProgress />}
+
       </Box>
       <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>

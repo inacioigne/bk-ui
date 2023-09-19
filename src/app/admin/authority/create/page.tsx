@@ -19,11 +19,14 @@ import { bkapi } from "@/services/api";
 // React Hooks
 import { useEffect, useState } from "react";
 
+
 // MUI Icons
 import { FcHome } from "react-icons/fc";
 import { BsPersonPlus } from "react-icons/bs";
 
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { useForm, useFieldArray, Controller, SubmitHandler } from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 const previousPaths = [
     {
@@ -43,29 +46,54 @@ interface IFormInput {
     DateNameElement: string;
 }
 
+const createAuthoritySchema = z.object({
+    fullNameElement: z.string().nonempty("Nome obrigatório"),
+    dateNameElement: z.string(),
+    variants: z.array(z.object({
+        variantLabel: z.string()
+    }))
+
+})
+type CreateAuthorityData = z.infer<typeof createAuthoritySchema>
+
 export default function Create() {
-    const { control, handleSubmit } = useForm<IFormInput>();
+
     const [id, setId] = useState(null)
 
-    useEffect(() => { 
+    const { 
+        control, 
+        register, 
+        handleSubmit, 
+        formState: { errors} 
+    } = useForm<CreateAuthorityData>({
+        resolver: zodResolver(createAuthoritySchema)
+    });
+    const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+        control, 
+        name: "variants", 
+    });
+
+   
+
+    useEffect(() => {
 
         bkapi.get(`/items/next_id`)
-          .then(function (response) {
-            setId(response.data.id)
- 
-            console.log(response.data.id)
-          })
-          .catch(function (error) {
-            // manipula erros da requisição
-            console.error(error);
-          })
-          .finally(function () {
-            // setProgress(false)
-          });
-    
-      }, [])
+            .then(function (response) {
+                setId(response.data.id)
 
-    const onSubmit: SubmitHandler<IFormInput> = (d) => {
+                console.log(response.data.id)
+            })
+            .catch(function (error) {
+                // manipula erros da requisição
+                console.error(error);
+            })
+            .finally(function () {
+                // setProgress(false)
+            });
+
+    }, [String(id)])
+
+    const onSubmit: SubmitHandler<IFormInput> = (formData) => {
         const hoje = new Date();
         const dia = String(hoje.getDate()).padStart(2, '0'); // Dia com zero à esquerda se for necessário
         const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // Mês com zero à esquerda se for necessário (lembrando que janeiro é 0)
@@ -74,81 +102,55 @@ export default function Create() {
 
 
         const headers = {
-            'Content-Type': 'application/json',
+            'accept': 'application/json',
+            'Content-Type': 'application/json'
         };
 
-        //   bkapi.post("authorities/agents/", { data, headers })
-        //     .then(function (response) {
-        //       console.log(response)
-        //     //   if (response.status === 200) {
-        //     //     setMessage("Registro excluido com sucesso!")
-        //     //     router.push(`/admin/authority/`)
-        //     //   }
-        //     })
-        //     .catch(function (error) {
-        //       console.error(error);
-        //     })
-        //     .finally(function () {
-        //     //   setProgress(false)
-        //     //   setOpenSnack(true)
-        //     //   setDoc(null)
-        //     });
-
-        // console.log(personalName)
-
         const data = {
-            'type': 'PersonalName',
-            'adminMetadata': {
-                'creationDate': '2023-09-18',
-                'identifiedBy': [
-                    {
-                        'type': 'Local',
-                        'assigner': 'http://id.loc.gov/vocabulary/organizations/brmninpa',
-                        'value': 'bka-4'
-                    }
-                ]
+            "type": "PersonalName",
+            "identifiersLocal": id,
+            "adminMetadata": {
+                "creationDate": "2023-09-19"
             },
-            'authoritativeLabel': 'Machado de Assis',
-            'elementList': [
+            "authoritativeLabel": "Machado",
+            "elementList": [
                 {
-                    'type': 'FullNameElement',
-                    'elementValue': {
-                        'value': 'Machado de Assis'
-                    }
-                },
-                {
-                    'type': 'DateNameElement',
-                    'elementValue': {
-                        'value': '1839-1908'
+                    "type": "FullNameElement",
+                    "elementValue": {
+                        "value": "Machado de Assis"
                     }
                 }
             ],
-            'isMemberOfMADSCollection': 'http://bibliokeia.com/authorities/PersonalName/'
+            "isMemberOfMADSCollection": "string"
         }
 
         bkapi.post(
             'http://localhost:8000/authorities/agents/', data,
             {
-                headers: {
-                    'accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
+                headers: headers
             }
         ).then(function (response) {
-                  console.log(response)
-                //   if (response.status === 200) {
-                //     setMessage("Registro excluido com sucesso!")
-                //     router.push(`/admin/authority/`)
-                //   }
-                })
-                .catch(function (error) {
-                  console.error(error);
-                })
-                .finally(function () {
+            console.log(response)
+            //   if (response.status === 200) {
+            //     setMessage("Registro excluido com sucesso!")
+            //     router.push(`/admin/authority/`)
+            //   }
+        })
+            .catch(function (error) {
+                console.error(error);
+            })
+            .finally(function () {
                 //   setProgress(false)
                 //   setOpenSnack(true)
                 //   setDoc(null)
-                });
+            });
+    }
+
+    const addVariant = () => {
+        append({
+            'variantLabel': ''
+
+        })
     }
 
     return (
@@ -166,26 +168,18 @@ export default function Create() {
                         <Typography variant="h6" gutterBottom>
                             Autoridade
                         </Typography>
-                        <Controller
-                            name="FullNameElement"
-                            control={control}
-                            defaultValue=""
-                            render={({ field }) => <TextField
-                                {...field}
-                                label="Nome"
-                                variant="outlined"
-                            />}
-                        />
-                        <Controller
-                            name="DateNameElement"
-                            control={control}
-                            defaultValue=""
-                            render={({ field }) => <TextField
-                                {...field}
-                                label="Data"
-                                variant="outlined"
-                            />}
-                        />
+                        <TextField id="outlined-basic" label="Outlined" variant="outlined" {...register("fullNameElement")} />
+                        {errors.fullNameElement && <span>{errors.fullNameElement.message}</span>}
+                        <button type="button" onClick={addVariant}>ADD</button>
+
+                     
+                        {fields.map((field, index) => (
+                  
+                            <input
+                                key={field.id} 
+                                {...register(`variants.${index}.variantLabel`)}
+                            />
+                        ))} 
                     </Grid>
                     <button>SALVAR</button>
                 </Grid>

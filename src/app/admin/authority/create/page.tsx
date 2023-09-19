@@ -13,7 +13,11 @@ import {
 // BiblioKeia Components
 import BreadcrumbsBK from "src/components/nav/breadcrumbs";
 
+// BiblioKeia Services
 import { bkapi } from "@/services/api";
+
+// React Hooks
+import { useEffect, useState } from "react";
 
 // MUI Icons
 import { FcHome } from "react-icons/fc";
@@ -41,6 +45,25 @@ interface IFormInput {
 
 export default function Create() {
     const { control, handleSubmit } = useForm<IFormInput>();
+    const [id, setId] = useState(null)
+
+    useEffect(() => { 
+
+        bkapi.get(`/items/next_id`)
+          .then(function (response) {
+            setId(response.data.id)
+ 
+            console.log(response.data.id)
+          })
+          .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
+          })
+          .finally(function () {
+            // setProgress(false)
+          });
+    
+      }, [])
 
     const onSubmit: SubmitHandler<IFormInput> = (d) => {
         const hoje = new Date();
@@ -73,8 +96,7 @@ export default function Create() {
 
         // console.log(personalName)
 
-        bkapi.post(
-            'http://localhost:8000/authorities/agents/', {
+        const data = {
             'type': 'PersonalName',
             'adminMetadata': {
                 'creationDate': '2023-09-18',
@@ -102,7 +124,10 @@ export default function Create() {
                 }
             ],
             'isMemberOfMADSCollection': 'http://bibliokeia.com/authorities/PersonalName/'
-        },
+        }
+
+        bkapi.post(
+            'http://localhost:8000/authorities/agents/', data,
             {
                 headers: {
                     'accept': 'application/json',
@@ -125,10 +150,11 @@ export default function Create() {
                 //   setDoc(null)
                 });
     }
+
     return (
         <Container maxWidth="xl">
             <Box my={"1rem"}>
-                <BreadcrumbsBK previousPaths={previousPaths} currentPath="Criar" />
+                <BreadcrumbsBK previousPaths={previousPaths} currentPath={id && id} />
             </Box>
             <Typography variant="h4" gutterBottom>
                 Criar Autoridades

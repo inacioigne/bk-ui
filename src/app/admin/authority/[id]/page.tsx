@@ -122,8 +122,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   }
 
-  useEffect(() => {
-    // setProgress(true)
+  useEffect(() => { 
 
     solr.get(`authority/select?fl=*,[child]&q=id:${params.id}`)
       .then(function (response) {

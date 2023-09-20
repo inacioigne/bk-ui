@@ -4,9 +4,9 @@ import {
   Container,
   Box,
   Grid,
-  FormControl,
-  InputLabel,
-  MenuItem,
+  // FormControl,
+  // InputLabel,
+  // MenuItem,
   Skeleton,
   DialogActions,
   DialogContentText,
@@ -25,7 +25,7 @@ import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import StyledTreeItem from "@/components/baseMui/styledTreeItem"
 
 // Reacts Icons
-import { RiFilterLine } from 'react-icons/ri';
+// import { RiFilterLine } from 'react-icons/ri';
 import { BsArrowsAngleContract, BsArrowsAngleExpand } from 'react-icons/bs';
 
 // React Icons
@@ -48,8 +48,9 @@ import { useEffect, useState } from "react";
 import { useProgress } from "src/providers/progress";
 import { useAlert } from "@/providers/alert"
 
-import { useRouter } from 'next/navigation'
-import { usePathname, useSearchParams } from 'next/navigation'
+// Nextjs
+import { useRouter, usePathname, useSearchParams  } from 'next/navigation'
+import Link from 'next/link'
 
 
 const previousPaths = [
@@ -164,7 +165,10 @@ export default function Page({ params }: { params: { id: string } }) {
               {doc.authority}
             </Typography>
             <Box>
+              <Link href={'/admin/authority/create'}>
               <Button sx={{ textTransform: 'none' }} variant="outlined" startIcon={<BsFillPersonPlusFill />}>Novo</Button>
+              </Link>
+              
               <Button sx={{ textTransform: 'none', mx: '10px' }} variant="outlined" startIcon={<CiEdit />}>Editar</Button>
               <Button sx={{ textTransform: 'none' }} variant="outlined" startIcon={<BsFillPersonXFill />} onClick={() => { setOpen(true) }}>Excluir</Button>
             </Box>
@@ -206,18 +210,17 @@ export default function Page({ params }: { params: { id: string } }) {
                       </Box>
                     </Box>
                   )}
-
-                  {doc?.deathPlace || doc?.deathDate && (
+                  {(doc?.deathPlace || doc?.deathDate) && (
                     <Box>
                       <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                        Morte:
+                        Falecimento:
                       </Typography>
                       <Box sx={{ display: "flex", gap: "5px" }}>
-                        {doc?.deathPlace &&
-                          <Button startIcon={<GiTombstone />} variant="outlined" size="small" sx={{ textTransform: "none" }}> {doc.deathPlace} </Button>}
-                        <Button variant="outlined" startIcon={<FcCalendar />} size="small"> {doc.deathDate} </Button>
+                      <Button startIcon={<LiaBirthdayCakeSolid />} variant="outlined" size="small" sx={{ textTransform: "none" }}> {doc.deathPlace}</Button>
+                      {doc?.deathDate && <Button variant="outlined" startIcon={<FcCalendar />} size="small"> {doc.deathDate} </Button>}
                       </Box>
                     </Box>
+
                   )}
                 </Box>
 

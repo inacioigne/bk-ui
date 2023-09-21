@@ -1,12 +1,8 @@
 "use client"
-
 import {
   Container,
   Box,
   Grid,
-  // FormControl,
-  // InputLabel,
-  // MenuItem,
   Skeleton,
   DialogActions,
   DialogContentText,
@@ -23,15 +19,14 @@ import BreadcrumbsBK from "src/components/nav/breadcrumbs";
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import StyledTreeItem from "@/components/baseMui/styledTreeItem"
+import  ExternalAuthority  from "@/components/madsrdf/view/externalAuthority";
 
 // Reacts Icons
-// import { RiFilterLine } from 'react-icons/ri';
 import { BsArrowsAngleContract, BsArrowsAngleExpand } from 'react-icons/bs';
 
 // React Icons
 import { FcHome, FcCalendar } from "react-icons/fc";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
-import { GiTombstone } from "react-icons/gi";
 import { CiEdit } from "react-icons/ci";
 import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
 
@@ -66,9 +61,11 @@ const previousPaths = [
   },
 ];
 
+import { PersonalNameDoc } from "@/schema/authority/solr"
+
 export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter() 
-  const [doc, setDoc] = useState(null)
+  const [doc, setDoc] = useState<PersonalNameDoc|null>(null)
   const [open, setOpen] = useState(false);
   const { progress, setProgress } = useProgress();
   const pathname = usePathname()
@@ -96,8 +93,8 @@ export default function Page({ params }: { params: { id: string } }) {
     setProgress(true)
 
     const data = {
-      "id": doc.id,
-      "type": doc.type[0]
+      "id": doc?.id,
+      "type": doc?.type[0]
     }
 
     const headers = {
@@ -129,7 +126,7 @@ export default function Page({ params }: { params: { id: string } }) {
       .then(function (response) {
         const [doc] = response.data.response.docs
         setDoc(doc)
-        // console.log(doc)
+        // console.log(response.data.response.docs)
       })
       .catch(function (error) {
         // manipula erros da requisição
@@ -145,11 +142,8 @@ export default function Page({ params }: { params: { id: string } }) {
     <Container maxWidth="xl">
        <Box my={"1rem"}>
        <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-
        </Box>
-
     </Container>
-
   )
 
   if (!doc) return <p>No profile data</p>
@@ -326,6 +320,12 @@ export default function Page({ params }: { params: { id: string } }) {
                   </TreeView>
                 </Grid>
 
+              )}
+
+              {doc?.hasExactExternalAuthority && (
+                <Grid item xs={4}>
+                <ExternalAuthority externalAuthority={doc?.hasExactExternalAuthority} />
+                </Grid>
               )}
 
 

@@ -30,15 +30,16 @@ import { useRouter } from 'next/navigation'
 // MUI Icons
 import { FcHome } from "react-icons/fc";
 import { BsPersonPlus } from "react-icons/bs";
-// import { GrAdd } from "react-icons/gr";
 import { IoIosSave } from "react-icons/io";
 import { IoRemove, IoAddOutline } from "react-icons/io5";
 
-// Types
-import { PersonalName } from "@/schema/authority/personalName"
+// Schema
+import { createAuthoritySchema } from "@/schema/authority/personalName"
 
+// Utils
+import { transformAuthority } from "@/utils/authority/personalName"
 
-
+// React-Hook-Form
 import {
     useForm,
     useFieldArray,
@@ -61,150 +62,13 @@ const previousPaths = [
     },
 ];
 
-const createAuthoritySchema = z.object({
-    fullNameElement: z.string().nonempty("Nome é obrigatório"),
-    fullerName: z.string(),
-    birthPlace: z.string(),
-    birthDayDate: z.string(),
-    birthMonthDate: z.string(),
-    birthYearDate: z.string(),
-    deathPlace: z.string(),
-    deathDayDate: z.string(),
-    deathMonthDate: z.string(),
-    deathYearDate: z.string(),
-    variants: z.array(
-        z.object({
-            fullNameElement: z.string(),
-            dateNameElement: z.string(),
-        })
-    ),
-});
+
 type CreateAuthorityData = z.infer<typeof createAuthoritySchema>;
-
-const Today = () => {
-    const hoje = new Date();
-    const dia = String(hoje.getDate()).padStart(2, "0");
-    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
-    const ano = hoje.getFullYear();
-    const dataFormatada = `${ano}-${mes}-${dia}`;
-
-    return dataFormatada;
-};
 
 const headers = {
     accept: "application/json",
     "Content-Type": "application/json",
 };
-
-function Variants(variants) {
-
-    const v = variants.map((variant) => {
-        let variantLabel =
-            variant.dateNameElement === ""
-                ? variant.fullNameElement
-                : `${variant.fullNameElement}, ${variant.dateNameElement}`;
-        const elementList: any = [
-            {
-                type: "FullNameElement",
-                elementValue: {
-                    value: variant.fullNameElement,
-                },
-            },
-        ];
-        variant.dateNameElement !== "" &&
-            elementList.push({
-                type: "DateNameElement",
-                elementValue: {
-                    value: variant.dateNameElement,
-                },
-            });
-        let obj = {
-            type: "PersonalName",
-            elementList: elementList,
-            variantLabel: variantLabel,
-        };
-        return obj;
-    });
-    return v;
-}
-
-function transformDate(day: string, month: string, year: string) {
-    const birthDayDate = day !== '' ? day.padStart(2, '0') : false
-    const birthMonthDate = month !== '' ? month : false
-    const birthYearDate = year !== '' ? year : false
-    if (birthYearDate && birthMonthDate && birthDayDate) {
-        const dateNameElement = `${birthDayDate}-${birthMonthDate}-${birthYearDate}`
-        return dateNameElement
-    }
-    if (birthYearDate && birthMonthDate) {
-        const dateNameElement = `${birthMonthDate}-${birthYearDate}`
-        return dateNameElement
-    }
-    if (birthYearDate) {
-        return birthYearDate
-    } else {
-        return false
-    }
-
-}
-
-function transformAuthority(data: CreateAuthorityData, id: number | null) {
-
-    const today = Today();
-    const elementList: any = [
-        {
-            type: "FullNameElement",
-            elementValue: {
-                value: data.fullNameElement,
-            },
-        },
-    ];
-
-    const date = (data.birthYearDate !== '' || data.deathYearDate !== '') ? `${data?.birthYearDate} - ${data?.deathYearDate}` : false
-
-    if (date) {
-        elementList.push({
-            type: "DateNameElement",
-            elementValue: {
-                value: date,
-            },
-        });
-    }
-
-    const personalName: PersonalName = {
-        type: "PersonalName",
-        identifiersLocal: id,
-        adminMetadata: {
-            creationDate: today,
-        },
-        authoritativeLabel: date ? `${data.fullNameElement}, ${date}` : data.fullNameElement,
-        elementList: elementList,
-        // hasVariant: hasVariant,
-        isMemberOfMADSCollection: "https://bibliokeia.com/authorities/PersonalName/",
-    };
-    data.fullerName && (personalName['fullerName'] = {
-        type: "PersonalName",
-        elementValue: {
-            value: data.fullerName,
-        }
-    }
-    )
-    const birthDate = transformDate(data.birthDayDate, data.birthMonthDate, data.birthYearDate)
-    birthDate && (personalName['birthDate'] = birthDate)
-    data.birthPlace && (personalName['birthPlace'] = data.birthPlace)
-
-    data.deathPlace && (personalName['deathPlace'] = data.deathPlace)
-    const deathDate = transformDate(data.deathDayDate, data.deathMonthDate, data.deathYearDate)
-    deathDate && (personalName['deathDate'] = deathDate)
-
-    if (data.variants.length > 0) {
-        const hasVariant = Variants(data.variants);
-        personalName['hasVariant'] = hasVariant
-    }
-
-    return personalName
-
-}
 
 const meses = [
     {
@@ -229,21 +93,28 @@ export default function Create() {
     } = useForm<CreateAuthorityData>({
         resolver: zodResolver(createAuthoritySchema),
         defaultValues: {
-            variants: [{ fullNameElement: "", dateNameElement: "" }],
-            birthMonthDate: ''
-
+            hasVariant: [{ fullNameElement: "", dateNameElement: "" }],
+            hasExactExternalAuthority: [{ value: "", label: "", base: "" }]
         },
     });
-    const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+
+    const { fields: fieldsVariant, append: appendVariant, remove: removeVariant, swap, move, insert } = useFieldArray(
         {
             control,
-            name: "variants",
-        }
+            name: "hasVariant",
+        },
+    );
+
+    const { fields: fieldsExternalAuthority, append: appendExternalAuthority, remove: removeExternalAuthority } = useFieldArray(
+        {
+            control,
+            name: "hasExactExternalAuthority",
+        },
     );
 
     useEffect(() => {
         bkapi
-            .get(`/items/next_id`)
+            .get(`/authority/next`)
             .then(function (response) {
                 setId(response.data.id);
 
@@ -260,9 +131,16 @@ export default function Create() {
 
 
     const addVariant = () => {
-        append({
+        appendVariant({
             fullNameElement: "",
             dateNameElement: "",
+        });
+    };
+    const addOcorrences = () => {
+        appendExternalAuthority({
+            value: "",
+            label: "",
+            base: ""
         });
     };
 
@@ -270,6 +148,7 @@ export default function Create() {
 
         const personalName = transformAuthority(data, id)
         console.log(personalName);
+        // console.log(data);
 
         bkapi
             .post("http://localhost:8000/authorities/agents/", personalName, {
@@ -316,7 +195,6 @@ export default function Create() {
                         </Button>
                     </Box>
                 </Box>
-
                 <Divider />
                 <Paper sx={{ p: '15px', mt: "10px" }}>
                     <Grid container spacing={2} >
@@ -328,6 +206,7 @@ export default function Create() {
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
+                                size="small"
                                 label="Nome Autorizado"
                                 variant="outlined"
                                 {...register("fullNameElement")}
@@ -336,12 +215,12 @@ export default function Create() {
                                 <Typography variant="caption" display="block" gutterBottom color={'red'}>
                                     {errors.fullNameElement.message}
                                 </Typography>
-
                             )}
                         </Grid>
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
+                                size="small"
                                 label="Nome completo"
                                 variant="outlined"
                                 {...register("fullerName")}
@@ -355,11 +234,13 @@ export default function Create() {
                                 <TextField
                                     label="Local de Nascimento"
                                     variant="outlined"
+                                    size="small"
                                     {...register("birthPlace")}
                                 />
                                 <TextField
                                     label="Dia"
                                     variant="outlined"
+                                    size="small"
                                     sx={{ width: 100 }}
                                     {...register("birthDayDate")}
                                 />
@@ -371,9 +252,11 @@ export default function Create() {
                                     render={({ field }) => (
                                         <FormControl
                                             sx={{ minWidth: 100 }}
+                                            size="small"
                                         >
                                             <InputLabel id="demo-simple-select-label">Mês</InputLabel>
                                             <Select {...field}
+                                                size="small"
                                                 labelId="demo-simple-select-label"
                                                 label="Mês"
                                             >
@@ -388,6 +271,7 @@ export default function Create() {
                                     label="Ano"
                                     variant="outlined"
                                     sx={{ width: 100 }}
+                                    size="small"
                                     {...register("birthYearDate")}
                                 />
 
@@ -402,12 +286,14 @@ export default function Create() {
                                 <TextField
                                     label="Local de Falecimento"
                                     variant="outlined"
+                                    size="small"
                                     {...register("deathPlace")}
                                 />
                                 <TextField
                                     label="Dia"
                                     variant="outlined"
                                     sx={{ width: 100 }}
+                                    size="small"
                                     {...register("deathDayDate")}
                                 />
                                 <Controller
@@ -418,6 +304,7 @@ export default function Create() {
                                     render={({ field }) => (
                                         <FormControl
                                             sx={{ width: 100 }}
+                                            size="small"
                                         >
                                             <InputLabel id="demo-simple-select-label">Mês</InputLabel>
                                             <Select {...field}
@@ -435,24 +322,28 @@ export default function Create() {
                                     label="Ano"
                                     variant="outlined"
                                     sx={{ width: 100 }}
+                                    size="small"
                                     {...register("deathYearDate")}
                                 />
 
                             </Box>
+
                         </Grid>
                         <Grid item xs={12}>
+                            <Divider />
                             <Typography variant="h6" gutterBottom>
-                                Variantes
+                                Variantes do nome
                             </Typography>
                         </Grid>
-                        {fields.map((field, index) => (
+                        {fieldsVariant.map((field, index) => (
                             <Fragment key={index}>
                                 <Grid item xs={6}>
                                     <TextField
                                         fullWidth
                                         label="Nome"
                                         variant="outlined"
-                                        {...register(`variants.${index}.fullNameElement`)}
+                                        size="small"
+                                        {...register(`hasVariant.${index}.fullNameElement`)}
                                     />
                                 </Grid>
                                 <Grid item xs={6}>
@@ -460,20 +351,84 @@ export default function Create() {
                                         <TextField
                                             label="Data Associada ao Nome"
                                             variant="outlined"
-                                            {...register(`variants.${index}.dateNameElement`)}
+                                            size="small"
+                                            {...register(`hasVariant.${index}.dateNameElement`)}
                                         />
                                         <IconButton aria-label="add" onClick={addVariant} color="primary">
                                             <IoAddOutline />
                                         </IconButton>
-                                        <IconButton aria-label="add" onClick={() =>{
-                                            remove(index)}} color="primary">
+                                        <IconButton aria-label="add" onClick={() => {
+                                            removeVariant(index)
+                                        }} color="primary">
                                             <IoRemove />
                                         </IconButton>
                                     </Box>
                                 </Grid>
                             </Fragment>
                         ))}
+                        <Grid item xs={6}>
+                            <Typography variant="h6" gutterBottom>
+                                Campos de Atividades
+                            </Typography>
 
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography variant="h6" gutterBottom>
+                                Ocupações
+                            </Typography>
+
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant="h6" gutterBottom>
+                                Afiliação
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant="h6" gutterBottom>
+                                Ocorrência em outras bases
+                            </Typography>
+                        </Grid>
+                        {fieldsExternalAuthority.map((field, index) => (
+                            <Fragment key={index}>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        fullWidth
+                                        label="URL"
+                                        variant="outlined"
+                                        size="small"
+                                        {...register(`hasExactExternalAuthority.${index}.value`)}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <TextField
+                                        fullWidth
+                                        label="Nome"
+                                        variant="outlined"
+                                        size="small"
+                                        {...register(`hasExactExternalAuthority.${index}.label`)}
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        fullWidth
+                                        label="Base"
+                                        variant="outlined"
+                                        size="small"
+                                        {...register(`hasExactExternalAuthority.${index}.base`)}
+                                    />
+                                </Grid>
+                                <Grid item xs={1}>
+                                <IconButton aria-label="add" onClick={addOcorrences} color="primary">
+                                    <IoAddOutline />
+                                </IconButton>
+                                <IconButton aria-label="add" onClick={() => {
+                                            removeExternalAuthority(index)
+                                        }} color="primary">
+                                            <IoRemove />
+                                        </IconButton>
+                                </Grid>
+                            </Fragment>
+                        ))}
                     </Grid>
                 </Paper>
             </form>

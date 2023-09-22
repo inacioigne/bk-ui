@@ -19,7 +19,7 @@ import BreadcrumbsBK from "src/components/nav/breadcrumbs";
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import StyledTreeItem from "@/components/baseMui/styledTreeItem"
-import  ExternalAuthority  from "@/components/madsrdf/view/externalAuthority";
+import ExternalAuthority from "@/components/madsrdf/view/externalAuthority";
 
 // Reacts Icons
 import { BsArrowsAngleContract, BsArrowsAngleExpand } from 'react-icons/bs';
@@ -44,7 +44,7 @@ import { useProgress } from "src/providers/progress";
 import { useAlert } from "@/providers/alert"
 
 // Nextjs
-import { useRouter, usePathname, useSearchParams  } from 'next/navigation'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
 
@@ -64,16 +64,16 @@ const previousPaths = [
 import { PersonalNameDoc } from "@/schema/authority/solr"
 
 export default function Page({ params }: { params: { id: string } }) {
-  const router = useRouter() 
-  const [doc, setDoc] = useState<PersonalNameDoc|null>(null)
+  const router = useRouter()
+  const [doc, setDoc] = useState<PersonalNameDoc | null>(null)
   const [open, setOpen] = useState(false);
   const { progress, setProgress } = useProgress();
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  
+
   const {
-    openSnack, 
-    setOpenSnack, 
+    openSnack,
+    setOpenSnack,
     message,
     setMessage,
     typeAlert,
@@ -120,7 +120,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   }
 
-  useEffect(() => { 
+  useEffect(() => {
 
     solr.get(`authority/select?fl=*,[child]&q=id:${params.id}`)
       .then(function (response) {
@@ -140,9 +140,9 @@ export default function Page({ params }: { params: { id: string } }) {
 
   if (progress) return (
     <Container maxWidth="xl">
-       <Box my={"1rem"}>
-       <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-       </Box>
+      <Box my={"1rem"}>
+        <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+      </Box>
     </Container>
   )
 
@@ -160,10 +160,12 @@ export default function Page({ params }: { params: { id: string } }) {
             </Typography>
             <Box>
               <Link href={'/admin/authority/create'}>
-              <Button sx={{ textTransform: 'none' }} variant="outlined" startIcon={<BsFillPersonPlusFill />}>Novo</Button>
+                <Button sx={{ textTransform: 'none' }} variant="outlined" startIcon={<BsFillPersonPlusFill />}>Novo</Button>
               </Link>
-              
-              <Button sx={{ textTransform: 'none', mx: '10px' }} variant="outlined" startIcon={<CiEdit />}>Editar</Button>
+              <Link href={`/admin/authority/edit/${params.id}`}>
+                <Button sx={{ textTransform: 'none', mx: '10px' }} variant="outlined" startIcon={<CiEdit />}>Editar</Button>
+              </Link>
+
               <Button sx={{ textTransform: 'none' }} variant="outlined" startIcon={<BsFillPersonXFill />} onClick={() => { setOpen(true) }}>Excluir</Button>
             </Box>
 
@@ -210,8 +212,8 @@ export default function Page({ params }: { params: { id: string } }) {
                         Falecimento:
                       </Typography>
                       <Box sx={{ display: "flex", gap: "5px" }}>
-                      <Button startIcon={<LiaBirthdayCakeSolid />} variant="outlined" size="small" sx={{ textTransform: "none" }}> {doc.deathPlace}</Button>
-                      {doc?.deathDate && <Button variant="outlined" startIcon={<FcCalendar />} size="small"> {doc.deathDate} </Button>}
+                        <Button startIcon={<LiaBirthdayCakeSolid />} variant="outlined" size="small" sx={{ textTransform: "none" }}> {doc.deathPlace}</Button>
+                        {doc?.deathDate && <Button variant="outlined" startIcon={<FcCalendar />} size="small"> {doc.deathDate} </Button>}
                       </Box>
                     </Box>
 
@@ -324,7 +326,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
               {doc?.hasExactExternalAuthority && (
                 <Grid item xs={4}>
-                <ExternalAuthority externalAuthority={doc?.hasExactExternalAuthority} />
+                  <ExternalAuthority externalAuthority={doc?.hasExactExternalAuthority} />
                 </Grid>
               )}
 

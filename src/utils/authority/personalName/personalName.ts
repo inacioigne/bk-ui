@@ -77,6 +77,7 @@ function ExternalAuthority(externalAuthority: uri[]) {
 }
 
 export function transformAuthority(data: CreateAuthorityData, id: number | null) {
+    console.log(data)
 
     const today = Today();
     const elementList: any = [
@@ -119,6 +120,8 @@ export function transformAuthority(data: CreateAuthorityData, id: number | null)
     )
     const birthDate = transformDate(data.birthDayDate, data.birthMonthDate, data.birthYearDate)
     birthDate && (personalName['birthDate'] = birthDate)
+    data.birthDayDate && (personalName['birthDayDate'] = data.birthDayDate.padStart(2, '0'))
+
     data.birthPlace && (personalName['birthPlace'] = data.birthPlace)
 
     data.deathPlace && (personalName['deathPlace'] = data.deathPlace)

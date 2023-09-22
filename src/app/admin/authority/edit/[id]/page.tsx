@@ -36,7 +36,7 @@ import {
 } from "react-hook-form";
 
 // Schema
-import { createAuthoritySchema } from "@/schema/authority/personalName";
+import { editAuthoritySchema } from "@/schema/authority/personalName";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -60,7 +60,7 @@ const previousPaths = [
   },
 ];
 
-type CreateAuthorityData = z.infer<typeof createAuthoritySchema>;
+type EditAuthorityData = z.infer<typeof editAuthoritySchema>;
 
 // Utils
 import { UpdateForm } from "@/utils/authority/personalName/updateForm";
@@ -74,8 +74,8 @@ export default function Edit({ params }: { params: { id: string } }) {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<CreateAuthorityData>({
-    resolver: zodResolver(createAuthoritySchema),
+  } = useForm<EditAuthorityData>({
+    resolver: zodResolver(editAuthoritySchema),
     defaultValues: {
       fullNameElement: "",
       hasVariant: [{ fullNameElement: "", dateNameElement: "" }],
@@ -157,7 +157,6 @@ export default function Edit({ params }: { params: { id: string } }) {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              {/* <InputLabel htmlFor="component-simple" focused={true}>Nome Autorizado</InputLabel> */}
               <TextField
                 fullWidth
                 size="small"

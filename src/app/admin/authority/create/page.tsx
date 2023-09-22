@@ -37,7 +37,7 @@ import { IoRemove, IoAddOutline } from "react-icons/io5";
 import { createAuthoritySchema } from "@/schema/authority/personalName"
 
 // Utils
-import { transformAuthority } from "@/utils/authority/personalName"
+import { transformAuthority } from "@/utils/authority/personalName/personalName"
 
 // React-Hook-Form
 import {
@@ -78,6 +78,14 @@ const meses = [
     {
         value: '02',
         label: 'Fev.'
+    },
+    {
+        value: '03',
+        label: 'Mar..'
+    },
+    {
+        value: '04',
+        label: 'Abr.'
     }
 ]
 
@@ -274,8 +282,6 @@ export default function Create() {
                                     size="small"
                                     {...register("birthYearDate")}
                                 />
-
-
                             </Box>
                         </Grid>
                         <Grid item xs={6}>

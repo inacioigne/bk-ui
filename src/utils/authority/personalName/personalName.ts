@@ -1,7 +1,7 @@
 
 // Schema
 import { createAuthoritySchema } from "@/schema/authority/personalName"
-import { PersonalName, uri } from "@/schema/authority/personalName"
+import { PersonalName, uri, variant } from "@/schema/authority/personalName"
 
 import { z } from "zod";
 
@@ -37,9 +37,9 @@ function transformDate(day: string, month: string, year: string) {
 
 }
 
-function Variants(variants) {
+function Variants(variants: any) {
 
-    const v = variants.map((variant) => {
+    const v = variants.map((variant: any) => {
         let variantLabel =
             variant.dateNameElement === ""
                 ? variant.fullNameElement
@@ -76,8 +76,8 @@ function ExternalAuthority(externalAuthority: uri[]) {
     })
 }
 
-export function transformAuthority(data: CreateAuthorityData, id: number | null) {
-    console.log(data)
+export function transformAuthority(data: CreateAuthorityData, id: string | null) {
+    // console.log(data)
 
     const today = Today();
     const elementList: any = [
@@ -118,15 +118,22 @@ export function transformAuthority(data: CreateAuthorityData, id: number | null)
         }
     }
     )
+    data.birthPlace && (personalName['birthPlace'] = data.birthPlace)
     const birthDate = transformDate(data.birthDayDate, data.birthMonthDate, data.birthYearDate)
     birthDate && (personalName['birthDate'] = birthDate)
     data.birthDayDate && (personalName['birthDayDate'] = data.birthDayDate.padStart(2, '0'))
-
-    data.birthPlace && (personalName['birthPlace'] = data.birthPlace)
+    data.birthMonthDate && (personalName['birthMonthDate'] = data.birthMonthDate)
+    data.birthYearDate && (personalName['birthYearDate'] = data.birthYearDate)
+    
 
     data.deathPlace && (personalName['deathPlace'] = data.deathPlace)
     const deathDate = transformDate(data.deathDayDate, data.deathMonthDate, data.deathYearDate)
     deathDate && (personalName['deathDate'] = deathDate)
+    data.deathDayDate && (personalName['deathDayDate'] = data.deathDayDate.padStart(2, '0'))
+    data.deathMonthDate && (personalName['deathMonthDate'] = data.deathMonthDate)
+    data.deathYearDate && (personalName['deathYearDate'] = data.deathYearDate)
+    
+
 
     if (data.hasVariant[0].fullNameElement !== '') {
         const hasVariant = Variants(data.hasVariant);
@@ -137,7 +144,7 @@ export function transformAuthority(data: CreateAuthorityData, id: number | null)
 
         // ExternalAuthority(data.hasExactExternalAuthority) 
 
-        console.log(data.hasExactExternalAuthority)
+        // console.log(data.hasExactExternalAuthority)
         // const hasVariant = Variants(data.hasVariant);
         // 
     }

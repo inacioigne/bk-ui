@@ -13,21 +13,18 @@ export interface PersonalNameDoc {
     imagem: string;
     fullerName: string;
     birthPlace: string;
-    birthDate: string;
+    birthDayDate?: string;
+    birthMonthDate?: string;
+    birthYearDate?: string;
     deathPlace: string;
     deathDate: string;
+    deathDayDate?: string;
+    deathMonthDate?: string;
+    deathYearDate?: string;
     hasAffiliation: string;
-    variant: string;
+    variant: string[];
     occupation: string;
-    hasExactExternalAuthority: uri[]
-        // "isMemberOfMADSCollection":["https://bibliokeia.com/authorities/PersonalName/"],
-        // "birthDate":["01-01-1980"],
-        // "birthPlace":["Rio de Janeiro"],
-        // "deathDate":["02-02-1990"],
-        // "deathPlace":["Rio de Janeiro"],
-        // "variant":["Maria Machado 1980-1990"],
-        // "creationDate":"2023-09-21T00:00:00Z",
-        
+    hasExactExternalAuthority: uri[]    
 
 
 }

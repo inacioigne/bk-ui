@@ -13,7 +13,7 @@ type element = {
     elementValue: label
 }
 
-type variant = {
+export type variant = {
     type: string;
     elementList: element[];
     variantLabel: string;
@@ -27,15 +27,20 @@ export type uri = {
 
 export interface PersonalName {
     type: string;
-    identifiersLocal: number | null;
+    identifiersLocal: string | null;
     adminMetadata: adminMetadata;
     authoritativeLabel: string;
     elementList: element[];
     fullerName?: element;
-    birthDayDate: string;
+    birthDayDate?: string;
+    birthMonthDate?: string;
+    birthYearDate?: string;
     birthDate?: string;
     birthPlace?: string;
     deathPlace?: string;
+    deathDayDate?: string;
+    deathMonthDate?: string;
+    deathYearDate?: string;
     deathDate?: string;    
     hasVariant?: variant[];
     // fieldOfActivity?: uri[]
@@ -48,10 +53,9 @@ export interface PersonalName {
     fullNameElement: z.string().nonempty("Nome é obrigatório"),
     fullerName: z.string(),
     birthPlace: z.string(),
-    birthDayDate: z.string().nullable(),
+    birthDayDate: z.string(),
     birthMonthDate: z.string(),
     birthYearDate: z.string(),
-    // birthDate: z.string(),
     deathPlace: z.string(),
     deathDayDate: z.string(),
     deathMonthDate: z.string(),

@@ -49,13 +49,20 @@ import { PersonalNameDoc } from "@/schema/authority/solr";
 
 // Utils
 import { UpdateForm } from "@/utils/authority/personalName/updateForm";
-import { transformAuthority } from "@/utils/authority/personalName/personalName"
+import { transformAuthority, transformEditAuthority } from "@/utils/authority/personalName/personalName"
 
 // Share
 import months from "@/share/months.json" assert { type: "json" };
 
 // BiblioKeia Services
 import { bkapi } from "@/services/api";
+
+// Providers BiblioKeia
+import { useProgress } from "src/providers/progress";
+import { useAlert } from "src/providers/alert";
+
+// Nextjs
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
 interface Props {
   doc: PersonalNameDoc;
@@ -71,7 +78,15 @@ const headers = {
 export default function EditPersonaName(props: Props) {
   const { doc } = props;
   const { id }  = props;
-  // const docMemo = useMemo(() => ({ doc }), [doc]);
+  const router = useRouter()
+  const {
+    openSnack,
+    setOpenSnack,
+    message, 
+    setMessage,
+    typeAlert,
+    setTypeAlert,
+  } = useAlert();
 
   const {
     control,
@@ -83,6 +98,7 @@ export default function EditPersonaName(props: Props) {
     resolver: zodResolver(editAuthoritySchema),
     defaultValues: {
       fullNameElement: "",
+      // teste: "teste"
     },
   });
 
@@ -129,7 +145,8 @@ export default function EditPersonaName(props: Props) {
   };
 
   function editAuthority(data: any) {
-    const personalName = transformAuthority(data, id)
+    const personalName = transformEditAuthority(data, id, doc.creationDate)
+    // console.log(personalName)
     bkapi
       .put(`http://localhost:8000/authority/personalName/${id}`, personalName, {
         headers: headers,
@@ -137,8 +154,10 @@ export default function EditPersonaName(props: Props) {
       .then(function (response) {
         if (response.status === 201) {
           console.log(response);
-          // setMessage("Registro excluido com sucesso!")
-          // router.push(`/admin/authority/${id}`);
+          setTypeAlert("error");
+          setMessage("Registro editado com sucesso!")
+          setOpenSnack(true);
+          router.push(`/admin/authority/${id}`);
         }
       })
       .catch(function (error) {
@@ -149,7 +168,7 @@ export default function EditPersonaName(props: Props) {
         //   setOpenSnack(true)
         //   setDoc(null)
       });
-    console.log(personalName);
+
   }
 
   return (
@@ -335,12 +354,7 @@ export default function EditPersonaName(props: Props) {
               </Grid>
               <Grid item xs={6}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <TextField
-                    label="Data Associada ao Nome"
-                    variant="outlined"
-                    size="small"
-                    {...register(`hasVariant.${index}.dateNameElement`)}
-                  />
+                 
                   <IconButton
                     aria-label="add"
                     onClick={addVariant}
@@ -415,6 +429,32 @@ export default function EditPersonaName(props: Props) {
               </Grid>
             </Fragment>
           ))}
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom>
+             Imagem
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+          <TextField
+                  fullWidth
+                  label="URL"
+                  variant="outlined"
+                  size="small"
+                  focused={doc?.imagem ? true : false}
+                  {...register(`imagem`)}
+                />
+            {/* <TextField
+                  fullWidth
+                  label="URL"
+                  variant="outlined"
+                  size="small"
+                  focused={doc?.imagem ? true : false}
+                  {...register(`teste`)}
+                /> */}
+
+
+          </Grid>
+
         </Grid>
       </Paper>
     </form>

@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 type adminMetadata = {
-    creationDate: string;
+    creationDate?: Date|string;
+    changeDate?: Date|string;
+    generationProcess: string
 }
 
 type label = {
@@ -46,7 +48,8 @@ export interface PersonalName {
     // fieldOfActivity?: uri[]
     // hasAffiliation
     hasExactExternalAuthority?: uri[]
-    isMemberOfMADSCollection: string
+    isMemberOfMADSCollection: string;
+    imagem?: string;
   }
 
   export const createAuthoritySchema = z.object({
@@ -72,7 +75,8 @@ export interface PersonalName {
             label: z.string(),
             base: z.string()
         })
-    )
+    ),
+    imagem: z.string()
     // fieldOfActivity: z.array(
     //     z.object({
 
@@ -105,7 +109,8 @@ export const editAuthoritySchema = z.object({
             label: z.string(),
             base: z.string()
         })
-    )
+    ),
+    imagem: z.string()
     // fieldOfActivity: z.array(
     //     z.object({
 

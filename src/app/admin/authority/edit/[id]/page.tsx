@@ -36,7 +36,7 @@ import {
 
 async function getData(id: string) {
   const url = `http://localhost:8983/solr/authority/select?fl=*,[child]&q=id:${id}`;
-  const res = await fetch(url);
+  const res = await fetch(url, { cache: 'no-store' });
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
@@ -60,13 +60,13 @@ const previousPaths = [
   },
 ];
 
-import { PersonalNameDoc } from "@/schema/authority/solr"
-
-import { useCallback } from 'react';
+// import { PersonalNameDoc } from "@/schema/authority/solr"
 
 export default async function Page({ params }: { params: { id: string } }) {
   const data = await getData(params.id);
+
   const [doc] = data.response.docs;
+  // console.log(doc)
 
 
   return (

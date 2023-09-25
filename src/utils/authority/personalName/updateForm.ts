@@ -10,13 +10,14 @@ export function UpdateForm(
   setValue("fullNameElement", doc.authority[0]);
   doc.fullerName && setValue("fullerName", doc.fullerName[0]);
   doc.birthPlace && setValue("birthPlace", doc.birthPlace[0]);
-  doc.birthDayDate && setValue("birthDayDate", doc.birthDayDate[0]);
-  doc.birthMonthDate && setValue("birthMonthDate", doc.birthMonthDate[0]);
-  doc.birthYearDate && setValue("birthYearDate", doc.birthYearDate[0]);
+  doc.birthDayDate && setValue("birthDayDate", doc.birthDayDate);
+  doc.birthMonthDate && setValue("birthMonthDate", doc.birthMonthDate);
+  doc.birthYearDate && setValue("birthYearDate", doc.birthYearDate);
   doc.deathPlace && setValue("deathPlace", doc.deathPlace[0]);
-  doc.deathDayDate && setValue("deathDayDate", doc.deathDayDate[0]);
-  doc.deathMonthDate && setValue("deathMonthDate", doc.deathMonthDate[0]);
-  doc.deathYearDate && setValue("deathYearDate", doc.deathYearDate[0]);
+  doc.deathDayDate && setValue("deathDayDate", doc.deathDayDate);
+  doc.deathMonthDate && setValue("deathMonthDate", doc.deathMonthDate);
+  doc.deathYearDate && setValue("deathYearDate", doc.deathYearDate);
+  doc.imagem && setValue("imagem", doc.imagem);
 
   if (doc.variant.length > 0) {
     doc.variant.forEach(function (variant, index) {

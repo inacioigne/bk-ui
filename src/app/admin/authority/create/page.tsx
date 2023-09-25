@@ -145,7 +145,7 @@ export default function Create() {
 
   function createAuthority(data: any) {
     const personalName = transformAuthority(data, id);
-    console.log(personalName);
+    // console.log(personalName);
     // console.log(data);
 
     bkapi
@@ -362,24 +362,6 @@ export default function Create() {
                     <IoRemove />
                   </IconButton>
                 </Grid>
-                {/* <Grid item xs={6}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <TextField
-                                            label="Data Associada ao Nome"
-                                            variant="outlined"
-                                            size="small"
-                                            {...register(`hasVariant.${index}.dateNameElement`)}
-                                        />
-                                        <IconButton aria-label="add" onClick={addVariant} color="primary">
-                                            <IoAddOutline />
-                                        </IconButton>
-                                        <IconButton aria-label="add" onClick={() => {
-                                            removeVariant(index)
-                                        }} color="primary">
-                                            <IoRemove />
-                                        </IconButton>
-                                    </Box>
-                                </Grid> */}
               </Fragment>
             ))}
             <Grid item xs={6}>
@@ -451,6 +433,21 @@ export default function Create() {
                 </Grid>
               </Fragment>
             ))}
+             <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom>
+             Imagem
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+          <TextField
+                  fullWidth
+                  label="URL"
+                  variant="outlined"
+                  size="small"
+                  {...register(`imagem`)}
+                />
+
+          </Grid>
           </Grid>
         </Paper>
       </form>

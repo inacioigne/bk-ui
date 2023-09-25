@@ -55,7 +55,7 @@ const previousPaths = [
     icon: <FcHome fontSize="small" />,
   },
   {
-    link: "/admin/Authority",
+    link: "/admin/authority",
     label: "Autoridades",
     icon: <FcHome fontSize="small" />,
   },
@@ -101,7 +101,7 @@ export default function Page({ params }: { params: { id: string } }) {
       'Content-Type': 'application/json',
     };
 
-    bkapi.delete("authority/", { data, headers })
+    bkapi.delete(`/authority/personalName/${doc?.id}`, { data, headers })
       .then(function (response) {
         console.log(response)
         if (response.status === 200) {
@@ -174,7 +174,7 @@ export default function Page({ params }: { params: { id: string } }) {
           <Box sx={{ mt: "5px", display: "flex", gap: "15px" }}>
             {doc?.imagem && (
               <Image
-                src={doc?.imagem[0]}
+                src={doc?.imagem}
                 height={300}
                 width={200}
                 alt="Picture of the author"
@@ -356,9 +356,7 @@ export default function Page({ params }: { params: { id: string } }) {
             Sim
           </Button>
         </DialogActions>
-
       </Dialog>
-
     </>
 
   );

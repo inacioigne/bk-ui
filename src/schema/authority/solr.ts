@@ -9,6 +9,7 @@ type uri = {
 export interface PersonalNameDoc {
     id: string;
     type: string;
+    creationDate: Date;
     authority: string;
     imagem: string;
     fullerName: string;

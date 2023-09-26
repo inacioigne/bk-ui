@@ -69,6 +69,7 @@ interface Props {
   id: string
 }
 
+
 var contador = 0;
 const headers = {
   accept: "application/json",
@@ -79,6 +80,7 @@ export default function EditPersonaName(props: Props) {
   const { doc } = props;
   const { id }  = props;
   const router = useRouter()
+  const { progress, setProgress } = useProgress();
   const {
     openSnack,
     setOpenSnack,
@@ -98,7 +100,6 @@ export default function EditPersonaName(props: Props) {
     resolver: zodResolver(editAuthoritySchema),
     defaultValues: {
       fullNameElement: "",
-      // teste: "teste"
     },
   });
 
@@ -145,6 +146,7 @@ export default function EditPersonaName(props: Props) {
   };
 
   function editAuthority(data: any) {
+    setProgress(true)
     const personalName = transformEditAuthority(data, id, doc.creationDate)
     // console.log(personalName)
     bkapi
@@ -154,7 +156,7 @@ export default function EditPersonaName(props: Props) {
       .then(function (response) {
         if (response.status === 201) {
           console.log(response);
-          setTypeAlert("error");
+          // setTypeAlert("error");
           setMessage("Registro editado com sucesso!")
           setOpenSnack(true);
           router.push(`/admin/authority/${id}`);
@@ -164,7 +166,7 @@ export default function EditPersonaName(props: Props) {
         console.error(error);
       })
       .finally(function () {
-        //   setProgress(false)
+          setProgress(false)
         //   setOpenSnack(true)
         //   setDoc(null)
       });

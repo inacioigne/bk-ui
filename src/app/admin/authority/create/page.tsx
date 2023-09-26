@@ -52,6 +52,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+// Providers BiblioKeia
+import { useProgress } from "src/providers/progress";
+import { useAlert } from "src/providers/alert";
+
 const previousPaths = [
   {
     link: "/admin",
@@ -75,6 +79,15 @@ const headers = {
 export default function Create() {
   const [id, setId] = useState(null);
   const router = useRouter();
+  const { progress, setProgress } = useProgress();
+  const {
+    openSnack,
+    setOpenSnack,
+    message, 
+    setMessage,
+    typeAlert,
+    setTypeAlert,
+  } = useAlert();
 
   const {
     control,
@@ -144,6 +157,7 @@ export default function Create() {
   // console.log(errors)
 
   function createAuthority(data: any) {
+    setProgress(true)
     const personalName = transformAuthority(data, id);
     // console.log(personalName);
     // console.log(data);
@@ -154,8 +168,8 @@ export default function Create() {
       })
       .then(function (response) {
         if (response.status === 201) {
-          console.log(response);
-          // setMessage("Registro excluido com sucesso!")
+          // console.log(response);
+          setMessage("Registro criado com sucesso!")
           router.push(`/admin/authority/${id}`);
         }
       })
@@ -163,8 +177,8 @@ export default function Create() {
         console.error(error);
       })
       .finally(function () {
-        //   setProgress(false)
-        //   setOpenSnack(true)
+          setProgress(false)
+          setOpenSnack(true)
         //   setDoc(null)
       });
   }

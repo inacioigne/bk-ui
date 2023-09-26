@@ -1,5 +1,6 @@
 "use client";
-import { createContext, useContext, useState, FC } from "react";
+import { createContext, useContext, useState, ReactNode  } from "react";
+
 
 interface ContextType {
   openSnack: boolean;
@@ -10,27 +11,26 @@ interface ContextType {
   setTypeAlert: Function
 }
 
-export const AlertContext = createContext<ContextType|undefined>(undefined);
+export const AlertContext = createContext<ContextType | undefined>(undefined);
 
-export const AlertProvider: FC = ({ children }) => {
-  const [openSnack, setOpenSnack] = useState(false);
-  const [message, setMessage] = useState(null);
-  const [typeAlert, setTypeAlert] = useState("success");
+export function AlertProvider({ children }: { children: ReactNode }) {
 
-  return ( 
-    <AlertContext.Provider
-      value={{
-        openSnack, 
-        setOpenSnack, 
-        message,
-        setMessage,
-        typeAlert,
-        setTypeAlert, 
-      }}
-    >
-      {children}
-    </AlertContext.Provider>
-  );
-};
+  const [openSnack, setOpenSnack] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const [typeAlert, setTypeAlert] = useState<string>("success");
 
-export const useAlert = () => useContext(AlertContext);
+
+  const contextValue: ContextType = {
+    openSnack, setOpenSnack, message, setMessage, typeAlert, setTypeAlert
+  };
+
+  return <AlertContext.Provider value={contextValue}>{children}</AlertContext.Provider>;
+}
+
+export function useAlert() {
+  const context = useContext(AlertContext);
+  if (!context) {
+    throw new Error('useAlert deve ser usado dentro de um MyContextProvider');
+  }
+  return context;
+}

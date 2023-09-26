@@ -21,8 +21,7 @@ import {
 } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-// MUI Icons
-// import { PersonAdd, Home, Search } from "@mui/icons-material/";
+// react-icons
 import { FcHome, FcSearch } from "react-icons/fc";
 import { BsPersonPlus, BsPersonFillDown } from "react-icons/bs";
 
@@ -64,7 +63,6 @@ const previousPaths = [
 export default function Lcnaf() {
   const [type, setType] = useState("all");
   const [search, setSearch] = useState("");
-  // const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hits, setHits] = useState([]);
   const [agent, setAgent] = useState(null);
@@ -136,11 +134,11 @@ export default function Lcnaf() {
           <form onSubmit={onSubmit}>
             <Paper sx={{ p: "1rem"}}>
                 <FormControl fullWidth sx={{mb: "0.5rem"}} >
-                  <InputLabel id="demo-simple-select-label">
+                  <InputLabel id="label">
                     Selecione uma opção
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
+                    labelId="label"
                     id="demo-simple-select"
                     value={type}
                     label="Selecione uma opção"

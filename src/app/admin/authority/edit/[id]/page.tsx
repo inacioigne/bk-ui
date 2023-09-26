@@ -1,23 +1,6 @@
 import {
   Container,
   Box,
-  Grid,
-  Skeleton,
-  DialogActions,
-  DialogContentText,
-  DialogContent,
-  Dialog,
-  ButtonGroup,
-  Divider,
-  Button,
-  Typography,
-  Paper,
-  TextField,
-  InputLabel,
-  IconButton,
-  FormControl,
-  Select,
-  MenuItem,
 } from "@mui/material";
 // BiblioKeia Components
 import BreadcrumbsBK from "src/components/nav/breadcrumbs";
@@ -59,8 +42,6 @@ const previousPaths = [
     icon: <BsFillPersonLinesFill fontSize="small" />,
   },
 ];
-
-// import { PersonalNameDoc } from "@/schema/authority/solr"
 
 export default async function Page({ params }: { params: { id: string } }) {
   const data = await getData(params.id);

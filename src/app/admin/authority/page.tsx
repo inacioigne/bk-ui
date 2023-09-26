@@ -93,8 +93,6 @@ function a11yProps(index: number) {
 
 export default function Authority() {
 
-  // const router = useRouter() 
-
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -234,13 +232,16 @@ export default function Authority() {
                 <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'space-around' }}>
                   <Button variant="outlined" size="large"
                     startIcon={<AiOutlineClear />}
-                    sx={{ lineHeight: 2.65, textTransform: 'none' }}
+                    
+                    sx={{ //lineHeight: 2.65, 
+                      textTransform: 'none' }}
                     onClick={handleClean}
                   >
                     Limpar
                   </Button>
                   <Link href={'/admin/authority/create'}>
-                  <Button variant="outlined" size="large" startIcon={<BsPersonPlus />} sx={{ lineHeight: 2.65, textTransform: 'none' }}
+                  <Button variant="outlined" size="large" 
+                  startIcon={<BsPersonPlus />} sx={{ lineHeight: 2.65, textTransform: 'none' }}
                   >
                     Novo
                   </Button>
@@ -248,7 +249,8 @@ export default function Authority() {
                   </Link>
                   
                   <Link href={'/admin/authority/importation'}>
-                  <Button variant="outlined" size="large" startIcon={<CiImport />} sx={{ lineHeight: 2.65, textTransform: 'none' }}
+                  <Button variant="outlined" size="large" 
+                  startIcon={<CiImport />} sx={{  lineHeight: 2.65, textTransform: 'none' }}
                   >
                     Importar
                   </Button>

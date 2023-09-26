@@ -15,6 +15,10 @@ a {
   text-decoration: none;
 }
 
+.icone-personalizado {
+  color: rgb(54, 54, 159); /* Defina a cor desejada */
+}
+
 /* :root {
   --max-width: 1100px;
   --border-radius: 12px;

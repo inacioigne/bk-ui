@@ -3,10 +3,8 @@ export function SearchLCSH(
   params: URLSearchParams,
   setHits: Function
 ) {
-
-
     loc
-      .get("authorities/subjects/suggest2/", {
+      .get("authorities/suggest2/", {
         params: params,
       })
       .then((response) => {

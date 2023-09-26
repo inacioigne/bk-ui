@@ -1,32 +1,21 @@
-// "use client";
+"use client";
 import {
   Container,
   Box,
   Divider,
   Typography,
-  Grid,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  TextField,
-  InputAdornment,
-  IconButton,
-  Paper,
-  LinearProgress,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
+  Grid
 } from "@mui/material";
-
 
 // BiblioKeia Components
 import BreadcrumbsBK from "src/components/nav/breadcrumbs";
 import FormLCSH from "@/components/forms/formLCSH"
+import CardLoc from "@/components/cards/cardLoc"
 
 // react-icons
 import { FcHome, FcSearch } from "react-icons/fc";
 import { BsPersonPlus, BsPersonFillDown } from "react-icons/bs";
+import { useState } from "react";
 
 const previousPaths = [
   {
@@ -47,6 +36,7 @@ const previousPaths = [
 ];
 
 export default function LCSH() {
+  const [hit, setHit] = useState(null)
   return (
     <Container maxWidth="xl">
       <Box my={"1rem"}>
@@ -57,10 +47,13 @@ export default function LCSH() {
       </Typography>
       <Divider />
       <Grid container spacing={2}>
-      <Grid item xs={5} sx={{ mt: "15px" }}>
-        <FormLCSH />
+        <Grid item xs={5} sx={{ mt: "15px" }}>
+          <FormLCSH setHit={setHit} />
+        </Grid>
+        <Grid item xs={7} sx={{ mt: "15px" }}>
+        <CardLoc />
 
-      </Grid>
+        </Grid>
       </Grid>
     </Container>
   );

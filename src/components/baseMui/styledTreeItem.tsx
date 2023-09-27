@@ -82,8 +82,9 @@ const StyledTreeItem = forwardRef(function StyledTreeItem(
                         pr: 0,
                     }}
                 >
-                    <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
-                    <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }}>
+                    <Box component={LabelIcon}  />
+                    <Typography variant="body2"  sx={{ fontWeight: 'inherit', flexGrow: 1 }}
+                    >
                         {labelText}
                     </Typography>
                     <Typography variant="caption" color="inherit">
@@ -91,7 +92,7 @@ const StyledTreeItem = forwardRef(function StyledTreeItem(
                     </Typography>
                 </Box>
             }
-            style={styleProps}
+           // style={styleProps}
             {...other}
             ref={ref}
         />

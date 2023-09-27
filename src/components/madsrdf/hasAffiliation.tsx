@@ -167,21 +167,24 @@ function StyledTreeItemChild(props) {
     />
   );
 }
+import { logos } from "@/share/objLogos"
 
-export default function HasAffiliation({ hasAffiliation }) {
-  // const logos = {
-  //   "www.wikidata.org": LogoWikidata,
-  //   "id.worldcat.org": LogoWordcat,
-  //   "vocab.getty.edu": LogoGetty,
-  //   "datos.bne.es": LogoBne,
-  // };
+import { schemaAuthority, schemaAffiliation } from "@/schema/authority";
+import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
+
+type Props = {
+  hasAffiliation: schemaAffiliation[]
+};
+
+export default function HasAffiliation({ hasAffiliation }: Props) {
+
 
   return (
     <TreeView
       aria-label="hasAffiliation"
       defaultExpanded={["3"]}
-      defaultCollapseIcon={<ArrowDropDownIcon />}
-      defaultExpandIcon={<ArrowRightIcon />}
+      defaultCollapseIcon={<AiOutlineArrowDown />}
+      defaultExpandIcon={<AiOutlineArrowUp />}
       defaultEndIcon={<div style={{ width: 24 }} />}
       sx={{
         flexGrow: 1,
@@ -189,10 +192,7 @@ export default function HasAffiliation({ hasAffiliation }) {
         overflowY: "auto",
       }}
     >
-      <StyledTreeItem
-        nodeId="3"
-        labelText="Afiliação" 
-      >
+      <TreeItem nodeId="1" label="Afiliação">
         {hasAffiliation.map((affiliation, index) => (
           <StyledTreeItemChild
           key={index}
@@ -206,7 +206,7 @@ export default function HasAffiliation({ hasAffiliation }) {
             bgColorForDarkMode="#071318"
           />
         ))}
-      </StyledTreeItem>
+      </TreeItem>
     </TreeView>
   );
 }

@@ -35,7 +35,7 @@ import BtnIcon from "src/components/buttons/btnIcon";
 import HasCloseExternalAuthority from "src/components/madsrdf/view/hasCloseExternalAuthority";
 import HasVariant from "src/components/madsrdf/view/hasVariant";
 import FieldOfActivity from "src/components/madsrdf/view/fieldOfActivity";
-import HasAffiliation from "src/components/madsrdf/view/hasAffiliation";
+import HasAffiliation from "src/components/madsrdf/hasAffiliation";
 
 
 // BiblioKeia Hooks

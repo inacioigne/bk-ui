@@ -8,23 +8,51 @@ import {
   Tooltip,
   IconButton,
   Divider,
-  Chip 
+  Chip,
+  Grid,
+  Box
 } from "@mui/material";
 
 import { CiImport } from "react-icons/ci";
 import { red } from "@mui/material/colors";
 
-import { Authority } from "@/schema/authority";
+import { schemaAuthority } from "@/schema/authority";
+
+// BiblioKeia Hooks
+import { useProgress } from "src/providers/progress";
+import { useAlert } from "src/providers/alert";
+
+// BiblioKeia Services
+import { CreateAuthority } from "@/services/thesarus/createAuthority"
+
+// BiblioKeia Components
+import IdentifiesRWO from "@/components/madsrdf/identifiesRWO"
+import HasAffiliation from "src/components/madsrdf/hasAffiliation";
+import BtnIcon from "src/components/buttons/btnIcon";
+
+// React Icons
+import { FaTreeCity } from "react-icons/fa6";
+import { FcCalendar } from "react-icons/fc";
+
+// Nextjs
+import { useRouter } from 'next/navigation'
+
 
 interface Props {
-  hit: Authority;
+  hit: schemaAuthority;
 }
 
 export default function CardLoc({ hit }: Props) {
-  // const data = await getData(params.id);
 
-  // const [doc] = data.response.docs;
-  // console.log(doc)
+  const router = useRouter();
+  const { setProgress } = useProgress();
+  const {
+    setOpenSnack,
+    setMessage,
+    setTypeAlert,
+  } = useAlert();
+
+
 
   return (
     <Card variant="outlined">
@@ -37,19 +65,26 @@ export default function CardLoc({ hit }: Props) {
           }
           title={
             <>
-            <Typography variant="h5" component="div">
-              {hit.authoritativeLabel}
-            </Typography>
-            <Chip label="Small" size="small" />
+              <Typography variant="h5" component="div">
+                {hit.authoritativeLabel}
+              </Typography>
+              <Chip label={hit.type} color="primary" size="small" />
             </>
-            
+
           }
           action={
             <Tooltip title="Import registro">
               <IconButton
                 aria-label="settings"
                 onClick={() => {
-                  // postImportBK(agent);
+                  CreateAuthority(
+                    hit,
+                    setProgress,
+                    setTypeAlert,
+                    setMessage,
+                    setOpenSnack,
+                    router
+                  )
                 }}
               >
                 <CiImport />
@@ -58,6 +93,86 @@ export default function CardLoc({ hit }: Props) {
           }
         />
         <Divider />
+        <Grid container spacing={2} sx={{ mt: "5px" }}>
+
+          {/* Nascimento */}
+          {(hit?.birthPlace || hit?.birthDate) && (
+            <Grid item xs={6}>
+              <Box sx={{ pl: "10px" }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+                  Nascimento:
+                </Typography>
+                <Divider />
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "5px",
+                    p: "5px",
+                  }}
+                >
+                  { hit?.birthPlace && (<BtnIcon icon={<FaTreeCity />} label={hit?.birthPlace} />)}
+                  { hit?.birthDate && (<BtnIcon icon={<FcCalendar />} label={hit?.birthDate} />)}
+                </Box>
+              </Box>
+            </Grid>
+          )}
+          {/* Falecimento */}
+          {(hit?.deathPlace || hit?.deathDate) && (
+            <Grid item xs={6}>
+              <Box sx={{ pl: "10px" }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+              Falecimento:
+                </Typography>
+                <Divider />
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "5px",
+                    p: "5px",
+                  }}
+                >
+                  { hit?.deathPlace && (<BtnIcon icon={<FaTreeCity />} label={hit.deathPlace} />)}
+                  { hit?.birthDate && (<BtnIcon icon={<FcCalendar />} label={hit?.birthDate} />)}
+                </Box>
+              </Box>
+            </Grid>
+          )}
+
+           {/* fullerName */}
+           {hit?.fullerName && (
+            <Grid item xs={6}>
+              <Box sx={{ pl: "10px" }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+                  Nome completo:
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  {hit.fullerName?.elementValue.value}
+                </Typography>
+              </Box>
+            </Grid>
+          )}
+
+          {/* identifiesRWO */}
+          {
+            hit?.identifiesRWO && (
+              <Grid item xs={6}>
+                <IdentifiesRWO identifiesRWO={hit?.identifiesRWO} />
+              </Grid>
+            )
+          }
+          {/* hasAffiliation */}
+          {hit?.hasAffiliation && (
+            <Grid item xs={6}>
+              <Box sx={{ pl: "10px" }}>
+              <HasAffiliation hasAffiliation={hit.hasAffiliation} />
+              
+              </Box>
+            </Grid>
+          )}
+
+        </Grid>
       </CardContent>
     </Card>
   );

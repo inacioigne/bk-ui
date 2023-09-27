@@ -49,7 +49,7 @@ const Affiliation: React.FC<FacetProps> = ({
 
   return (
     <TreeView
-      defaultCollapseIcon={<BsArrowsAngleExpand />}
+      defaultCollapseIcon={<BsArrowsAngleExpand />} 
       defaultExpandIcon={<BsArrowsAngleContract />}
       sx={{
         flexGrow: 1, overflowY: 'auto'

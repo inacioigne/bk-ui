@@ -41,10 +41,6 @@ interface typeHits {
   uri: string;
 }
 
-// .icone-personalizado {
-//   color: red; /* Defina a cor desejada */
-// }
-
 const iconType = {
   names: <BsPersonCircle className="icone-personalizado" />,
   subjects: <MdOutlineSubject className="icone-personalizado" />,
@@ -140,7 +136,6 @@ export default function FormLCSH( props: Props) {
                     <ListItem disablePadding key={index}>
                       <ListItemButton
                       onClick={(e) => {
-                        // getImportBK(hit.uri);
                         GetDataLoc(setHit, hit.uri)
                         // console.log(hit.uri);
                       }}

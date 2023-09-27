@@ -19,7 +19,7 @@ import BreadcrumbsBK from "src/components/nav/breadcrumbs";
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import StyledTreeItem from "@/components/baseMui/styledTreeItem"
-import ExternalAuthority from "@/components/madsrdf/view/externalAuthority";
+import ExternalAuthority from "@/components/madsrdf/externalAuthority";
 
 // Reacts Icons
 import { BsArrowsAngleContract, BsArrowsAngleExpand } from 'react-icons/bs';

@@ -65,12 +65,15 @@ export default function FormLCSH( props: Props) {
   const [search, setSearch] = useState("");
   const [hits, setHits] = useState<typeHits[]>([]);
   const [params, setParams] = useState(new URLSearchParams());
+  params.set("rdftype", "SimpleType");
 
   const handleChangeType = (event: SelectChangeEvent, params: URLSearchParams) => {
     const target = event.target as HTMLButtonElement;
     setType(target.value);
     if (target.value === 'all') {
       params.has('rdftype') && params.delete('rdftype')
+      params.set("rdftype", "SimpleType");
+
     } else {
       params.set("rdftype", target.value);
     }

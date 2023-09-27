@@ -3,13 +3,14 @@ export function SearchLCSH(
   params: URLSearchParams,
   setHits: Function
 ) {
+  // console.log(params.toString())
     loc
       .get("authorities/suggest2/", {
         params: params,
       })
       .then((response) => {
         setHits(response.data.hits);
-        console.log(response)
+        // console.log(response)
       })
       .catch(function (error) {
         console.log("ERROOO!!", error);

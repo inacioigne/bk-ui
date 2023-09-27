@@ -51,8 +51,8 @@ export default function LCSH() {
           <FormLCSH setHit={setHit} />
         </Grid>
         <Grid item xs={7} sx={{ mt: "15px" }}>
-        <CardLoc />
-
+          {hit && <CardLoc hit={hit} /> }
+        
         </Grid>
       </Grid>
     </Container>

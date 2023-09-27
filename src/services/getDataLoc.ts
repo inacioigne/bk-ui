@@ -11,14 +11,23 @@ export function GetDataLoc(setHit: Function, uri: string) {
     .get(`${uri}.madsrdf_raw.jsonld`)
     .then(function (response) {
       const data = response.data;
+      
       const [a] = data.filter(function (elemento: any) {
         return elemento["@id"] === uri;
       });
+      // Type
+      const [tipo] = a['@type'].filter(function (elemento: any) {
+        return elemento !== "http://www.loc.gov/mads/rdf/v1#Authority"
+      })
+      
+
+      
       // authoritativeLabel
       let [authoritativeLabel] = a[
         "http://www.loc.gov/mads/rdf/v1#authoritativeLabel"
       ];
-      const authority: Authority = {authoritativeLabel: authoritativeLabel['@value']};
+      // console.log(authoritativeLabel);
+      
       
       // elementList
       let [elementList] = a['http://www.loc.gov/mads/rdf/v1#elementList']
@@ -33,8 +42,15 @@ export function GetDataLoc(setHit: Function, uri: string) {
         }
         return obj
     })
-    authority['elementList'] = obj
+    const authority: Authority = {
+      type: tipo.split("#")[1],
+      authoritativeLabel: authoritativeLabel['@value'],
+      elementList: obj
+    };
+    // authority['elementList'] = obj
+    setHit(authority)
     console.log(authority);
+    
     
 
 

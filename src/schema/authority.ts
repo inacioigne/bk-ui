@@ -8,7 +8,7 @@ type element = {
 }
 
 export interface Authority {
-    // type: string;
+    type: string;
     // identifiersLocal: string | null;
     // adminMetadata: adminMetadata;
     authoritativeLabel: string;

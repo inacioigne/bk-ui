@@ -60,8 +60,24 @@ function ParserData(response: any, uri: string) {
       let types = obj["@type"]
       let [type] = types.filter((e: string) => {return e !== "http://www.loc.gov/mads/rdf/v1#Variant"})
       let [elementList] = obj[`${mads}elementList`]
-      let objV = {type: type}
-      console.log(elementList);
+
+      let objE = elementList['@list'].map((e:any) => {
+        let id = e['@id']
+        let [obj] = data.filter(function (e: any) {
+          return e["@id"] === id;
+        });
+        let [type] = obj['@type']
+        let [elementValue] = obj['http://www.loc.gov/mads/rdf/v1#elementValue']
+
+        let element = {type: type.split("#")[1], elementValue: {value: elementValue['@value']}}
+        return element
+       
+
+      })
+      console.log(obj);
+      
+      
+      
       // let [label] = obj[`${mads}authoritativeLabel`];
       // let uri = { label: label["@value"], base: "loc", uri: obj["@id"] };
       // return uri;
@@ -69,6 +85,8 @@ function ParserData(response: any, uri: string) {
     //   type: string;
     // elementList: element[];
     // variantLabel
+
+   
     });
     
 

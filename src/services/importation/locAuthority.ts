@@ -28,6 +28,7 @@ function ParserData(response: any, uri: string) {
     const obj = { type: type, elementValue: { value: value["@value"] } };
     return obj;
   });
+
   const authority: schemaAuthority = {
     type: type.split("#")[1],
     authoritativeLabel: authoritativeLabel["@value"],
@@ -48,7 +49,32 @@ function ParserData(response: any, uri: string) {
     };
     authority["fullerName"] = obj;
   }
+  
+  if (a.hasOwnProperty(`${mads}hasVariant`)) {
+    let hv = a[`${mads}hasVariant`];
+    let fieldOfActivity = hv.map((e: any) => {
+      let id = e["@id"];
+      let [obj] = data.filter(function (e: any) {
+        return e["@id"] === id;
+      });
+      let types = obj["@type"]
+      let [type] = types.filter((e: string) => {return e !== "http://www.loc.gov/mads/rdf/v1#Variant"})
+      let [elementList] = obj[`${mads}elementList`]
+      let objV = {type: type}
+      console.log(elementList);
+      // let [label] = obj[`${mads}authoritativeLabel`];
+      // let uri = { label: label["@value"], base: "loc", uri: obj["@id"] };
+      // return uri;
 
+    //   type: string;
+    // elementList: element[];
+    // variantLabel
+    });
+    
+
+
+
+  }
   // identifiesRWO
   if (a.hasOwnProperty(`${mads}identifiesRWO`)) {
     let identifiesRWO = a[`${mads}identifiesRWO`];
@@ -69,8 +95,9 @@ function ParserData(response: any, uri: string) {
           let [birthPlace] = data.filter(function (elemento: any) {
             return elemento["@id"] === bp["@id"];
           });
-          let [label] =
-            birthPlace["http://www.w3.org/2000/01/rdf-schema#label"];
+          let [label] = birthPlace[
+            "http://www.w3.org/2000/01/rdf-schema#label"
+          ];
           authority["birthPlace"] = label["@value"];
         }
 
@@ -114,8 +141,9 @@ function ParserData(response: any, uri: string) {
               objOrg["uri"] = uri;
               objOrg["label"] = label["@value"];
             } else {
-              let [label] =
-                organization["http://www.w3.org/2000/01/rdf-schema#label"];
+              let [label] = organization[
+                "http://www.w3.org/2000/01/rdf-schema#label"
+              ];
               objOrg["label"] = label["@value"];
             }
 
@@ -129,24 +157,49 @@ function ParserData(response: any, uri: string) {
               objA["affiliationStart"] = start["@value"];
             }
             // affiliationEnd
-            if (
-              metadado.hasOwnProperty(`${mads}affiliationEnd`
-               
-              )
-            ) {
-              let [end] =
-                metadado[`${mads}affiliationEnd`];
+            if (metadado.hasOwnProperty(`${mads}affiliationEnd`)) {
+              let [end] = metadado[`${mads}affiliationEnd`];
               objA["affiliationEnd"] = end["@value"];
             }
             return objA;
           });
-          
-        authority["hasAffiliation"] = affiliations;
+
+          authority["hasAffiliation"] = affiliations;
         }
+
+        // Field of Activity
+        if (metadado.hasOwnProperty(`${mads}fieldOfActivity`)) {
+          let foa = metadado[`${mads}fieldOfActivity`];
+          let fieldOfActivity = foa.map((e: any) => {
+            let id = e["@id"];
+            let [obj] = data.filter(function (e: any) {
+              return e["@id"] === id;
+            });
+            let [label] = obj[`${mads}authoritativeLabel`];
+            let uri = { label: label["@value"], base: "loc", uri: obj["@id"] };
+            return uri;
+          });
+          authority["fieldOfActivity"] = fieldOfActivity;
+        }
+
+        // occupation
+        if (metadado.hasOwnProperty(`${mads}occupation`)) {
+          let occ = metadado[`${mads}occupation`];
+          let occupation = occ.map((e: any) => {
+            let id = e["@id"];
+            let [obj] = data.filter(function (e: any) {
+              return e["@id"] === id;
+            });
+            let [label] = obj[`${mads}authoritativeLabel`];
+            let uri = { label: label["@value"], base: "loc", uri: obj["@id"] };
+            return uri;
+          });
+          authority["occupation"] = occupation;
+         }
       }
     });
   }
-  console.log(authority)
+  
 
   return authority;
 }

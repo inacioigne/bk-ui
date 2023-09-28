@@ -7,7 +7,7 @@ type element = {
     elementValue: label
 }
 
-type Uri = {
+export type schemaUri = {
     label: string
     base?: string
     uri?: string
@@ -15,9 +15,15 @@ type Uri = {
 
 
 export type schemaAffiliation = {
-    organization: Uri
+    organization: schemaUri
     affiliationStart?: string
     affiliationEnd?: string
+}
+
+export type variant = {
+    type: string;
+    elementList: element[];
+    variantLabel: string;
 }
     
 export interface schemaAuthority {
@@ -27,13 +33,15 @@ export interface schemaAuthority {
     authoritativeLabel: string;
     elementList: element[];
     fullerName?: element;
+    hasVariant?: variant[];
     identifiesRWO?: string[]
     birthPlace?: string;
     birthDate?: string;
     deathPlace?: string;
     deathDate?: string; 
-    hasAffiliation?: schemaAffiliation[]
-    fieldOfActivity?: Uri[]
+    hasAffiliation?: schemaAffiliation[];
+    fieldOfActivity?: schemaUri[];
+    occupation?: schemaUri[];
     // birthDayDate?: string;
     // birthMonthDate?: string;
     // birthYearDate?: string;
@@ -44,7 +52,7 @@ export interface schemaAuthority {
     // deathMonthDate?: string;
     // deathYearDate?: string;
     //    
-    // hasVariant?: variant[];
+    // 
     // // fieldOfActivity?: uri[]
     // // 
     // hasExactExternalAuthority?: uri[]

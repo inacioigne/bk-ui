@@ -1,20 +1,37 @@
-"use client";
+// "use client";
 // MUI Components
 import { Typography, Box } from "@mui/material";
-// import TreeView from "@mui/lab/TreeView";
-// import TreeItem from "@mui/lab/TreeItem";
 import { TreeView } from '@mui/x-tree-view/TreeView';
-import { TreeItem} from '@mui/x-tree-view/TreeItem';
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+// import { TreeItem} from '@mui/x-tree-view/TreeItem';
+import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
+import { TreeItem, TreeItemProps, treeItemClasses } from '@mui/x-tree-view/TreeItem';
+// import { SvgIconProps } from '@mui/material/SvgIcon';
+// import { styled, useTheme } from '@mui/material/styles';
+// // forwardRef
+// import { forwardRef } from 'react';
 
-export default function FieldOfActivity({ fieldOfActivity }) {
+import { BsLink45Deg } from "react-icons/bs";
+
+import { schemaUri } from "@/schema/authority";
+
+import StyledTreeItem from "@/components/baseMui/styledTreeItem"
+
+// Bibliokeia Services
+import { LocAuthority } from "@/services/importation/locAuthority"
+
+
+type Props = {
+  fieldOfActivity: schemaUri[]
+  setHit: Function
+};
+
+export default function FieldOfActivity({ fieldOfActivity, setHit }: Props) {
   return (
     <Box sx={{ pl: "10px" }}>
       <TreeView
-        aria-label="file system navigator"
-        defaultCollapseIcon={<ExpandMoreIcon />}
-        defaultExpandIcon={<ChevronRightIcon />}
+        aria-label="FieldOfActivity"
+        defaultCollapseIcon={<AiOutlineArrowDown />}
+            defaultExpandIcon={<AiOutlineArrowUp />}
         sx={{
           flexGrow: 1,
           maxHeight: 300,
@@ -29,8 +46,21 @@ export default function FieldOfActivity({ fieldOfActivity }) {
             </Typography>
           }
         >
-          {fieldOfActivity.map((element, index) => (
-            <TreeItem key={index} nodeId={"2"} label={element.label} />
+          {fieldOfActivity.map((e, index) => (
+            <div key={index} onClick={() => {
+              LocAuthority(setHit, e.uri)
+              console.log(e)}}>
+            <StyledTreeItem
+              nodeId={`${index + 5}`}
+              labelText={e.label}
+              labelIcon={BsLink45Deg}
+              color="#1a73e8"
+              bgColor="#e8f0fe"
+              colorForDarkMode="#B8E7FB"
+              bgColorForDarkMode="#071318"
+            />
+
+          </div>
           ))}
         </TreeItem>
       </TreeView>

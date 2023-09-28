@@ -117,47 +117,47 @@ function StyledTreeItemChild(props) {
         <Box
           sx={{
             display: "flex",
-            // alignItems: "center",
             flexDirection: "column",
             p: 0.5,
             pr: 0,
           }}
         >
-          <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+          <Typography variant="subtitle2" color="text.primary" //sx={{ fontWeight: "bold" }}
+          >
             {labelText}
           </Typography>
           <Box sx={{ display: "flex" }}>
-          {affiliationStart && 
-          <Box sx={{ display: "flex", p: "5px" }}>
-            <Typography variant="caption" color="text.secondary" gutterBottom>
-              Início:
-            </Typography>
-            <Button
-              size="small"
-              variant="outlined"
-              startIcon={<FcCalendar />}
-              sx={{ ml: "5px", textTransform: "none", cursor: "auto" }}
-            >
-              {affiliationStart}
-           
-            </Button>
-          </Box>}
-          {affiliationEnd &&
-          <div>
-          <Divider orientation="vertical" flexItem />
-          <Box sx={{ display: "flex", p: "5px" }}>
-            <Typography variant="caption" color="text.secondary" gutterBottom>
-              Fim:
-            </Typography>
-            <Button
-              size="small"
-              variant="outlined"
-              startIcon={<FcCalendar />}
-              sx={{ ml: "5px", textTransform: "none", cursor: "auto" }}
-            >
-             {affiliationEnd}
-            </Button>
-          </Box></div>}
+            {affiliationStart &&
+              <Box sx={{ display: "flex", p: "5px" }}>
+                <Typography variant="caption" color="text.secondary" gutterBottom>
+                  Início:
+                </Typography>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  startIcon={<FcCalendar />}
+                  sx={{ ml: "5px", textTransform: "none", cursor: "auto" }}
+                >
+                  {affiliationStart}
+
+                </Button>
+              </Box>}
+            {affiliationEnd &&
+              <div>
+                <Divider orientation="vertical" flexItem />
+                <Box sx={{ display: "flex", p: "5px" }}>
+                  <Typography variant="caption" color="text.secondary" gutterBottom>
+                    Fim:
+                  </Typography>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    startIcon={<FcCalendar />}
+                    sx={{ ml: "5px", textTransform: "none", cursor: "auto" }}
+                  >
+                    {affiliationEnd}
+                  </Button>
+                </Box></div>}
           </Box>
           <Divider />
         </Box>
@@ -192,11 +192,13 @@ export default function HasAffiliation({ hasAffiliation }: Props) {
         overflowY: "auto",
       }}
     >
-      <TreeItem nodeId="1" label="Afiliação">
+      <TreeItem nodeId="1" label={<Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+        Afiliação:
+      </Typography>}>
         {hasAffiliation.map((affiliation, index) => (
           <StyledTreeItemChild
-          key={index}
-            nodeId="5"
+            key={index}
+            nodeId={`${index + 5}`}
             labelText={affiliation.organization.label}
             affiliationStart={affiliation?.affiliationStart}
             affiliationEnd={affiliation?.affiliationEnd}

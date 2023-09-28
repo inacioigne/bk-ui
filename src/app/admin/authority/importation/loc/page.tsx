@@ -35,15 +35,15 @@ const previousPaths = [
   },
 ];
 
-export default function LCSH() {
+export default function LOC() {
   const [hit, setHit] = useState(null)
   return (
     <Container maxWidth="xl">
       <Box my={"1rem"}>
-        <BreadcrumbsBK previousPaths={previousPaths} currentPath="LCSH" />
+        <BreadcrumbsBK previousPaths={previousPaths} currentPath="LOC" />
       </Box>
       <Typography variant="h4" gutterBottom>
-        Importar Assuntos - LCSH
+        Importar Autoridades - Library of Congress
       </Typography>
       <Divider />
       <Grid container spacing={2}>
@@ -51,7 +51,7 @@ export default function LCSH() {
           <FormLCSH setHit={setHit} />
         </Grid>
         <Grid item xs={7} sx={{ mt: "15px" }}>
-          {hit && <CardLoc hit={hit} /> }
+          {hit && <CardLoc hit={hit} setHit={setHit} /> }
         
         </Grid>
       </Grid>

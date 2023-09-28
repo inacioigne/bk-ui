@@ -27,7 +27,9 @@ import { CreateAuthority } from "@/services/thesarus/createAuthority"
 
 // BiblioKeia Components
 import IdentifiesRWO from "@/components/madsrdf/identifiesRWO"
+import FieldOfActivity from "@/components/madsrdf/fieldOfActivity"
 import HasAffiliation from "src/components/madsrdf/hasAffiliation";
+import Occupation from "src/components/madsrdf/occupation";
 import BtnIcon from "src/components/buttons/btnIcon";
 
 // React Icons
@@ -38,11 +40,14 @@ import { FcCalendar } from "react-icons/fc";
 import { useRouter } from 'next/navigation'
 
 
+
+
 interface Props {
   hit: schemaAuthority;
+  setHit: Function
 }
 
-export default function CardLoc({ hit }: Props) {
+export default function CardLoc({ hit, setHit }: Props) {
 
   const router = useRouter();
   const { setProgress } = useProgress();
@@ -99,7 +104,7 @@ export default function CardLoc({ hit }: Props) {
           {(hit?.birthPlace || hit?.birthDate) && (
             <Grid item xs={6}>
               <Box sx={{ pl: "10px" }}>
-              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
                   Nascimento:
                 </Typography>
                 <Divider />
@@ -111,18 +116,19 @@ export default function CardLoc({ hit }: Props) {
                     p: "5px",
                   }}
                 >
-                  { hit?.birthPlace && (<BtnIcon icon={<FaTreeCity />} label={hit?.birthPlace} />)}
-                  { hit?.birthDate && (<BtnIcon icon={<FcCalendar />} label={hit?.birthDate} />)}
+                  {hit?.birthPlace && (<BtnIcon icon={<FaTreeCity />} label={hit?.birthPlace} />)}
+                  {hit?.birthDate && (<BtnIcon icon={<FcCalendar />} label={hit?.birthDate} />)}
                 </Box>
               </Box>
             </Grid>
           )}
+
           {/* Falecimento */}
           {(hit?.deathPlace || hit?.deathDate) && (
             <Grid item xs={6}>
               <Box sx={{ pl: "10px" }}>
-              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              Falecimento:
+                <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+                  Falecimento:
                 </Typography>
                 <Divider />
                 <Box
@@ -133,15 +139,15 @@ export default function CardLoc({ hit }: Props) {
                     p: "5px",
                   }}
                 >
-                  { hit?.deathPlace && (<BtnIcon icon={<FaTreeCity />} label={hit.deathPlace} />)}
-                  { hit?.birthDate && (<BtnIcon icon={<FcCalendar />} label={hit?.birthDate} />)}
+                  {hit?.deathPlace && (<BtnIcon icon={<FaTreeCity />} label={hit.deathPlace} />)}
+                  {hit?.birthDate && (<BtnIcon icon={<FcCalendar />} label={hit?.birthDate} />)}
                 </Box>
               </Box>
             </Grid>
           )}
 
-           {/* fullerName */}
-           {hit?.fullerName && (
+          {/* fullerName */}
+          {hit?.fullerName && (
             <Grid item xs={6}>
               <Box sx={{ pl: "10px" }}>
                 <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
@@ -153,6 +159,10 @@ export default function CardLoc({ hit }: Props) {
               </Box>
             </Grid>
           )}
+
+          {/* hasVariant */}
+          
+
 
           {/* identifiesRWO */}
           {
@@ -166,11 +176,24 @@ export default function CardLoc({ hit }: Props) {
           {hit?.hasAffiliation && (
             <Grid item xs={6}>
               <Box sx={{ pl: "10px" }}>
-              <HasAffiliation hasAffiliation={hit.hasAffiliation} />
-              
+                <HasAffiliation hasAffiliation={hit.hasAffiliation} />
               </Box>
             </Grid>
           )}
+
+          {/* fieldOfActivity */}
+          {hit?.fieldOfActivity && (
+            <Grid item xs={6}>
+              <FieldOfActivity fieldOfActivity={hit.fieldOfActivity} setHit={setHit} />
+            </Grid>
+          )}
+          {/* Occupation */}
+          {hit?.occupation && (
+            <Grid item xs={6}>
+              <Occupation occupation={hit.occupation} setHit={setHit} />
+            </Grid>
+          )}
+
 
         </Grid>
       </CardContent>

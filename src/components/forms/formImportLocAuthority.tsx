@@ -25,10 +25,10 @@ import { useState, FormEvent, ChangeEvent, ReactNode } from "react";
 
 // BiblioKeia Services
 import { SearchLCSH } from "@/services/searchLCSH";
-import { GetDataLoc } from "@/services/getDataLoc";
+// import { GetDataLoc } from "@/services/getDataLoc";
 import { LocAuthority } from "@/services/importation/locAuthority"
 
-import { bkapi } from "src/services/api";
+// import { bkapi } from "src/services/api";
 
 // react-icons
 import { FcHome, FcSearch } from "react-icons/fc";
@@ -137,7 +137,6 @@ export default function FormLCSH( props: Props) {
                     <ListItem disablePadding key={index}>
                       <ListItemButton
                       onClick={(e) => {
-                        // GetDataLoc(setHit, hit.uri)
                         LocAuthority(setHit, hit.uri)
 
                       }}

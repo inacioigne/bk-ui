@@ -9,7 +9,7 @@ import {
 
 // BiblioKeia Components
 import BreadcrumbsBK from "src/components/nav/breadcrumbs";
-import FormLCSH from "@/components/forms/formLCSH"
+import FormLCSH from "@/components/forms/formImportLocAuthority"
 import CardLoc from "@/components/cards/cardLoc"
 
 // react-icons

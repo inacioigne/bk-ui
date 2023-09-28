@@ -1,4 +1,3 @@
-// import { loc } from "@/services/loc";
 import axios from "axios";
 
 import { schemaAuthority, schemaAffiliation } from "@/schema/authority";
@@ -7,41 +6,37 @@ const mads = "http://www.loc.gov/mads/rdf/v1#";
 
 function ParserData(response: any, uri: string) {
   const data = response.data;
-
   const [a] = data.filter(function (elemento: any) {
     return elemento["@id"] === uri;
   });
   // Type
-  const [tipo] = a["@type"].filter(function (elemento: any) {
+  const [type] = a["@type"].filter(function (elemento: any) {
     return elemento !== `${mads}Authority`;
   });
 
   // authoritativeLabel
-  let [authoritativeLabel] = a[
-    "http://www.loc.gov/mads/rdf/v1#authoritativeLabel"
-  ];
+  let [authoritativeLabel] = a[`${mads}authoritativeLabel`];
 
   // elementList
-  let [elementList] = a["http://www.loc.gov/mads/rdf/v1#elementList"];
-  const obj = elementList["@list"].map((e: any) => {
+  let [elementList] = a[`${mads}elementList`];
+  let obj = elementList["@list"].map((e: any) => {
     let [metadado] = data.filter(function (elemento: any) {
       return elemento["@id"] === e["@id"];
     });
     const [type] = metadado["@type"];
-    const [value] = metadado["http://www.loc.gov/mads/rdf/v1#elementValue"];
+    const [value] = metadado[`${mads}elementValue`];
     const obj = { type: type, elementValue: { value: value["@value"] } };
     return obj;
   });
   const authority: schemaAuthority = {
-    type: tipo.split("#")[1],
+    type: type.split("#")[1],
     authoritativeLabel: authoritativeLabel["@value"],
     elementList: obj,
   };
 
   // fullerName
-  const fullerName = a["http://www.loc.gov/mads/rdf/v1#fullerName"];
-  if (typeof fullerName !== "undefined") {
-    let [name] = fullerName;
+  if (a.hasOwnProperty(`${mads}fullerName`)) {
+    let [name] = a[`${mads}fullerName`];
     let [metadado] = data.filter(function (elemento: any) {
       return elemento["@id"] === name["@id"];
     });
@@ -53,14 +48,16 @@ function ParserData(response: any, uri: string) {
     };
     authority["fullerName"] = obj;
   }
+
   // identifiesRWO
-  const identifiesRWO = a["http://www.loc.gov/mads/rdf/v1#identifiesRWO"];
-  if (typeof identifiesRWO !== "undefined") {
+  if (a.hasOwnProperty(`${mads}identifiesRWO`)) {
+    let identifiesRWO = a[`${mads}identifiesRWO`];
+
     let identifies = identifiesRWO.map((rwo: any) => {
       return rwo["@id"];
     });
+
     identifies.forEach((identifier: string) => {
-      // RWO
       if (identifier.split("/")[3] === "rwo") {
         let [metadado] = data.filter(function (e: any) {
           return e["@id"] === identifier;
@@ -72,9 +69,8 @@ function ParserData(response: any, uri: string) {
           let [birthPlace] = data.filter(function (elemento: any) {
             return elemento["@id"] === bp["@id"];
           });
-          let [label] = birthPlace[
-            "http://www.w3.org/2000/01/rdf-schema#label"
-          ];
+          let [label] =
+            birthPlace["http://www.w3.org/2000/01/rdf-schema#label"];
           authority["birthPlace"] = label["@value"];
         }
 
@@ -98,94 +94,72 @@ function ParserData(response: any, uri: string) {
         // hasAffiliation
         if (metadado.hasOwnProperty(`${mads}hasAffiliation`)) {
           let hasAffiliation = metadado[`${mads}hasAffiliation`];
+
           let affiliations = hasAffiliation.map((affiliation: any) => {
             let id = affiliation["@id"];
             let [metadado] = data.filter(function (elemento: any) {
               return elemento["@id"] === id;
             });
-            let [org] = metadado["http://www.loc.gov/mads/rdf/v1#organization"];
+
+            let [org] = metadado[`${mads}organization`];
             let orgId = org["@id"];
             let [organization] = data.filter(function (elemento: any) {
               return elemento["@id"] === orgId;
             });
-            let [label] = organization[
-              "http://www.w3.org/2000/01/rdf-schema#label"
-            ];
+            let uri = organization["@id"];
+            const objOrg: any = { base: "loc" };
+
+            if (uri.includes("http://")) {
+              let [label] = organization[`${mads}authoritativeLabel`];
+              objOrg["uri"] = uri;
+              objOrg["label"] = label["@value"];
+            } else {
+              let [label] =
+                organization["http://www.w3.org/2000/01/rdf-schema#label"];
+              objOrg["label"] = label["@value"];
+            }
+
             let objA: schemaAffiliation = {
-              organization: {
-                label: label["@value"].replace("(naf) ", ""),
-                base: "loc",
-              },
+              organization: objOrg,
             };
 
             // affiliationStart
-            if (
-              metadado.hasOwnProperty(
-                "http://www.loc.gov/mads/rdf/v1#affiliationStart"
-              )
-            ) {
-              let [start] = metadado[
-                "http://www.loc.gov/mads/rdf/v1#affiliationStart"
-              ];
+            if (metadado.hasOwnProperty(`${mads}affiliationStart`)) {
+              let [start] = metadado[`${mads}affiliationStart`];
               objA["affiliationStart"] = start["@value"];
             }
             // affiliationEnd
             if (
-              metadado.hasOwnProperty(
-                "http://www.loc.gov/mads/rdf/v1#affiliationEnd"
+              metadado.hasOwnProperty(`${mads}affiliationEnd`
+               
               )
             ) {
-              let [end] = metadado[
-                "http://www.loc.gov/mads/rdf/v1#affiliationEnd"
-              ];
+              let [end] =
+                metadado[`${mads}affiliationEnd`];
               objA["affiliationEnd"] = end["@value"];
             }
             return objA;
           });
-          authority["hasAffiliation"] = affiliations;
-        }
-        
-        // fieldOfActivity
-        if (metadado.hasOwnProperty(`${mads}fieldOfActivity`)) {
-          let fa = metadado[`${mads}fieldOfActivity`];
-          let fieldOfActivity = fa.map((e: any) => {
-            let id = e["@id"];
-            let [metadado] = data.filter(function (e: any) {
-              return e["@id"] === id;
-            });
-            let [label] = metadado[
-              "http://www.w3.org/2000/01/rdf-schema#label"
-            ];
-            let obj = {
-              label: label["@value"],
-              base: "loc",
-            };
-            return obj;
-          });
-          authority["fieldOfActivity"] = fieldOfActivity;
-          console.log(authority);
+          
+        authority["hasAffiliation"] = affiliations;
         }
       }
     });
-
-    authority["identifiesRWO"] = identifies;
   }
+  console.log(authority)
 
   return authority;
 }
+export function LocAuthority(setHit: Function, uri: string) {
+  const url = `${uri}.json`;
 
-export function GetDataLoc(setHit: Function, uri: string) {
-  const url = `${uri}.madsrdf_raw.jsonld`;
-  //   console.log(url)
   axios
-    .get(`${uri}.madsrdf_raw.jsonld`)
+    .get(url)
     .then(function (response) {
       const authority = ParserData(response, uri);
-
-      setHit(authority); 
+      setHit(authority);
     })
     .catch(function (error) {
-      // manipula erros da requisição
       console.error(error);
     })
     .finally(function () {

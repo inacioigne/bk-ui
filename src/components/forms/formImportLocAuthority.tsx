@@ -26,6 +26,7 @@ import { useState, FormEvent, ChangeEvent, ReactNode } from "react";
 // BiblioKeia Services
 import { SearchLCSH } from "@/services/searchLCSH";
 import { GetDataLoc } from "@/services/getDataLoc";
+import { LocAuthority } from "@/services/importation/locAuthority"
 
 import { bkapi } from "src/services/api";
 
@@ -136,12 +137,13 @@ export default function FormLCSH( props: Props) {
                     <ListItem disablePadding key={index}>
                       <ListItemButton
                       onClick={(e) => {
-                        GetDataLoc(setHit, hit.uri)
-                        // console.log(hit.uri);
+                        // GetDataLoc(setHit, hit.uri)
+                        LocAuthority(setHit, hit.uri)
+
                       }}
                       >
                         <ListItemIcon color="primary">
-                        {iconType[hit.uri.split('/')[4]]} 
+                        {iconType[`${hit.uri.split('/')[4]}`]} 
                           {/* {hit.uri.split('/')[4] === ''}
                           <BsPersonCircle /> */}
                         </ListItemIcon>

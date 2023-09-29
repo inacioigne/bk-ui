@@ -25,11 +25,17 @@ export type schemaVariant = {
     elementList: element[];
     variantLabel: string;
 }
+
+type adminMetadata = {
+    creationDate?: Date|string;
+    changeDate?: Date|string;
+    generationProcess: string
+}
     
-export interface schemaAuthority {
+export interface schemaMads {
     type: string;
-    // identifiersLocal: string | null;
-    // adminMetadata: adminMetadata;
+    identifiersLccn?: string;
+    adminMetadata: adminMetadata;
     authoritativeLabel: string;
     elementList: element[];
     fullerName?: element;
@@ -42,6 +48,8 @@ export interface schemaAuthority {
     hasAffiliation?: schemaAffiliation[];
     fieldOfActivity?: schemaUri[];
     occupation?: schemaUri[];
+    hasCloseExternalAuthority?: schemaUri[]
+    hasExactExternalAuthority?: schemaUri[]
     // birthDayDate?: string;
     // birthMonthDate?: string;
     // birthYearDate?: string;
@@ -55,7 +63,7 @@ export interface schemaAuthority {
     // 
     // // fieldOfActivity?: uri[]
     // // 
-    // hasExactExternalAuthority?: uri[]
+    // 
     // isMemberOfMADSCollection: string;
     // imagem?: string;
   }

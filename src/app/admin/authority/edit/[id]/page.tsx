@@ -12,24 +12,23 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
 import { IoIosSave } from "react-icons/io";
 
 // Schema
-import {
-    editAuthoritySchema,
-    createAuthoritySchema,
-  } from "@/schema/authority/personalName";
+// import {
+//     editAuthoritySchema,
+//     createAuthoritySchema,
+//   } from "@/schema/authority/personalName";
 
 async function getData(id: string) {
   const url = `http://localhost:8983/solr/authority/select?fl=*,[child]&q=id:${id}`;
   const res = await fetch(url, { cache: 'no-store' });
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
 
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
+
     throw new Error("Failed to fetch data");
   }
 
   return res.json();
 }
+
 const previousPaths = [
   {
     link: "/admin",
@@ -45,10 +44,7 @@ const previousPaths = [
 
 export default async function Page({ params }: { params: { id: string } }) {
   const data = await getData(params.id);
-
   const [doc] = data.response.docs;
-  // console.log(doc)
-
 
   return (
     <Container maxWidth="xl">

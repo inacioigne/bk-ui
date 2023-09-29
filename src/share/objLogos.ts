@@ -8,7 +8,7 @@ import LogoViaf from "src/components/logos/viaf";
 
 
 
-export const logos = {
+export const logos: any = {
     "www.wikidata.org": LogoWikidata,
     "id.worldcat.org": LogoWordcat,
     "vocab.getty.edu": LogoGetty,

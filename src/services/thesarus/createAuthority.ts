@@ -1,5 +1,5 @@
 // Schema
-import { schemaAuthority } from "@/schema/authority";
+import { schemaMads } from "@/schema/authority";
 import { MetadataRoute } from "next/types";
 import  AppRouterInstance from 'next'
 import { NextRouter } from 'next/router';
@@ -9,7 +9,7 @@ import { useRouter  } from 'next/navigation'
 import { bkapi } from "src/services/api";
 
 export function CreateAuthority(
-  authority: schemaAuthority,
+  authority: schemaMads,
   setProgress: Function,
   setTypeAlert: Function,
   setMessage: Function,
@@ -17,6 +17,8 @@ export function CreateAuthority(
   router: any
 ) {
     setProgress(true);
+    // console.log(authority)
+
     bkapi
       .post('/thesarus/create', authority)
       .then((response) => {

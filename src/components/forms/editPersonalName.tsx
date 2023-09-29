@@ -78,6 +78,7 @@ const headers = {
 
 export default function EditPersonaName(props: Props) {
   const { doc } = props;
+  // console.log(doc)
   const { id }  = props;
   const router = useRouter()
   const { progress, setProgress } = useProgress();

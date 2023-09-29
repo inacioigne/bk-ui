@@ -1,18 +1,24 @@
 import axios from "axios";
 
-import { schemaAuthority, schemaAffiliation } from "@/schema/authority";
+import { schemaMads, schemaAffiliation } from "@/schema/authority";
 
 const mads = "http://www.loc.gov/mads/rdf/v1#";
 
-function ParserData(response: any, uri: string | undefined) {
+function ParserData(response: any, uri: string) {
   const data = response.data;
+
   const [a] = data.filter(function (elemento: any) {
     return elemento["@id"] === uri;
   });
+  
   // Type
   const [type] = a["@type"].filter(function (elemento: any) {
     return elemento !== `${mads}Authority`;
   });
+
+  // identifiersLccn
+  let uriArray = uri.split("/")
+  let identifiersLccn = uriArray[uriArray.length - 1]
 
   // authoritativeLabel
   let [authoritativeLabel] = a[`${mads}authoritativeLabel`];
@@ -25,16 +31,19 @@ function ParserData(response: any, uri: string | undefined) {
     });
     const [type] = metadado["@type"];
     const [value] = metadado[`${mads}elementValue`];
-    const obj = { type: type, elementValue: { value: value["@value"] } };
+    const obj = { type: type.split("#")[1], elementValue: { value: value["@value"] } };
     return obj;
   });
 
-  const authority: schemaAuthority = {
+  const authority: schemaMads = {
+    adminMetadata: {
+      generationProcess: "BiblioKeia",
+  },
     type: type.split("#")[1],
+    identifiersLccn: identifiersLccn,
     authoritativeLabel: authoritativeLabel["@value"],
     elementList: obj,
   };
-
   // fullerName
   if (a.hasOwnProperty(`${mads}fullerName`)) {
     let [name] = a[`${mads}fullerName`];
@@ -49,7 +58,7 @@ function ParserData(response: any, uri: string | undefined) {
     };
     authority["fullerName"] = obj;
   }
-
+  // hasVariant
   if (a.hasOwnProperty(`${mads}hasVariant`)) {
     let hv = a[`${mads}hasVariant`];
     let hasVariant = hv.map((e: any) => {
@@ -82,13 +91,30 @@ function ParserData(response: any, uri: string | undefined) {
         elementList: elementList,
         variantLabel: variantLabel["@value"],
       };
+      // console.log(hasVariant)
 
       return hasVariant;
     });
 
     authority["hasVariant"] = hasVariant;
   }
+  // hasCloseExternalAuthority
+  if (a.hasOwnProperty(`${mads}hasCloseExternalAuthority`)) {
+    let hca = a[`${mads}hasCloseExternalAuthority`];
+    let hasCloseExternalAuthority = hca.map((e: any) => {
+      let id = e["@id"]
+      let [metadado] = data.filter(function (e: any) {
+        return e["@id"] === id;
+      });
+      let [label] = metadado[`${mads}authoritativeLabel`]
+      let uri = metadado["@id"]
+      let base = uri.split("/")[2]
+      let obj = {label: label['@value'], base: base, uri: uri}
 
+      return obj
+    })
+    authority["hasCloseExternalAuthority"] = hasCloseExternalAuthority
+  }
   // identifiesRWO
   if (a.hasOwnProperty(`${mads}identifiesRWO`)) {
     let identifiesRWO = a[`${mads}identifiesRWO`];
@@ -96,6 +122,7 @@ function ParserData(response: any, uri: string | undefined) {
     let identifies = identifiesRWO.map((rwo: any) => {
       return rwo["@id"];
     });
+    authority["identifiesRWO"] = identifies;
 
     identifies.forEach((identifier: string) => {
       if (identifier.split("/")[3] === "rwo") {
@@ -223,7 +250,7 @@ function ParserData(response: any, uri: string | undefined) {
             }
           });
           authority["occupation"] = occupation;
-          // console.log(occupation);
+         
         }
       }
     });
@@ -231,7 +258,7 @@ function ParserData(response: any, uri: string | undefined) {
 
   return authority;
 }
-export function LocAuthority(setHit: Function, uri: string | undefined) {
+export function LocAuthority(setHit: Function, uri: string) {
   const url = `${uri}.json`;
 
   axios

@@ -17,7 +17,7 @@ export function AlertProvider({ children }: { children: ReactNode }) {
 
   const [openSnack, setOpenSnack] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [typeAlert, setTypeAlert] = useState<string>("success");
+  const [typeAlert, setTypeAlert] = useState<string>("error");
 
 
   const contextValue: ContextType = {

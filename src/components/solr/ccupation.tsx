@@ -1,3 +1,4 @@
+"use client"
 // MUI Components
 import { Typography, Box } from "@mui/material";
 import { TreeView } from "@mui/x-tree-view/TreeView";
@@ -12,14 +13,14 @@ import { schemaUri } from "@/schema/authority";
 import StyledTreeItem from "@/components/baseMui/styledTreeItem";
 
 // Bibliokeia Services
-import { LocAuthority } from "@/services/importation/locAuthority";
+// import { LocAuthority } from "@/services/importation/locAuthority";
 
 type Props = {
   occupation: schemaUri[];
-  setHit: Function;
+  // setHit: Function;
 };
 
-export default function Occupation({ occupation, setHit }: Props) {
+export default function Occupation({ occupation }: Props) {
   return (
       <TreeView
         aria-label="occupation"
@@ -42,9 +43,9 @@ export default function Occupation({ occupation, setHit }: Props) {
           {occupation.map((e, index) => (
             <div
               key={index}
-              onClick={() => {
-                e.uri && LocAuthority(setHit, e.uri);
-              }}
+              // onClick={() => {
+              //   e.uri && LocAuthority(setHit, e.uri);
+              // }}
             >
               <StyledTreeItem
                 nodeId={`${index + 5}`}

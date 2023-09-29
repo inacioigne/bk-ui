@@ -45,31 +45,7 @@ export default function Importation() {
       </Typography>
       <Divider />
       <Grid container spacing={5}>
-        {/* <Grid item xs={2} sx={{ mt: "10px" }}>
-          <Link href={"/admin/authority/importation/lcnaf"}>
-            <Card sx={{ width: 180, cursor: "pointer" }}>
-              <CardContent
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <Typography variant="body2" sx={{ textAlign: "center" }}>
-                  Library of Congress
-                </Typography>
-                <Avatar
-                  alt="lncaf"
-                  src="/logos/loc.png"
-                  sx={{ width: 56, height: 56 }}
-                />
-                <Typography variant="body2" sx={{ textAlign: "center" }}>
-                  LCNAF
-                </Typography>
-              </CardContent>
-            </Card>
-          </Link>
-        </Grid> */}
+       
         <Grid item xs={2} sx={{ mt: "10px" }}>
           <Link href={"/admin/authority/importation/loc"}>
             <Card sx={{ width: 180, cursor: "pointer" }}>
@@ -80,16 +56,14 @@ export default function Importation() {
                   alignItems: "center",
                 }}
               >
-                <Typography variant="body2" sx={{ textAlign: "center" }}>
-                  Library of Congress
-                </Typography>
+                
                 <Avatar
                   alt="lncaf"
                   src="/logos/loc.png"
                   sx={{ width: 56, height: 56 }}
                 />
                 <Typography variant="body2" sx={{ textAlign: "center" }}>
-                  LCSH
+                  Library of Congress
                 </Typography>
               </CardContent>
             </Card>

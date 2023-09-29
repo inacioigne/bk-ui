@@ -19,7 +19,7 @@ type Props = {
 
 export default function HasVariant({ hasVariant }: Props) {
   return (
-    <Box sx={{ pl: "10px" }}>
+
       <TreeView
         aria-label="hasVariant"
         defaultCollapseIcon={<AiOutlineArrowDown />}
@@ -52,6 +52,6 @@ export default function HasVariant({ hasVariant }: Props) {
           ))}
         </TreeItem>
       </TreeView>
-    </Box>
+
   );
 }

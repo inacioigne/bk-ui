@@ -1,6 +1,6 @@
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 
@@ -18,17 +18,20 @@ type Props = {
 export default function IdentifiesRWO({ identifiesRWO }: Props) {
     return (
         <TreeView
-            aria-label="file system navigator"
+            aria-label="IdentifiesRWO"
             defaultCollapseIcon={<AiOutlineArrowDown />}
             defaultExpandIcon={<AiOutlineArrowUp />}
-            defaultExpanded={['1']}
             sx={{
                 flexGrow: 1, overflowY: 'auto'
             }}
         >
 
-            <TreeItem nodeId="1" label="Identificado por">
-                <Box sx={{ display: 'flex', //gap: '5px', 
+            <TreeItem nodeId="1" label={
+            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+              Identificado por:
+            </Typography>
+          }>
+                <Box sx={{ display: 'flex',
                 flexDirection: 'column'}}>
                     {
                         identifiesRWO.map((rwo, index) => (

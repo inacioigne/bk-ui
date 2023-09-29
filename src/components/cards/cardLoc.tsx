@@ -16,7 +16,7 @@ import {
 import { CiImport } from "react-icons/ci";
 import { red } from "@mui/material/colors";
 
-import { schemaAuthority } from "@/schema/authority";
+import { schemaMads } from "@/schema/authority";
 
 // BiblioKeia Hooks
 import { useProgress } from "src/providers/progress";
@@ -31,6 +31,7 @@ import FieldOfActivity from "@/components/madsrdf/fieldOfActivity"
 import HasAffiliation from "src/components/madsrdf/hasAffiliation";
 import HasVariant from "src/components/madsrdf/hasVariant";
 import Occupation from "src/components/madsrdf/occupation";
+import HasCloseExternalAuthority from "src/components/madsrdf/hasCloseExternalAuthority";
 import BtnIcon from "src/components/buttons/btnIcon";
 
 // React Icons
@@ -40,10 +41,15 @@ import { FcCalendar } from "react-icons/fc";
 // Nextjs
 import { useRouter } from 'next/navigation'
 
+// BiblioKeia Services
+import { bkapi } from "@/services/api";
+
 interface Props {
-  hit: schemaAuthority;
+  hit: schemaMads;
   setHit: Function
 }
+
+
 
 export default function CardLoc({ hit, setHit }: Props) {
 
@@ -54,6 +60,47 @@ export default function CardLoc({ hit, setHit }: Props) {
     setMessage,
     setTypeAlert,
   } = useAlert();
+
+  function LocExist(identifiersLccn: string) {
+    setProgress(true)
+
+    bkapi
+      .get(`/import/loc/exist/${identifiersLccn}`)
+      .then(function (response) {
+        if (response.status === 200) {
+          if (response.data) {
+            setTypeAlert("error");
+            setMessage("Registro já existe")
+            setOpenSnack(true);
+          } else {
+            CreateAuthority(
+                    hit,
+                    setProgress,
+                    setTypeAlert,
+                    setMessage,
+                    setOpenSnack,
+                    router
+                  )
+
+            // router.push(`/admin/authority/${id}`);
+
+          }
+          console.log(response);
+          // setTypeAlert("error");
+
+          
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      })
+      .finally(function () {
+        setProgress(false)
+        //   setOpenSnack(true)
+        //   setDoc(null)
+      });
+
+  }
 
   return (
     <Card variant="outlined">
@@ -77,14 +124,9 @@ export default function CardLoc({ hit, setHit }: Props) {
               <IconButton
                 aria-label="settings"
                 onClick={() => {
-                  CreateAuthority(
-                    hit,
-                    setProgress,
-                    setTypeAlert,
-                    setMessage,
-                    setOpenSnack,
-                    router
-                  )
+                  // console.log(hit.identifiersLccn)
+                  LocExist(hit.identifiersLccn)
+                  
                 }}
               >
                 <CiImport />
@@ -156,14 +198,12 @@ export default function CardLoc({ hit, setHit }: Props) {
           )}
 
           {/* hasVariant */}
-          { hit?.hasVariant && (
-             <Grid item xs={6}>
-             <HasVariant hasVariant={hit?.hasVariant} />
-           </Grid>
+          {hit?.hasVariant && (
+            <Grid item xs={6}>
+              <HasVariant hasVariant={hit?.hasVariant} />
+            </Grid>
 
           )}
-          
-
 
           {/* identifiesRWO */}
           {
@@ -181,7 +221,6 @@ export default function CardLoc({ hit, setHit }: Props) {
               </Box>
             </Grid>
           )}
-
           {/* fieldOfActivity */}
           {hit?.fieldOfActivity && (
             <Grid item xs={6}>
@@ -192,6 +231,12 @@ export default function CardLoc({ hit, setHit }: Props) {
           {hit?.occupation && (
             <Grid item xs={6}>
               <Occupation occupation={hit.occupation} setHit={setHit} />
+            </Grid>
+          )}
+          {/* HasCloseExternalAuthority */}
+          {hit?.hasCloseExternalAuthority && (
+            <Grid item xs={6}>
+              <HasCloseExternalAuthority hasCloseExternalAuthority={hit.hasCloseExternalAuthority} />
             </Grid>
           )}
 

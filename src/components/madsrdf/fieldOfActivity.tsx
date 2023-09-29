@@ -27,7 +27,6 @@ type Props = {
 
 export default function FieldOfActivity({ fieldOfActivity, setHit }: Props) {
   return (
-    <Box sx={{ pl: "10px" }}>
       <TreeView
         aria-label="FieldOfActivity"
         defaultCollapseIcon={<AiOutlineArrowDown />}
@@ -64,6 +63,6 @@ export default function FieldOfActivity({ fieldOfActivity, setHit }: Props) {
           ))}
         </TreeItem>
       </TreeView>
-    </Box>
+    // </Box>
   );
 }

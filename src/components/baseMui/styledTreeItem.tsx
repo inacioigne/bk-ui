@@ -1,18 +1,22 @@
 // "use client";
 // MUI Components
 import { Typography, Box } from "@mui/material";
-import { TreeItem, TreeItemProps, treeItemClasses } from '@mui/x-tree-view/TreeItem';
-import { SvgIconProps } from '@mui/material/SvgIcon';
-import { styled, useTheme } from '@mui/material/styles';
+import {
+  TreeItem,
+  TreeItemProps,
+  treeItemClasses,
+} from "@mui/x-tree-view/TreeItem";
+import { SvgIconProps } from "@mui/material/SvgIcon";
+import { styled, useTheme } from "@mui/material/styles";
 // forwardRef
-import { forwardRef } from 'react';
+import { forwardRef } from "react";
 
-// 
+//
 
-declare module 'react' {
+declare module "react" {
   interface CSSProperties {
-    '--tree-view-color'?: string;
-    '--tree-view-bg-color'?: string;
+    "--tree-view-color"?: string;
+    "--tree-view-bg-color"?: string;
   }
 }
 
@@ -29,24 +33,25 @@ type StyledTreeItemProps = TreeItemProps & {
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
   color: theme.palette.text.secondary,
   [`& .${treeItemClasses.content}`]: {
-    color: theme.palette.text.secondary,
+    // color: theme.palette.text.secondary,
+    // cursor: 'none',
     borderTopRightRadius: theme.spacing(2),
     borderBottomRightRadius: theme.spacing(2),
     paddingRight: theme.spacing(1),
     fontWeight: theme.typography.fontWeightMedium,
-    '&.Mui-expanded': {
+    "&.Mui-expanded": {
       fontWeight: theme.typography.fontWeightRegular,
     },
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.palette.action.hover,
     },
-    '&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused': {
+    "&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused": {
       backgroundColor: `var(--tree-view-bg-color, ${theme.palette.action.selected})`,
-      color: 'var(--tree-view-color)',
+      color: "var(--tree-view-color)",
     },
     [`& .${treeItemClasses.label}`]: {
-      fontWeight: 'inherit',
-      color: 'inherit',
+      fontWeight: "inherit",
+      color: "inherit",
     },
   },
   [`& .${treeItemClasses.group}`]: {
@@ -57,10 +62,9 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
   },
 })) as unknown as typeof TreeItem;
 
-
 const StyledTreeItem = forwardRef(function StyledTreeItem(
   props: StyledTreeItemProps,
-  ref: React.Ref<HTMLLIElement>,
+  ref: React.Ref<HTMLLIElement>
 ) {
   const theme = useTheme();
   const {
@@ -75,9 +79,10 @@ const StyledTreeItem = forwardRef(function StyledTreeItem(
   } = props;
 
   const styleProps = {
-    '--tree-view-color': theme.palette.mode !== 'dark' ? color : colorForDarkMode,
-    '--tree-view-bg-color':
-      theme.palette.mode !== 'dark' ? bgColor : bgColorForDarkMode,
+    "--tree-view-color":
+      theme.palette.mode !== "dark" ? color : colorForDarkMode,
+    "--tree-view-bg-color":
+      theme.palette.mode !== "dark" ? bgColor : bgColorForDarkMode,
   };
 
   return (
@@ -85,14 +90,18 @@ const StyledTreeItem = forwardRef(function StyledTreeItem(
       label={
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'center',
+            display: "flex",
+            alignItems: "center",
             p: 0.5,
             pr: 0,
           }}
         >
           <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
-          <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }}>
+          <Typography
+            variant="body2"
+            color={"text.primary"}
+            sx={{ fontWeight: "inherit", flexGrow: 1, }}
+          >
             {labelText}
           </Typography>
           <Typography variant="caption" color="inherit">
@@ -107,4 +116,4 @@ const StyledTreeItem = forwardRef(function StyledTreeItem(
   );
 });
 
-export default StyledTreeItem
+export default StyledTreeItem;

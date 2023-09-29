@@ -5,9 +5,6 @@ import { Typography, Box, Divider, Button } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { styled, useTheme } from "@mui/material/styles";
-// import TreeView from "@mui/lab/TreeView";
-// import TreeItem from "@mui/lab/TreeItem";
-// import { TreeItemProps, treeItemClasses } from "@mui/lab/TreeItem";
 import { TreeItem, TreeItemProps, treeItemClasses } from '@mui/x-tree-view/TreeItem';
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import LogoWikidata from "src/components/logos/wikidata";
@@ -79,7 +76,6 @@ function StyledTreeItem(props) {
           }}
         >
           <Box
-          // component={LabelIcon} color="inherit" sx={{ mr: 1 }}
           />
           <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
             {labelText}

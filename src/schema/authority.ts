@@ -20,7 +20,7 @@ export type schemaAffiliation = {
     affiliationEnd?: string
 }
 
-export type variant = {
+export type schemaVariant = {
     type: string;
     elementList: element[];
     variantLabel: string;
@@ -33,7 +33,7 @@ export interface schemaAuthority {
     authoritativeLabel: string;
     elementList: element[];
     fullerName?: element;
-    hasVariant?: variant[];
+    hasVariant?: schemaVariant[];
     identifiesRWO?: string[]
     birthPlace?: string;
     birthDate?: string;

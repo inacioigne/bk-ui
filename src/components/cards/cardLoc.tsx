@@ -29,6 +29,7 @@ import { CreateAuthority } from "@/services/thesarus/createAuthority"
 import IdentifiesRWO from "@/components/madsrdf/identifiesRWO"
 import FieldOfActivity from "@/components/madsrdf/fieldOfActivity"
 import HasAffiliation from "src/components/madsrdf/hasAffiliation";
+import HasVariant from "src/components/madsrdf/hasVariant";
 import Occupation from "src/components/madsrdf/occupation";
 import BtnIcon from "src/components/buttons/btnIcon";
 
@@ -38,9 +39,6 @@ import { FcCalendar } from "react-icons/fc";
 
 // Nextjs
 import { useRouter } from 'next/navigation'
-
-
-
 
 interface Props {
   hit: schemaAuthority;
@@ -56,8 +54,6 @@ export default function CardLoc({ hit, setHit }: Props) {
     setMessage,
     setTypeAlert,
   } = useAlert();
-
-
 
   return (
     <Card variant="outlined">
@@ -75,7 +71,6 @@ export default function CardLoc({ hit, setHit }: Props) {
               </Typography>
               <Chip label={hit.type} color="primary" size="small" />
             </>
-
           }
           action={
             <Tooltip title="Import registro">
@@ -161,6 +156,12 @@ export default function CardLoc({ hit, setHit }: Props) {
           )}
 
           {/* hasVariant */}
+          { hit?.hasVariant && (
+             <Grid item xs={6}>
+             <HasVariant hasVariant={hit?.hasVariant} />
+           </Grid>
+
+          )}
           
 
 

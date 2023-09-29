@@ -53,6 +53,7 @@ function ParserData(response: any, uri: string) {
     };
     authority["fullerName"] = obj;
   }
+  
   // identifiesRWO
   const identifiesRWO = a["http://www.loc.gov/mads/rdf/v1#identifiesRWO"];
   if (typeof identifiesRWO !== "undefined") {

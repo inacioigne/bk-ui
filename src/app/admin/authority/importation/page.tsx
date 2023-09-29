@@ -45,7 +45,7 @@ export default function Importation() {
       </Typography>
       <Divider />
       <Grid container spacing={5}>
-        <Grid item xs={2} sx={{ mt: "10px" }}>
+        {/* <Grid item xs={2} sx={{ mt: "10px" }}>
           <Link href={"/admin/authority/importation/lcnaf"}>
             <Card sx={{ width: 180, cursor: "pointer" }}>
               <CardContent
@@ -69,9 +69,9 @@ export default function Importation() {
               </CardContent>
             </Card>
           </Link>
-        </Grid>
+        </Grid> */}
         <Grid item xs={2} sx={{ mt: "10px" }}>
-          <Link href={"/admin/authority/importation/lcsh"}>
+          <Link href={"/admin/authority/importation/loc"}>
             <Card sx={{ width: 180, cursor: "pointer" }}>
               <CardContent
                 sx={{

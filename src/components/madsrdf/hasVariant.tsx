@@ -1,18 +1,29 @@
 // "use client";
 // MUI Components
 import { Typography, Box } from "@mui/material";
-import { TreeItem, TreeItemProps, treeItemClasses } from '@mui/x-tree-view/TreeItem';
-import { TreeView } from '@mui/x-tree-view/TreeView';
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import {
+  TreeItem,
+  TreeItemProps,
+  treeItemClasses,
+} from "@mui/x-tree-view/TreeItem";
+import { TreeView } from "@mui/x-tree-view/TreeView";
+import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 
-export default function HasVariant({ hasVariant }) {
+import { schemaVariant } from "@/schema/authority";
+
+import StyledTreeItem from "@/components/baseMui/styledTreeItem";
+
+type Props = {
+  hasVariant: schemaVariant[];
+};
+
+export default function HasVariant({ hasVariant }: Props) {
   return (
     <Box sx={{ pl: "10px" }}>
       <TreeView
-        aria-label="file system navigator"
-        defaultCollapseIcon={<ExpandMoreIcon />}
-        defaultExpandIcon={<ChevronRightIcon />}
+        aria-label="hasVariant"
+        defaultCollapseIcon={<AiOutlineArrowDown />}
+        defaultExpandIcon={<AiOutlineArrowUp />}
         sx={{
           flexGrow: 1,
           maxHeight: 300,
@@ -28,7 +39,16 @@ export default function HasVariant({ hasVariant }) {
           }
         >
           {hasVariant.map((variant, index) => (
-            <TreeItem key={index} nodeId={"2"} label={variant.variantLabel} />
+            <StyledTreeItem
+            key={index}
+              nodeId={`${index + 5}`}
+              labelText={variant.variantLabel}
+              // labelIcon={BsLink45Deg}
+              color={"#1a73e8"}
+              bgColor="#e8f0fe"
+              colorForDarkMode="#B8E7FB"
+              bgColorForDarkMode="#071318"
+            />
           ))}
         </TreeItem>
       </TreeView>

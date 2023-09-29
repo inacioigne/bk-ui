@@ -4,7 +4,7 @@ import { schemaAuthority, schemaAffiliation } from "@/schema/authority";
 
 const mads = "http://www.loc.gov/mads/rdf/v1#";
 
-function ParserData(response: any, uri: string) {
+function ParserData(response: any, uri: string | undefined) {
   const data = response.data;
   const [a] = data.filter(function (elemento: any) {
     return elemento["@id"] === uri;
@@ -49,50 +49,46 @@ function ParserData(response: any, uri: string) {
     };
     authority["fullerName"] = obj;
   }
-  
+
   if (a.hasOwnProperty(`${mads}hasVariant`)) {
     let hv = a[`${mads}hasVariant`];
-    let fieldOfActivity = hv.map((e: any) => {
+    let hasVariant = hv.map((e: any) => {
       let id = e["@id"];
       let [obj] = data.filter(function (e: any) {
         return e["@id"] === id;
       });
-      let types = obj["@type"]
-      let [type] = types.filter((e: string) => {return e !== "http://www.loc.gov/mads/rdf/v1#Variant"})
-      let [elementList] = obj[`${mads}elementList`]
+      let types = obj["@type"];
+      let [type] = types.filter((e: string) => {
+        return e !== `${mads}Variant`;
+      });
+      let [el] = obj[`${mads}elementList`];
 
-      let objE = elementList['@list'].map((e:any) => {
-        let id = e['@id']
+      let elementList = el["@list"].map((e: any) => {
+        let id = e["@id"];
         let [obj] = data.filter(function (e: any) {
           return e["@id"] === id;
         });
-        let [type] = obj['@type']
-        let [elementValue] = obj['http://www.loc.gov/mads/rdf/v1#elementValue']
+        let [type] = obj["@type"];
+        let [elementValue] = obj[`${mads}elementValue`];
+        let element = {
+          type: type.split("#")[1],
+          elementValue: { value: elementValue["@value"] },
+        };
+        return element;
+      });
+      let [variantLabel] = obj[`${mads}variantLabel`];
+      let hasVariant = {
+        type: type.split("#")[1],
+        elementList: elementList,
+        variantLabel: variantLabel["@value"],
+      };
 
-        let element = {type: type.split("#")[1], elementValue: {value: elementValue['@value']}}
-        return element
-       
-
-      })
-      console.log(obj);
-      
-      
-      
-      // let [label] = obj[`${mads}authoritativeLabel`];
-      // let uri = { label: label["@value"], base: "loc", uri: obj["@id"] };
-      // return uri;
-
-    //   type: string;
-    // elementList: element[];
-    // variantLabel
-
-   
+      return hasVariant;
     });
-    
 
-
-
+    authority["hasVariant"] = hasVariant;
   }
+
   // identifiesRWO
   if (a.hasOwnProperty(`${mads}identifiesRWO`)) {
     let identifiesRWO = a[`${mads}identifiesRWO`];
@@ -113,9 +109,8 @@ function ParserData(response: any, uri: string) {
           let [birthPlace] = data.filter(function (elemento: any) {
             return elemento["@id"] === bp["@id"];
           });
-          let [label] = birthPlace[
-            "http://www.w3.org/2000/01/rdf-schema#label"
-          ];
+          let [label] =
+            birthPlace["http://www.w3.org/2000/01/rdf-schema#label"];
           authority["birthPlace"] = label["@value"];
         }
 
@@ -159,9 +154,8 @@ function ParserData(response: any, uri: string) {
               objOrg["uri"] = uri;
               objOrg["label"] = label["@value"];
             } else {
-              let [label] = organization[
-                "http://www.w3.org/2000/01/rdf-schema#label"
-              ];
+              let [label] =
+                organization["http://www.w3.org/2000/01/rdf-schema#label"];
               objOrg["label"] = label["@value"];
             }
 
@@ -208,20 +202,36 @@ function ParserData(response: any, uri: string) {
             let [obj] = data.filter(function (e: any) {
               return e["@id"] === id;
             });
-            let [label] = obj[`${mads}authoritativeLabel`];
-            let uri = { label: label["@value"], base: "loc", uri: obj["@id"] };
-            return uri;
+            //
+            //
+
+            if (id.includes("http://")) {
+              let [label] = obj[`${mads}authoritativeLabel`];
+              let objOcc: any = {
+                label: label["@value"],
+                base: "loc",
+                uri: obj["@id"],
+              };
+              return objOcc;
+            } else {
+              let [label] = obj["http://www.w3.org/2000/01/rdf-schema#label"];
+              let objOcc: any = {
+                label: label["@value"],
+                base: "loc",
+              };
+              return objOcc;
+            }
           });
           authority["occupation"] = occupation;
-         }
+          // console.log(occupation);
+        }
       }
     });
   }
-  
 
   return authority;
 }
-export function LocAuthority(setHit: Function, uri: string) {
+export function LocAuthority(setHit: Function, uri: string | undefined) {
   const url = `${uri}.json`;
 
   axios

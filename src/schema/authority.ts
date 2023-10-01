@@ -15,7 +15,7 @@ export type schemaUri = {
 
 
 export type schemaAffiliation = {
-    organization: schemaUri
+    organization: schemaUri|string
     affiliationStart?: string
     affiliationEnd?: string
 }
@@ -42,25 +42,20 @@ export interface schemaMads {
     hasVariant?: schemaVariant[];
     identifiesRWO?: string[]
     birthPlace?: string;
+    birthDayDate?: string;
+    birthMonthDate?: string;
+    birthYearDate?: string;
     birthDate?: string;
     deathPlace?: string;
     deathDate?: string; 
+    deathDayDate?: string;
+    deathMonthDate?: string;
+    deathYearDate?: string;
     hasAffiliation?: schemaAffiliation[];
     fieldOfActivity?: schemaUri[];
     occupation?: schemaUri[];
     hasCloseExternalAuthority?: schemaUri[]
     hasExactExternalAuthority?: schemaUri[]
-    // birthDayDate?: string;
-    // birthMonthDate?: string;
-    // birthYearDate?: string;
-    // 
-    // 
-    // 
-    // deathDayDate?: string;
-    // deathMonthDate?: string;
-    // deathYearDate?: string;
-    //    
-    // 
     // // fieldOfActivity?: uri[]
     // // 
     // 

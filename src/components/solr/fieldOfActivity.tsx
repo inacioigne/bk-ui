@@ -21,14 +21,13 @@ import { logos } from "@/share/objLogos"
 import Link from "next/link";
 
 type Props = {
-  occupation: schemaUri[];
-  // setHit: Function;
+    fieldOfActivity: schemaUri[];
 };
 
-export default function Occupation({ occupation }: Props) {
+export default function FieldOfActivity({ fieldOfActivity }: Props) {
   return (
       <TreeView
-        aria-label="occupation"
+        aria-label="FieldOfActivity"
         defaultCollapseIcon={<AiOutlineArrowDown />}
         defaultExpandIcon={<AiOutlineArrowUp />}
         sx={{
@@ -41,11 +40,11 @@ export default function Occupation({ occupation }: Props) {
           nodeId="1"
           label={
             <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              Ocupações:
+              Campos de atividade:
             </Typography>
           }
         >
-          {occupation.map((e, index) => (
+          {fieldOfActivity.map((e, index) => (
             <div
               key={index}
               // onClick={() => {

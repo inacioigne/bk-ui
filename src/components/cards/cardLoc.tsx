@@ -49,8 +49,6 @@ interface Props {
   setHit: Function
 }
 
-
-
 export default function CardLoc({ hit, setHit }: Props) {
 
   const router = useRouter();
@@ -61,7 +59,7 @@ export default function CardLoc({ hit, setHit }: Props) {
     setTypeAlert,
   } = useAlert();
 
-  function LocExist(identifiersLccn: string) {
+  function LocExist(identifiersLccn:any) {
     setProgress(true)
 
     bkapi
@@ -85,10 +83,8 @@ export default function CardLoc({ hit, setHit }: Props) {
             // router.push(`/admin/authority/${id}`);
 
           }
-          console.log(response);
+          // console.log(response);
           // setTypeAlert("error");
-
-          
         }
       })
       .catch(function (error) {
@@ -124,9 +120,7 @@ export default function CardLoc({ hit, setHit }: Props) {
               <IconButton
                 aria-label="settings"
                 onClick={() => {
-                  // console.log(hit.identifiersLccn)
                   LocExist(hit.identifiersLccn)
-                  
                 }}
               >
                 <CiImport />
@@ -177,7 +171,7 @@ export default function CardLoc({ hit, setHit }: Props) {
                   }}
                 >
                   {hit?.deathPlace && (<BtnIcon icon={<FaTreeCity />} label={hit.deathPlace} />)}
-                  {hit?.birthDate && (<BtnIcon icon={<FcCalendar />} label={hit?.birthDate} />)}
+                  {hit?.deathDate && (<BtnIcon icon={<FcCalendar />} label={hit?.deathDate} />)}
                 </Box>
               </Box>
             </Grid>

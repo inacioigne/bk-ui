@@ -1,16 +1,7 @@
-"use client";
+// "use client";
 // MUI
-import { Box, Button } from "@mui/material/";
-
-// Providers BiblioKeia
-// import { useProgress } from "src/providers/progress";
+import { Box } from "@mui/material/";
 
 export default function Dashboard() {
-  // const { progress, setProgress, initProgress } = useProgress();
-
-  return <Box>Dashboard Content
-    <Button //onClick={initProgress}
-    >PROGRESS</Button>
-
-  </Box>;
+  return <Box>Dashboard Content</Box>;
 }

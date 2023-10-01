@@ -30,5 +30,21 @@
     {
         "value": "08",
         "label": "Ago."
+    },
+    {
+        "value": "09",
+        "label": "Set."
+    },
+    {
+        "value": "10",
+        "label": "Out."
+    },
+    {
+        "value": "11",
+        "label": "Nov."
+    },
+    {
+        "value": "12",
+        "label": "Dez."
     }
 ]

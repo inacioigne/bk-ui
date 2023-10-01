@@ -9,11 +9,17 @@ import { AlertProvider } from "src/providers/alert";
 import { ModeProvider } from "src/providers/mode";
 import { ParamsAuthorityProvider } from "src/providers/paramsAuthority";
 
-import { useProgress } from "src/providers/progress";
+// BiblioKeia Components
+// import ProgressBar from "@/components/utils/progressBar";
 
-import { Box, LinearProgress } from "@mui/material/";
-import { NavigationEvents } from "@/app/navigation-events";
+// import NextTopLoader from 'nextjs-toploader';
+
+import Loading from "@/app/loading";
+import { NavigationEvents } from "@/components/utils/navigation-events";
+
+// React Hooks
 import { Suspense } from "react";
+import ProgressBar from "@/components/loadings/progressBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,7 +41,9 @@ export default function RootLayout({
             <ParamsAuthorityProvider>
               <body className={inter.className}>
                 {children}
-                
+                <Suspense fallback={null}>
+                  <NavigationEvents />
+                </Suspense>
               </body>
             </ParamsAuthorityProvider>
           </AlertProvider>

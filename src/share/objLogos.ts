@@ -14,6 +14,7 @@ export const logos: any = {
     "vocab.getty.edu": LogoGetty,
     "datos.bne.es": LogoBne,
     "id.loc.gov": LogoLoc,
+    "loc": LogoLoc,
     "isni.org": LogoIsni,
     "viaf.org": LogoViaf
   };

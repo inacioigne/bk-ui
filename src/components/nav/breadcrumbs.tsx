@@ -5,6 +5,7 @@ import { emphasize, styled } from "@mui/material/styles";
 
 // Next Components
 import Link from "next/link";
+import { ReactElement } from "react";
 
 // Providers BiblioKeia
 import { useProgress } from "src/providers/progress";
@@ -32,18 +33,30 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   };
 });
 
-export default function BreadcrumbsBK({ previousPaths, currentPath }) {
+interface Path {
+  link: string,
+  label: string,
+  icon: ReactElement
+}
 
-  const { initProgress } = useProgress();
+interface Props {
+  previousPaths: Path[],
+  currentPath: string
+}
+
+export default function BreadcrumbsBK({ previousPaths, currentPath }: Props) {
+
+  const { setProgress } = useProgress();
   
   return (
     <Breadcrumbs separator="/">
       {previousPaths?.map((path, index) => (
-        <Link key={index} href={path.link}>
+        <Link key={index} href={path.link} //onClick={setProgress(true)}
+        >
           <StyledBreadcrumb
             label={path.label}
             icon={path.icon} 
-            onClick={initProgress}
+            // onClick={initProgress}
           />
         </Link>
       ))}

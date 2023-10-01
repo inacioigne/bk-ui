@@ -31,9 +31,9 @@ type StyledTreeItemProps = TreeItemProps & {
 };
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
-  color: theme.palette.text.secondary,
+  color: theme.palette.text.primary,
   [`& .${treeItemClasses.content}`]: {
-    // color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     // cursor: 'none',
     borderTopRightRadius: theme.spacing(2),
     borderBottomRightRadius: theme.spacing(2),
@@ -99,7 +99,7 @@ const StyledTreeItem = forwardRef(function StyledTreeItem(
           <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
           <Typography
             variant="body2"
-            color={"text.primary"}
+            // color={"text.primary"}
             sx={{ fontWeight: "inherit", flexGrow: 1, }}
           >
             {labelText}

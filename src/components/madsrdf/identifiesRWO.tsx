@@ -1,3 +1,4 @@
+"use client"
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import { Box, Typography } from "@mui/material";

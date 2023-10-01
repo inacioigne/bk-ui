@@ -124,7 +124,7 @@ export function TabName({ rows, rowCount, setRows, setRowCount, setFacetType, se
     rowCount={rowCount}
     onRowClick={(params: GridRowParams, event: MuiEvent, details: GridCallbackDetails) => {
       setProgress(true)
-      router.push(`/admin/authority/${params.id}`)
+      router.push(`/admin/authority/${params.id}`) 
     }}
     columns={columns}
     paginationModel={paginationModel}

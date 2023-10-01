@@ -57,6 +57,7 @@ export interface PersonalName {
     fullNameElement: z.string().nonempty("Nome é obrigatório"),
     fullerName: z.string(),
     birthPlace: z.string(),
+    // birthDate: z.string(),
     birthDayDate: z.string(),
     birthMonthDate: z.string(),
     birthYearDate: z.string(),
@@ -77,6 +78,20 @@ export interface PersonalName {
             base: z.string()
         })
     ),
+    hasCloseExternalAuthority: z.array(
+        z.object({
+            value: z.string(),
+            label: z.string(),
+            base: z.string()
+        })
+    ),
+    hasOccupation: z.array(
+        z.object({
+            value: z.string(),
+            label: z.string(),
+            base: z.string()
+        })
+    ),
     imagem: z.string()
     // fieldOfActivity: z.array(
     //     z.object({
@@ -90,10 +105,10 @@ export const editAuthoritySchema = z.object({
     fullNameElement: z.string().nonempty("Nome é obrigatório"),
     fullerName: z.string(),
     birthPlace: z.string(),
-    birthDayDate: z.string(),
-    birthMonthDate: z.string(),
-    birthYearDate: z.string(),
-    // birthDate: z.string(),
+    // birthDayDate: z.string(),
+    // birthMonthDate: z.string(),
+    // birthYearDate: z.string(),
+    birthDate: z.string(),
     deathPlace: z.string(),
     deathDayDate: z.string(),
     deathMonthDate: z.string(),
@@ -104,7 +119,7 @@ export const editAuthoritySchema = z.object({
             dateNameElement: z.string(),
         })
     ),
-    hasExactExternalAuthority: z.array(
+    hasCloseExternalAuthority: z.array(
         z.object({
             value: z.string(),
             label: z.string(),

@@ -45,7 +45,7 @@ import {
 
 type EditAuthorityData = z.infer<typeof createAuthoritySchema>;
 
-import { PersonalNameDoc } from "@/schema/authority/solr";
+import { schemaAuthorityDoc } from "@/schema/solr";
 
 // Utils
 import { UpdateForm } from "@/utils/authority/personalName/updateForm";
@@ -65,7 +65,7 @@ import { useAlert } from "src/providers/alert";
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
 interface Props {
-  doc: PersonalNameDoc;
+  doc: schemaAuthorityDoc;
   id: string
 }
 
@@ -78,7 +78,7 @@ const headers = {
 
 export default function EditPersonaName(props: Props) {
   const { doc } = props;
-  // console.log(doc)
+  console.log(doc.hasCloseExternalAuthority)
   const { id }  = props;
   const router = useRouter()
   const { progress, setProgress } = useProgress();
@@ -119,14 +119,23 @@ export default function EditPersonaName(props: Props) {
     remove: removeExternalAuthority,
   } = useFieldArray({
     control,
-    name: "hasExactExternalAuthority",
+    name: "hasCloseExternalAuthority",
+  });
+
+  const {
+    fields: fieldshasOccupation,
+    append: appendhasOccupation,
+    remove: removehasOccupation,
+  } = useFieldArray({
+    control,
+    name: "hasOccupation",
   });
 
   useEffect(() => {
     
     contador++;
     if (contador === 1) {
-      UpdateForm(doc, setValue, appendVariant, appendExternalAuthority);
+      UpdateForm(doc, setValue, appendVariant, appendExternalAuthority, appendhasOccupation);
 
     }
   }, []);
@@ -391,7 +400,7 @@ export default function EditPersonaName(props: Props) {
                   label="URL"
                   variant="outlined"
                   size="small"
-                  {...register(`hasExactExternalAuthority.${index}.value`)}
+                  {...register(`hasCloseExternalAuthority.${index}.value`)}
                 />
               </Grid>
               <Grid item xs={4}>
@@ -400,7 +409,7 @@ export default function EditPersonaName(props: Props) {
                   label="Nome"
                   variant="outlined"
                   size="small"
-                  {...register(`hasExactExternalAuthority.${index}.label`)}
+                  {...register(`hasCloseExternalAuthority.${index}.label`)}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -409,7 +418,61 @@ export default function EditPersonaName(props: Props) {
                   label="Base"
                   variant="outlined"
                   size="small"
-                  {...register(`hasExactExternalAuthority.${index}.base`)}
+                  {...register(`hasCloseExternalAuthority.${index}.base`)}
+                />
+              </Grid>
+              <Grid item xs={1}>
+                <IconButton
+                  aria-label="add"
+                  onClick={addOcorrences}
+                  color="primary"
+                >
+                  <IoAddOutline />
+                </IconButton>
+                <IconButton
+                  aria-label="add"
+                  onClick={() => {
+                    removeExternalAuthority(index);
+                  }}
+                  color="primary"
+                >
+                  <IoRemove />
+                </IconButton>
+              </Grid>
+            </Fragment>
+          ))}
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom>
+              Ocupações
+            </Typography>
+          </Grid>
+           {fieldshasOccupation.map((field, index) => (
+            <Fragment key={index}>
+              <Grid item xs={4}>
+                <TextField
+                  fullWidth
+                  label="URL"
+                  variant="outlined"
+                  size="small"
+                  {...register(`hasOccupation.${index}.value`)}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  fullWidth
+                  label="Nome"
+                  variant="outlined"
+                  size="small"
+                  {...register(`hasOccupation.${index}.label`)}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  fullWidth
+                  label="Base"
+                  variant="outlined"
+                  size="small"
+                  {...register(`hasOccupation.${index}.base`)}
                 />
               </Grid>
               <Grid item xs={1}>

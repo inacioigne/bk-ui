@@ -144,7 +144,14 @@ function ParserData(response: any, uri: string) {
         // birthDate
         if (metadado.hasOwnProperty(`${mads}birthDate`)) {
           let [bd] = metadado[`${mads}birthDate`];
-          authority["birthDate"] = bd["@value"];
+          let date = new Date(bd["@value"])
+          let day = String(date.getUTCDate())
+          let month = String(date.getMonth() + 1).padStart(2, "0");
+          let year = String(date.getFullYear())
+          authority["birthDate"] = `${day}-${month}-${year}`;
+          authority["birthDayDate"] = day
+          authority["birthMonthDate"] = month
+          authority["birthYearDate"] = year
         }
 
         // deathPlace
@@ -155,7 +162,14 @@ function ParserData(response: any, uri: string) {
         // deathDate
         if (metadado.hasOwnProperty(`${mads}deathDate`)) {
           let [dd] = metadado[`${mads}deathDate`];
-          authority["deathDate"] = dd["@value"];
+          let date = new Date(dd["@value"])
+          let day = String(date.getUTCDate())
+          let month = String(date.getMonth() + 1).padStart(2, "0");
+          let year = String(date.getFullYear())
+          authority["deathDate"] = `${day}-${month}-${year}`;
+          authority["deathDayDate"] = day
+          authority["deathMonthDate"] = month
+          authority["deathYearDate"] = year
         }
 
         // hasAffiliation

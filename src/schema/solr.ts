@@ -1,12 +1,12 @@
 // import { uri } from "@/schema/authority/personalName"
 
 type uri = {
-    value: string;
+    uri: string;
     label: string
     base?: string
 }
 
-export interface PersonalNameDoc {
+export interface schemaAuthorityDoc {
     id: string;
     type: string;
     creationDate: Date;
@@ -14,6 +14,7 @@ export interface PersonalNameDoc {
     imagem: string;
     fullerName: string;
     birthPlace: string;
+    birthDate?: string;
     birthDayDate?: string;
     birthMonthDate?: string;
     birthYearDate?: string;
@@ -25,7 +26,9 @@ export interface PersonalNameDoc {
     hasAffiliation: string;
     variant: string[];
     occupation: string;
-    hasExactExternalAuthority: uri[]    
+    hasExactExternalAuthority: uri[] 
+    hasCloseExternalAuthority?: uri[]  
+    hasOccupation?: uri[]    
 
 
 }

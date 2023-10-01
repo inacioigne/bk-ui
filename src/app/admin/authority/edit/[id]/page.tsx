@@ -9,13 +9,7 @@ import EditPersonaName from "@/components/forms/editPersonalName"
 // React Icons
 import { FcHome } from "react-icons/fc";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import { IoIosSave } from "react-icons/io";
-
-// Schema
-// import {
-//     editAuthoritySchema,
-//     createAuthoritySchema,
-//   } from "@/schema/authority/personalName";
+// import { IoIosSave } from "react-icons/io";
 
 async function getData(id: string) {
   const url = `http://localhost:8983/solr/authority/select?fl=*,[child]&q=id:${id}`;

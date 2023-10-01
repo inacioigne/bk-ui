@@ -17,8 +17,6 @@ export function CreateAuthority(
   router: any
 ) {
     setProgress(true);
-    // console.log(authority)
-
     bkapi
       .post('/thesarus/create', authority)
       .then((response) => {
@@ -26,7 +24,7 @@ export function CreateAuthority(
         setTypeAlert("success");
         setMessage("Registro criado com sucesso!");
         setOpenSnack(true);
-        // router.replace(`/admin/authority?id=${response.data.id}`)
+        router.replace(`/admin/authority/${response.data.id}`)
       })
       .catch(function (error) {
         if (error.response.status == 409) {

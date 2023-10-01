@@ -7,17 +7,14 @@ import { useProgress } from "src/providers/progress";
 export function NavigationEvents() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const { setProgress } = useProgress();
+  const { progress, setProgress } = useProgress();
+
  
   useEffect(() => {
-    setProgress(true)
     const url = `${pathname}?${searchParams}`
-    console.log("Nav:", url)
-    // You can now use the current URL
-    // ...
     setProgress(false)
+    // console.log(url)
   }, [pathname, searchParams])
-  
  
   return null
 }

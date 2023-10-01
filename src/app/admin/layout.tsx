@@ -5,47 +5,48 @@ import { Box, LinearProgress, Alert, Snackbar } from "@mui/material/";
 // BiblioKeia Components
 import NavBar from "../../components/nav/navBar";
 import SideBar from "../../components/nav/sideBar";
+// import Loading from "@/app/admin/loading";
 
 // React Hooks
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import { useProgress } from "src/providers/progress";
-import { useAlert } from "@/providers/alert"
-import { NavigationEvents } from "@/app/navigation-events";
+import { useAlert } from "@/providers/alert";
 
 export default function AdminLayout({ children }) {
-
   const [open, setOpen] = useState(false);
   const { progress } = useProgress();
   const {
-    openSnack, 
-    setOpenSnack, 
+    openSnack,
+    setOpenSnack,
     message,
     setMessage,
     typeAlert,
     setTypeAlert,
-  } = useAlert()
+  } = useAlert();
 
-  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
       return;
     }
     setOpenSnack(false);
   };
-  
+
   return (
     <Box sx={{ display: "flex" }}>
       <Box sx={{ position: "absolute", zIndex: 2200, width: '100%' }}>
         {progress && <LinearProgress />}
-
       </Box>
       <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           {message}
         </Alert>
       </Snackbar>
       <NavBar open={open} setOpen={setOpen} />
-      <Box component="nav" >
+      <Box component="nav">
         <SideBar open={open} />
       </Box>
       <Box
@@ -60,6 +61,7 @@ export default function AdminLayout({ children }) {
         }}
       >
         {children}
+        {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
       </Box>
     </Box>
   );

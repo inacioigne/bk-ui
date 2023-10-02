@@ -26,6 +26,7 @@ export default function IdentifiesRWO({ identifiesRWO }: Props) {
             aria-label="IdentifiesRWO"
             defaultCollapseIcon={<AiOutlineArrowDown />}
             defaultExpandIcon={<AiOutlineArrowUp />}
+            defaultExpanded={["1"]}
             sx={{
                 flexGrow: 1, overflowY: 'auto'
             }}

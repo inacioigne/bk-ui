@@ -113,9 +113,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 sx={{ alignItems: "flex-start", alignContent: "flex-start" }}
               >
                 <Grid item xs={12}>
-                  <Box
-                    sx={{ display: "flex", justifyContent: "space-between" }}
-                  >
+                 
                     {doc?.fullerName && (
                       <Box>
                         <Typography
@@ -129,8 +127,14 @@ export default async function Page({ params }: { params: { id: string } }) {
                         </Typography>
                       </Box>
                     )}
-                    {/* Nascimento */}
-                    {(doc?.birthPlace || doc?.birthDate) && (
+                 
+                </Grid>
+                <Grid item xs={12}>
+                <Box
+                    sx={{ display: "flex", justifyContent: "flex-start", gap: "2rem" }}
+                  >
+                   {/* Nascimento */}
+                   {(doc?.birthPlace || doc?.birthDate) && (
                       <Box>
                         <Typography
                           variant="subtitle2"
@@ -139,7 +143,8 @@ export default async function Page({ params }: { params: { id: string } }) {
                           Nascimento:
                         </Typography>
                         <Box sx={{ display: "flex", gap: "5px" }}>
-                          <Button
+                          { doc?.birthPlace && (
+                            <Button
                             startIcon={<LiaBirthdayCakeSolid />}
                             variant="outlined"
                             size="small"
@@ -148,6 +153,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                             {" "}
                             {doc.birthPlace}
                           </Button>
+
+                          )}
+                          
                           <Button
                             variant="outlined"
                             startIcon={<FcCalendar />}
@@ -195,8 +203,10 @@ export default async function Page({ params }: { params: { id: string } }) {
                         </Box>
                       </Box>
                     )}
-                  </Box>
+                     </Box>
+
                 </Grid>
+
                 {/* hasAffiliation */}
                 {doc?.hasAffiliation && (
                   <Grid item xs={4}>
@@ -228,7 +238,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                   </Grid>
                 )}
                 {/* hasCloseExternalAuthority */}
-                {doc?.fieldOfActivity && (
+                {doc?.hasCloseExternalAuthority && (
                   <Grid item xs={4}>
                     <ChildUri
                       child={doc.hasCloseExternalAuthority}

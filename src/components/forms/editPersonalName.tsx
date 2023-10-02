@@ -78,7 +78,7 @@ const headers = {
 
 export default function EditPersonaName(props: Props) {
   const { doc } = props;
-  console.log(doc.hasCloseExternalAuthority)
+  // console.log(doc.hasCloseExternalAuthority)
   const { id }  = props;
   const router = useRouter()
   const { progress, setProgress } = useProgress();
@@ -101,6 +101,8 @@ export default function EditPersonaName(props: Props) {
     resolver: zodResolver(editAuthoritySchema),
     defaultValues: {
       fullNameElement: "",
+      // hasOccupation: [{ value: "", label: "", base: "" }],
+      // hasExactExternalAuthority: [{ value: "", label: "", base: "" }],
     },
   });
 
@@ -441,6 +443,7 @@ export default function EditPersonaName(props: Props) {
               </Grid>
             </Fragment>
           ))}
+          
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom>
               Ocupações
@@ -495,6 +498,7 @@ export default function EditPersonaName(props: Props) {
               </Grid>
             </Fragment>
           ))}
+
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom>
              Imagem

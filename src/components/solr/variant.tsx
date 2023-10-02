@@ -19,7 +19,8 @@ export default function HasVariant({ hasVariant }: Props) {
       aria-label="hasVariant"
       defaultCollapseIcon={<AiOutlineArrowDown />}
       defaultExpandIcon={<AiOutlineArrowUp />}
-    >
+      defaultExpanded={["1"]}
+    > 
       <TreeItem
         nodeId="1"
         label={

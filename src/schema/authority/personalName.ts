@@ -126,6 +126,7 @@ export const editAuthoritySchema = z.object({
             base: z.string()
         })
     ),
+    
     imagem: z.string()
     // fieldOfActivity: z.array(
     //     z.object({

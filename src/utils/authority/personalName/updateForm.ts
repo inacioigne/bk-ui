@@ -29,24 +29,7 @@ export function UpdateForm(
       });
     });
   }
-  // if (doc.hasExactExternalAuthority) {
-  //   if (Array.isArray(doc.hasExactExternalAuthority)) {
-  //     // console.log(doc.hasExactExternalAuthority);
-  //     doc.hasExactExternalAuthority.forEach(function (authority, index) {
-  //       appendExternalAuthority({
-  //         value: authority.uri,
-  //         label: authority.label[0],
-  //         base: authority.base,
-  //       });
-  //     });
-  //   } else {
-  //     appendExternalAuthority({
-  //       value: doc.hasExactExternalAuthority.uri,
-  //       label: doc.hasExactExternalAuthority.label[0],
-  //       base: doc.hasExactExternalAuthority.base,
-  //     });
-  //   }
-  // }
+ 
   if (doc.hasCloseExternalAuthority) {
     if (Array.isArray(doc.hasCloseExternalAuthority)) {
       // console.log(doc.hasCloseExternalAuthority);
@@ -70,7 +53,7 @@ export function UpdateForm(
     if (Array.isArray(doc.hasOccupation)) {
       // console.log(doc.hasOccupation);
       doc.hasOccupation.forEach(function (authority, index) {
-        console.log(authority)
+        // console.log(authority)
         appendhasOccupation({
           value: authority.uri,
           label: authority.label[0],
@@ -84,5 +67,12 @@ export function UpdateForm(
         base: doc.hasOccupation.base,
       });
     }
+  } else {
+    appendhasOccupation({
+      value: "",
+      label: "",
+      base: "",
+    });
+
   }
 }

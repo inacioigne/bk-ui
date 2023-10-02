@@ -143,8 +143,7 @@ export default function FormLCSH( props: Props) {
                       >
                         <ListItemIcon color="primary">
                         {iconType[`${hit.uri.split('/')[4]}`]} 
-                          {/* {hit.uri.split('/')[4] === ''}
-                          <BsPersonCircle /> */}
+                 
                         </ListItemIcon>
                         <ListItemText
                           primary={hit.aLabel}

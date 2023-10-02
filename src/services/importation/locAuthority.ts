@@ -4,6 +4,14 @@ import { schemaMads, schemaAffiliation } from "@/schema/authority";
 
 const mads = "http://www.loc.gov/mads/rdf/v1#";
 
+function possuiDiaDefinido(data: Date): boolean {
+  // Obtém o dia da data
+  const dia = data.getDate();
+
+  // Verifica se o dia é um número válido (entre 1 e 31)
+  return !isNaN(dia) && dia >= 1 && dia <= 31;
+}
+
 function ParserData(response: any, uri: string) {
   const data = response.data;
 
@@ -144,14 +152,17 @@ function ParserData(response: any, uri: string) {
         // birthDate
         if (metadado.hasOwnProperty(`${mads}birthDate`)) {
           let [bd] = metadado[`${mads}birthDate`];
-          let date = new Date(bd["@value"])
-          let day = String(date.getUTCDate())
-          let month = String(date.getMonth() + 1).padStart(2, "0");
-          let year = String(date.getFullYear())
-          authority["birthDate"] = `${day}-${month}-${year}`;
-          authority["birthDayDate"] = day
-          authority["birthMonthDate"] = month
-          authority["birthYearDate"] = year
+          let date = bd["@value"].split("-")      
+          if (date.length === 1) {
+            let [year] = date
+            authority["birthYearDate"] = year
+            authority["birthDate"] = year   
+          } else if (date.length === 3 ) {
+            authority["birthYearDate"] = date[0]
+            authority["birthMonthDate"] = date[1]
+            authority["birthDayDate"] = date[2]
+            authority["birthDate"] = `${date[2]}-${date[1]}-${date[0]}` 
+          }
         }
 
         // deathPlace
@@ -162,14 +173,25 @@ function ParserData(response: any, uri: string) {
         // deathDate
         if (metadado.hasOwnProperty(`${mads}deathDate`)) {
           let [dd] = metadado[`${mads}deathDate`];
-          let date = new Date(dd["@value"])
-          let day = String(date.getUTCDate())
-          let month = String(date.getMonth() + 1).padStart(2, "0");
-          let year = String(date.getFullYear())
-          authority["deathDate"] = `${day}-${month}-${year}`;
-          authority["deathDayDate"] = day
-          authority["deathMonthDate"] = month
-          authority["deathYearDate"] = year
+          let date = dd["@value"].split("-")
+          if (date.length === 1) {
+            let [year] = date
+            authority["deathYearDate"] = year
+            authority["deathDate"] = year   
+          } else if (date.length === 3 ) {
+            authority["deathYearDate"] = date[0]
+            authority["deathMonthDate"] = date[1]
+            authority["deathDayDate"] = date[2]
+            authority["deathDate"] = `${date[2]}-${date[1]}-${date[0]}` 
+          }  
+          // let date = new Date(dd["@value"])
+          // let day = String(date.getUTCDate())
+          // let month = String(date.getMonth() + 1).padStart(2, "0");
+          // let year = String(date.getFullYear())
+          // authority["deathDate"] = `${day}-${month}-${year}`;
+          // authority["deathDayDate"] = day
+          // authority["deathMonthDate"] = month
+          // authority["deathYearDate"] = year
         }
 
         // hasAffiliation

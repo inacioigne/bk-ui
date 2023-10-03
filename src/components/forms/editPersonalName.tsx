@@ -23,7 +23,9 @@ import {
 
 // React Icons
 import { IoIosSave } from "react-icons/io";
+import { FcCancel } from "react-icons/fc";
 import { IoRemove, IoAddOutline } from "react-icons/io5";
+
 
 // React-Hook-Form
 import {
@@ -39,7 +41,7 @@ import { useEffect, useState, Fragment, useMemo } from "react";
 
 // Schema
 import {
-  editAuthoritySchema,
+  // editAuthoritySchema,
   createAuthoritySchema,
 } from "@/schema/authority/personalName";
 
@@ -63,6 +65,7 @@ import { useAlert } from "src/providers/alert";
 
 // Nextjs
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import Link from "next/link";
 
 interface Props {
   doc: schemaAuthorityDoc;
@@ -70,22 +73,23 @@ interface Props {
 }
 
 
-var contador = 0;
+
 const headers = {
   accept: "application/json",
   "Content-Type": "application/json",
 };
 
 export default function EditPersonaName(props: Props) {
+  var contador = 0;
   const { doc } = props;
-  // console.log(doc.hasCloseExternalAuthority)
-  const { id }  = props;
+  // console.log(doc)
+  const { id } = props;
   const router = useRouter()
   const { progress, setProgress } = useProgress();
   const {
     openSnack,
     setOpenSnack,
-    message, 
+    message,
     setMessage,
     typeAlert,
     setTypeAlert,
@@ -98,7 +102,7 @@ export default function EditPersonaName(props: Props) {
     formState: { errors },
     setValue,
   } = useForm<EditAuthorityData>({
-    resolver: zodResolver(editAuthoritySchema),
+    resolver: zodResolver(createAuthoritySchema),
     defaultValues: {
       fullNameElement: "",
       // hasOccupation: [{ value: "", label: "", base: "" }],
@@ -130,16 +134,28 @@ export default function EditPersonaName(props: Props) {
     remove: removehasOccupation,
   } = useFieldArray({
     control,
-    name: "hasOccupation",
+    name: "occupation",
+  });
+
+  const {
+    fields: fieldshasAffiliation,
+    append: appendhasAffiliation,
+    remove: removehasAffiliation,
+  } = useFieldArray({
+    control,
+    name: "hasAffiliation",
   });
 
   useEffect(() => {
-    
+
+
     contador++;
     if (contador === 1) {
-      UpdateForm(doc, setValue, appendVariant, appendExternalAuthority, appendhasOccupation);
-
+      // console.log(doc)
+      UpdateForm(doc, setValue, appendVariant, appendExternalAuthority, appendhasOccupation, appendhasAffiliation);
     }
+
+    // console.log(contador)
   }, []);
 
   const addVariant = () => {
@@ -151,39 +167,49 @@ export default function EditPersonaName(props: Props) {
 
   const addOcorrences = () => {
     appendExternalAuthority({
-      value: "",
+      uri: "",
       label: "",
       base: "",
     });
   };
 
+  const addAffiliation = () => {
+    appendhasAffiliation({
+      organization: { label: "", uri: "", base: "" },
+      affiliationStart: "",
+      affiliationEnd: ""
+    })
+  };
+
   function editAuthority(data: any) {
-    setProgress(true)
-    const personalName = transformEditAuthority(data, id, doc.creationDate)
-    // console.log(personalName)
-    bkapi
-      .put(`http://localhost:8000/authority/personalName/${id}`, personalName, {
-        headers: headers,
-      })
-      .then(function (response) {
-        if (response.status === 201) {
-          console.log(response);
-          // setTypeAlert("error");
-          setMessage("Registro editado com sucesso!")
-          setOpenSnack(true);
-          router.push(`/admin/authority/${id}`);
-        }
-      })
-      .catch(function (error) {
-        console.error(error);
-      })
-      .finally(function () {
-          setProgress(false)
-        //   setOpenSnack(true)
-        //   setDoc(null)
-      });
+    // setProgress(true)
+    const authority = transformEditAuthority(data, id, doc.creationDate)
+    doc.identifiersLccn && (authority['identifiersLccn'] = doc.identifiersLccn)
+    console.log(authority)
+    // bkapi
+    //   .put("thesarus/edit", authority, {
+    //     headers: headers,
+    //   })
+    //   .then(function (response) {
+    //     if (response.status === 200) {
+    //       console.log(response);
+    //       // setTypeAlert("error");
+    //       setMessage("Registro salvo com sucesso!")
+    //       setOpenSnack(true);
+    //       router.push(`/admin/authority/${id}`);
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error);
+    //   })
+    //   .finally(function () {
+    //     setProgress(false)
+    //     //   setOpenSnack(true)
+    //     //   setDoc(null)
+    //   });
 
   }
+  // console.log(errors)
 
   return (
     <form onSubmit={handleSubmit(editAuthority)}>
@@ -192,14 +218,29 @@ export default function EditPersonaName(props: Props) {
           Editar - Nome Pessoal
         </Typography>
         <Box>
-          <Button
-            type="submit"
-            sx={{ textTransform: "none" }}
-            variant="outlined"
-            startIcon={<IoIosSave />}
-          >
-            Salvar
-          </Button>
+
+
+          <Box sx={{ display: "flex", gap: "5px" }}>
+            <Link href="/admin/authority/">
+              <Button
+                sx={{ textTransform: "none" }}
+                variant="outlined"
+                startIcon={<FcCancel />}
+              >
+                Cancelar
+              </Button>
+            </Link>
+
+
+            <Button
+              type="submit"
+              sx={{ textTransform: "none" }}
+              variant="outlined"
+              startIcon={<IoIosSave />}
+            >
+              Salvar
+            </Button>
+          </Box>
         </Box>
       </Box>
       <Divider />
@@ -368,7 +409,7 @@ export default function EditPersonaName(props: Props) {
               </Grid>
               <Grid item xs={6}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                 
+
                   <IconButton
                     aria-label="add"
                     onClick={addVariant}
@@ -391,6 +432,68 @@ export default function EditPersonaName(props: Props) {
           ))}
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom>
+              Afiliação
+            </Typography>
+          </Grid>
+          {fieldshasAffiliation.map((field, index) => (
+            <Fragment key={index}>
+              <Grid item xs={4}>
+                <TextField
+                  fullWidth
+                  label="Organização"
+                  variant="outlined"
+                  size="small"
+                  {...register(`hasAffiliation.${index}.organization.label`)}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  fullWidth
+                  label="Início"
+                  variant="outlined"
+                  size="small"
+                  sx={{ width: 100 }}
+                  {...register(`hasAffiliation.${index}.affiliationStart`)}
+                />
+                <TextField
+                  fullWidth
+                  label="Fim"
+                  variant="outlined"
+                  size="small"
+                  sx={{ width: 100 }}
+                  {...register(`hasAffiliation.${index}.affiliationEnd`)}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+
+                  <IconButton
+                    aria-label="add"
+                    onClick={addAffiliation}
+                    color="primary"
+                  >
+                    <IoAddOutline />
+                  </IconButton>
+                  <IconButton
+                    aria-label="add"
+                    onClick={() => {
+                      removehasAffiliation(index);
+                    }}
+                    color="primary"
+                  >
+                    <IoRemove />
+                  </IconButton>
+                </Box>
+              </Grid>
+
+
+            </Fragment>
+
+
+          ))}
+
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom>
               Ocorrência em outras bases
             </Typography>
           </Grid>
@@ -402,7 +505,7 @@ export default function EditPersonaName(props: Props) {
                   label="URL"
                   variant="outlined"
                   size="small"
-                  {...register(`hasCloseExternalAuthority.${index}.value`)}
+                  {...register(`hasCloseExternalAuthority.${index}.uri`)}
                 />
               </Grid>
               <Grid item xs={4}>
@@ -443,13 +546,13 @@ export default function EditPersonaName(props: Props) {
               </Grid>
             </Fragment>
           ))}
-          
+
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom>
               Ocupações
             </Typography>
           </Grid>
-           {fieldshasOccupation.map((field, index) => (
+          {fieldshasOccupation.map((field, index) => (
             <Fragment key={index}>
               <Grid item xs={4}>
                 <TextField
@@ -457,7 +560,7 @@ export default function EditPersonaName(props: Props) {
                   label="URL"
                   variant="outlined"
                   size="small"
-                  {...register(`hasOccupation.${index}.value`)}
+                  {...register(`occupation.${index}.uri`)}
                 />
               </Grid>
               <Grid item xs={4}>
@@ -466,7 +569,7 @@ export default function EditPersonaName(props: Props) {
                   label="Nome"
                   variant="outlined"
                   size="small"
-                  {...register(`hasOccupation.${index}.label`)}
+                  {...register(`occupation.${index}.label`)}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -475,7 +578,7 @@ export default function EditPersonaName(props: Props) {
                   label="Base"
                   variant="outlined"
                   size="small"
-                  {...register(`hasOccupation.${index}.base`)}
+                  {...register(`occupation.${index}.base`)}
                 />
               </Grid>
               <Grid item xs={1}>
@@ -489,7 +592,7 @@ export default function EditPersonaName(props: Props) {
                 <IconButton
                   aria-label="add"
                   onClick={() => {
-                    removeExternalAuthority(index);
+                    removehasOccupation(index);
                   }}
                   color="primary"
                 >
@@ -501,28 +604,18 @@ export default function EditPersonaName(props: Props) {
 
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom>
-             Imagem
+              Imagem
             </Typography>
           </Grid>
           <Grid item xs={12}>
-          <TextField
-                  fullWidth
-                  label="URL"
-                  variant="outlined"
-                  size="small"
-                  focused={doc?.imagem ? true : false}
-                  {...register(`imagem`)}
-                />
-            {/* <TextField
-                  fullWidth
-                  label="URL"
-                  variant="outlined"
-                  size="small"
-                  focused={doc?.imagem ? true : false}
-                  {...register(`teste`)}
-                /> */}
-
-
+            <TextField
+              fullWidth
+              label="URL"
+              variant="outlined"
+              size="small"
+              focused={doc?.imagem ? true : false}
+              {...register(`imagem`)}
+            />
           </Grid>
 
         </Grid>

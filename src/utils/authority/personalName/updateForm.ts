@@ -6,7 +6,8 @@ export function UpdateForm(
   setValue: Function,
   appendVariant: Function,
   appendExternalAuthority: Function,
-  appendhasOccupation: Function
+  appendhasOccupation: Function,
+  appendhasAffiliation: Function
 ) {
   setValue("fullNameElement", doc.authority[0]);
   doc.fullerName && setValue("fullerName", doc.fullerName[0]);
@@ -36,35 +37,35 @@ export function UpdateForm(
       doc.hasCloseExternalAuthority.forEach(function (authority, index) {
         // console.log(authority)
         appendExternalAuthority({
-          value: authority.uri,
+          uri: authority.uri,
           label: authority.label[0],
           base: authority.base,
         });
       });
     } else {
       appendExternalAuthority({
-        value: doc.hasCloseExternalAuthority.uri,
+        uri: doc.hasCloseExternalAuthority.uri,
         label: doc.hasCloseExternalAuthority.label[0],
         base: doc.hasCloseExternalAuthority.base,
       });
     }
   }
-  if (doc.hasOccupation) {
-    if (Array.isArray(doc.hasOccupation)) {
-      // console.log(doc.hasOccupation);
-      doc.hasOccupation.forEach(function (authority, index) {
-        // console.log(authority)
+
+  if (doc.occupation) {
+    if (Array.isArray(doc.occupation)) {
+      doc.occupation.forEach(function (authority, index) {
+        // console.log(doc.occupation)
         appendhasOccupation({
-          value: authority.uri,
+          uri: authority.uri,
           label: authority.label[0],
           base: authority.base,
         });
       });
     } else {
       appendhasOccupation({
-        value: doc.hasOccupation.uri,
-        label: doc.hasOccupation.label[0],
-        base: doc.hasOccupation.base,
+        value: doc.occupation.uri,
+        label: doc.occupation.label[0],
+        base: doc.occupation.base,
       });
     }
   } else {
@@ -73,6 +74,38 @@ export function UpdateForm(
       label: "",
       base: "",
     });
+  }
+  // hasAffiliation
+  if (doc.hasAffiliation) {
+    
+    if (Array.isArray(doc.hasAffiliation)) {
+      doc.hasAffiliation.forEach(function (affiliation, index) {
+        appendhasAffiliation({
+          organization: {label: affiliation.organization},
+          affiliationStart: affiliation.affiliationStart,
+          affiliationEnd: affiliation.affiliationEnd
+        })
+        // console.log(affiliation)
+
+
+      })
+      
+      
+    } else {
+      // console.log(doc.hasAffiliation)
+      appendhasAffiliation({
+        organization: {label: doc.hasAffiliation.organization},
+        affiliationStart: doc.hasAffiliation.affiliationStart,
+        affiliationEnd: doc.hasAffiliation.affiliationEnd
+      })
+    } 
+  } else {
+    appendhasAffiliation({
+      organization: {label: ""},
+      affiliationStart: "",
+      affiliationEnd: ""
+    })
+
 
   }
 }

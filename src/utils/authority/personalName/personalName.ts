@@ -154,10 +154,11 @@ export function transformAuthority(
     const hasVariant = Variants(data.hasVariant);
     personalName["hasVariant"] = hasVariant;
   }
+  
 
-  if (data.hasExactExternalAuthority[0].value !== "") {
-    personalName["hasExactExternalAuthority"] = data.hasExactExternalAuthority;
-  }
+  // if (data.hasExactExternalAuthority[0].value !== "") {
+  //   personalName["hasExactExternalAuthority"] = data.hasExactExternalAuthority;
+  // }
 
   return personalName;
 }
@@ -167,7 +168,8 @@ export function transformEditAuthority(
   id: string | null,
   creationDate: Date
 ) {
-  const today = Today();
+  console.log(data.hasAffiliation)
+
   const elementList: any = [
     {
       type: "FullNameElement",
@@ -207,6 +209,7 @@ export function transformEditAuthority(
     isMemberOfMADSCollection:
       "https://bibliokeia.com/authorities/PersonalName/",
   };
+
   data.fullerName &&
     (personalName["fullerName"] = {
       type: "PersonalName",
@@ -214,12 +217,14 @@ export function transformEditAuthority(
         value: data.fullerName,
       },
     });
+
   data.birthPlace && (personalName["birthPlace"] = data.birthPlace);
   const birthDate = transformDate(
     data.birthDayDate,
     data.birthMonthDate,
     data.birthYearDate
   );
+
   birthDate && (personalName["birthDate"] = birthDate);
   data.birthDayDate &&
     (personalName["birthDayDate"] = data.birthDayDate.padStart(2, "0"));
@@ -232,6 +237,7 @@ export function transformEditAuthority(
     data.deathMonthDate,
     data.deathYearDate
   );
+
   deathDate && (personalName["deathDate"] = deathDate);
   data.deathDayDate &&
     (personalName["deathDayDate"] = data.deathDayDate.padStart(2, "0"));
@@ -243,15 +249,34 @@ export function transformEditAuthority(
     const hasVariant = Variants(data.hasVariant);
     personalName["hasVariant"] = hasVariant;
   }
-  if (data.hasExactExternalAuthority[0].value !== "") {
-    personalName["hasExactExternalAuthority"] = data.hasExactExternalAuthority;
+  if (data.occupation[0].uri !== "") {
+    personalName["occupation"] = data.occupation
+  }
+  if (data.hasCloseExternalAuthority[0].uri !== "") {
+    personalName["hasCloseExternalAuthority"] = data.hasCloseExternalAuthority
+  }
+  if (data.hasAffiliation[0].organization.label !== "") {
+    // uri: Optional[str] = None
+    // label: str
+    // base: 
+    
+    // let affiliations = data.hasAffiliation.map((element) => {
+    //   let organization = {'label' : element.organization}
+    //   console.log(data.hasAffiliation)
+
+    // })
+    personalName["hasAffiliation"] = data.hasAffiliation
+  }
+
+  // if (data.hasExactExternalAuthority[0].value !== "") {
+  //   personalName["hasExactExternalAuthority"] = data.hasExactExternalAuthority;
 
     // ExternalAuthority(data.hasExactExternalAuthority)
 
     // console.log(data.hasExactExternalAuthority)
     // const hasVariant = Variants(data.hasVariant);
     //
-  }
+  // }
 
   return personalName;
 }

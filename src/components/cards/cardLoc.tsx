@@ -196,7 +196,6 @@ export default function CardLoc({ hit, setHit }: Props) {
             <Grid item xs={6}>
               <HasVariant hasVariant={hit?.hasVariant} />
             </Grid>
-
           )}
 
           {/* identifiesRWO */}
@@ -210,9 +209,9 @@ export default function CardLoc({ hit, setHit }: Props) {
           {/* hasAffiliation */}
           {hit?.hasAffiliation && (
             <Grid item xs={6}>
-              <Box sx={{ pl: "10px" }}>
+              {/* <Box sx={{ pl: "10px" }}> */}
                 <HasAffiliation hasAffiliation={hit.hasAffiliation} />
-              </Box>
+              {/* </Box> */}
             </Grid>
           )}
           {/* fieldOfActivity */}
@@ -233,8 +232,6 @@ export default function CardLoc({ hit, setHit }: Props) {
               <HasCloseExternalAuthority hasCloseExternalAuthority={hit.hasCloseExternalAuthority} />
             </Grid>
           )}
-
-
         </Grid>
       </CardContent>
     </Card>

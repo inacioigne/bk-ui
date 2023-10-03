@@ -22,7 +22,7 @@ export type variant = {
 }
 
 export type uri = {
-    value: string;
+    uri: string;
     label: string
     base?: string
 }
@@ -31,6 +31,7 @@ export type uri = {
 export interface PersonalName {
     type: string;
     identifiersLocal: string | null;
+    identifiersLccn?: string;
     adminMetadata: adminMetadata;
     authoritativeLabel: string;
     elementList: element[];
@@ -46,9 +47,11 @@ export interface PersonalName {
     deathYearDate?: string;
     deathDate?: string;    
     hasVariant?: variant[];
+    occupation?: uri[]
     // fieldOfActivity?: uri[]
-    // hasAffiliation
-    hasExactExternalAuthority?: uri[]
+    hasAffiliation?: any
+    hasExactExternalAuthority?: uri[];
+    hasCloseExternalAuthority?: uri[];
     isMemberOfMADSCollection: string;
     imagem?: string;
   }
@@ -71,23 +74,30 @@ export interface PersonalName {
             dateNameElement: z.string(),
         })
     ),
-    hasExactExternalAuthority: z.array(
+    hasAffiliation: z.array(
         z.object({
-            value: z.string(),
-            label: z.string(),
-            base: z.string()
+            organization: z.object({label: z.string(), uri: z.string(), base: z.string()}),
+            affiliationStart: z.string(),
+            affiliationEnd:  z.string(),
         })
     ),
+    // hasExactExternalAuthority: z.array(
+    //     z.object({
+    //         value: z.string(),
+    //         label: z.string(),
+    //         base: z.string()
+    //     })
+    // ),
     hasCloseExternalAuthority: z.array(
         z.object({
-            value: z.string(),
+            uri: z.string(),
             label: z.string(),
             base: z.string()
         })
     ),
-    hasOccupation: z.array(
+    occupation: z.array(
         z.object({
-            value: z.string(),
+            uri: z.string(),
             label: z.string(),
             base: z.string()
         })
@@ -108,7 +118,7 @@ export const editAuthoritySchema = z.object({
     // birthDayDate: z.string(),
     // birthMonthDate: z.string(),
     // birthYearDate: z.string(),
-    birthDate: z.string(),
+    // birthDate: z.string(),
     deathPlace: z.string(),
     deathDayDate: z.string(),
     deathMonthDate: z.string(),

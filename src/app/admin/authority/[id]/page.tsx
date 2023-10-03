@@ -222,7 +222,11 @@ export default async function Page({ params }: { params: { id: string } }) {
                 {/* occupation */}
                 {doc?.occupation && (
                   <Grid item xs={4}>
-                    <Occupation occupation={doc.hasOccupation} />
+                    <ChildUri
+                      child={doc.occupation}
+                      label={"Ocupações:"}
+                    />
+
                   </Grid>
                 )}
                 {/* identifiesRWO */}

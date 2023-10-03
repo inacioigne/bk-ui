@@ -257,7 +257,7 @@ export default function HasAffiliation({ hasAffiliation }: Props) {
   return (
     <TreeView
       aria-label="hasAffiliation"
-      defaultExpanded={["3"]}
+      defaultExpanded={["1"]}
       defaultCollapseIcon={<AiOutlineArrowDown />}
       defaultExpandIcon={<AiOutlineArrowUp />}
       defaultEndIcon={<div style={{ width: 24 }} />}

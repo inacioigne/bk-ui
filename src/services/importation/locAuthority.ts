@@ -4,14 +4,6 @@ import { schemaMads, schemaAffiliation } from "@/schema/authority";
 
 const mads = "http://www.loc.gov/mads/rdf/v1#";
 
-function possuiDiaDefinido(data: Date): boolean {
-  // Obtém o dia da data
-  const dia = data.getDate();
-
-  // Verifica se o dia é um número válido (entre 1 e 31)
-  return !isNaN(dia) && dia >= 1 && dia <= 31;
-}
-
 function ParserData(response: any, uri: string) {
   const data = response.data;
 
@@ -184,14 +176,6 @@ function ParserData(response: any, uri: string) {
             authority["deathDayDate"] = date[2]
             authority["deathDate"] = `${date[2]}-${date[1]}-${date[0]}` 
           }  
-          // let date = new Date(dd["@value"])
-          // let day = String(date.getUTCDate())
-          // let month = String(date.getMonth() + 1).padStart(2, "0");
-          // let year = String(date.getFullYear())
-          // authority["deathDate"] = `${day}-${month}-${year}`;
-          // authority["deathDayDate"] = day
-          // authority["deathMonthDate"] = month
-          // authority["deathYearDate"] = year
         }
 
         // hasAffiliation

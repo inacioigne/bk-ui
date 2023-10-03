@@ -51,8 +51,7 @@ export default function BreadcrumbsBK({ previousPaths, currentPath }: Props) {
   return (
     <Breadcrumbs separator="/">
       {previousPaths?.map((path, index) => (
-        <Link key={index} href={path.link} //onClick={setProgress(true)}
-        >
+        <Link key={index} href={path.link} >
           <StyledBreadcrumb
             label={path.label}
             icon={path.icon} 

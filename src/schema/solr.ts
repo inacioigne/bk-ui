@@ -8,6 +8,7 @@ type uri = {
 
 export interface schemaAuthorityDoc {
     id: string;
+    identifiersLccn?: string;
     type: string;
     creationDate: Date;
     authority: string;
@@ -23,9 +24,9 @@ export interface schemaAuthorityDoc {
     deathDayDate?: string;
     deathMonthDate?: string;
     deathYearDate?: string;
-    hasAffiliation: string;
+    hasAffiliation: any;
     variant: string[];
-    occupation: string;
+    occupation: any;
     hasExactExternalAuthority: uri[] 
     hasCloseExternalAuthority?: uri[]  
     hasOccupation?: uri[]    

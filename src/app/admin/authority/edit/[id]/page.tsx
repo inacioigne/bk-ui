@@ -5,6 +5,7 @@ import {
 // BiblioKeia Components
 import BreadcrumbsBK from "src/components/nav/breadcrumbs";
 import EditPersonaName from "@/components/forms/editPersonalName"
+import EditAuthority from "@/components/forms/editAuthority"
 
 // React Icons
 import { FcHome } from "react-icons/fc";
@@ -39,6 +40,7 @@ const previousPaths = [
 export default async function Page({ params }: { params: { id: string } }) {
   const data = await getData(params.id);
   const [doc] = data.response.docs;
+  // console.log(doc)
 
   return (
     <Container maxWidth="xl">
@@ -48,7 +50,8 @@ export default async function Page({ params }: { params: { id: string } }) {
           currentPath={`edit/${params.id}`}
         />
       </Box>
-      <EditPersonaName doc={doc} id={params.id} />
+      <EditAuthority doc={doc} />
+      {/* <EditPersonaName doc={doc} id={params.id} /> */}
     </Container>
   );
 }

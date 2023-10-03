@@ -27,33 +27,30 @@ type Props = {
 
 export default function Occupation({ occupation }: Props) {
   return (
-      <TreeView
-        aria-label="occupation"
-        defaultCollapseIcon={<AiOutlineArrowDown />}
-        defaultExpandIcon={<AiOutlineArrowUp />}
-        sx={{
-          flexGrow: 1,
-          maxHeight: 300,
-          overflowY: "auto",
-        }}
+    <TreeView
+      aria-label="occupation"
+      defaultCollapseIcon={<AiOutlineArrowDown />}
+      defaultExpandIcon={<AiOutlineArrowUp />}
+      sx={{
+        flexGrow: 1,
+        maxHeight: 300,
+        overflowY: "auto",
+      }}
+    >
+      <TreeItem
+        nodeId="1"
+        label={
+          <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+            Ocupações:
+          </Typography>
+        }
       >
-        <TreeItem
-          nodeId="1"
-          label={
-            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              Ocupações:
-            </Typography>
-          }
-        >
-          {occupation.map((e, index) => (
-            <div
-              key={index}
-              // onClick={() => {
-              //   console.log(logos[`${e.base}`])
-              // }}
-            >
-              <Link href={`${e.uri}`} target="_blanck">
-              
+        {occupation.map((e, index) => (
+          <div
+            key={index}
+          >
+            <Link href={`${e.uri}`} target="_blanck">
+
               <StyledTreeItem
                 nodeId={`${index + 5}`}
                 labelText={e.label}
@@ -63,10 +60,10 @@ export default function Occupation({ occupation }: Props) {
                 colorForDarkMode="#B8E7FB"
                 bgColorForDarkMode="#071318"
               />
-              </Link>
-            </div>
-          ))}
-        </TreeItem>
-      </TreeView>
+            </Link>
+          </div>
+        ))}
+      </TreeItem>
+    </TreeView>
   );
 }

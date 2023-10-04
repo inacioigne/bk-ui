@@ -2,15 +2,15 @@ import {
   Container,
   Box,
 } from "@mui/material";
+
 // BiblioKeia Components
 import BreadcrumbsBK from "src/components/nav/breadcrumbs";
-import EditPersonaName from "@/components/forms/editPersonalName"
+// import EditPersonaName from "@/components/forms/editPersonalName"
 import EditAuthority from "@/components/forms/editAuthority"
 
 // React Icons
 import { FcHome } from "react-icons/fc";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-// import { IoIosSave } from "react-icons/io";
 
 async function getData(id: string) {
   const url = `http://localhost:8983/solr/authority/select?fl=*,[child]&q=id:${id}`;

@@ -25,7 +25,7 @@ export function UpdateForm(
   if (doc.variant.length > 0) {
     doc.variant.forEach(function (variant, index) {
       appendVariant({
-        fullNameElement: variant,
+        fullNameElement: variant, 
         dateNameElement: "",
       });
     });

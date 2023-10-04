@@ -1,6 +1,6 @@
 "use client";
 // React Hooks
-import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
+import { useState } from "react";
 // MUI
 import {
   DataGrid,
@@ -20,10 +20,11 @@ import { SearchNames } from "@/services/searchNames";
 
 // Nextjs
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+// import Link from 'next/link'
 
 function RenderLabel(props: GridRenderCellParams<any, Object>) {
   const { hasFocus, value } = props;
+  // console.log(value)
 
   function stringToColor(string: string) {
     let hash = 0;
@@ -71,19 +72,21 @@ function RenderLabel(props: GridRenderCellParams<any, Object>) {
 
 function RenderType(props: GridRenderCellParams<any, String>) {
   const { hasFocus, value } = props;
-  const obj = {
+  let obj = {
     PersonalName: { name: "Nome Pessoal", icon: <TbUserSearch /> },
     CorporateName: {
       name: "Nome Coorporativo",
       icon: <HiOutlineBuildingOffice2 />,
     },
   };
+  // console.log(obj)
 
   return (
     <div>
-      <Button startIcon={obj[`${value}`].icon} sx={{ textTransform: "none" }}>
+      {/* <Button startIcon={obj[`${value}`].icon} sx={{ textTransform: "none" }}>
         {obj[`${value}`].name}
-      </Button>
+      </Button> */}
+      {value}
     </div>
   );
 }

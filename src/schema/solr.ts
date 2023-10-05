@@ -29,7 +29,9 @@ export interface schemaAuthorityDoc {
     occupation: any;
     hasExactExternalAuthority: uri[] 
     hasCloseExternalAuthority?: uri[]  
-    hasOccupation?: uri[]    
+    hasOccupation?: uri[]  
+    identifiesRWO?: uri[]  
+    fieldOfActivity?: uri[]
 
 
 }

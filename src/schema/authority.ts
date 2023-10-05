@@ -38,7 +38,7 @@ export interface schemaMads {
     adminMetadata: adminMetadata;
     authoritativeLabel: string;
     elementList: element[];
-    fullerName?: element;
+    fullerName?: string;
     hasVariant?: schemaVariant[];
     identifiesRWO?: string[]
     birthPlace?: string;

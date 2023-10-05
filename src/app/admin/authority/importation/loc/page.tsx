@@ -52,7 +52,6 @@ export default function LOC() {
         </Grid>
         <Grid item xs={7} sx={{ mt: "15px" }}>
           {hit && <CardLoc hit={hit} setHit={setHit} /> }
-        
         </Grid>
       </Grid>
     </Container>

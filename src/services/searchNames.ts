@@ -35,8 +35,9 @@ export function SearchNames(
       const docs = response.data.response.docs;
       setRowCount(response.data.response.numFound)
       const r = docs.map((doc: any, index: number) => {
-        return { id: doc.id, authority: doc.authority[0], type: doc.type[0] };
+        return { id: doc.id, authority: doc.authority[0], type: doc.type };
       });
+
       setRows(r);
       // Facets
       const fType = TransformFacet(

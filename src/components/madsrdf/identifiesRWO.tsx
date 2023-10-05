@@ -13,7 +13,7 @@ import Link from "next/link";
 import { logos } from "@/share/objLogos"
 
 type Props = {
-    identifiesRWO: string[]
+    identifiesRWO: any[]
 };
 
 export default function IdentifiesRWO({ identifiesRWO }: Props) {
@@ -36,11 +36,11 @@ export default function IdentifiesRWO({ identifiesRWO }: Props) {
                 flexDirection: 'column'}}>
                     {
                         identifiesRWO.map((rwo, index) => (
-                            <Link key={index} href={rwo} target="_blank">
+                            <Link key={index} href={rwo.uri} target="_blank">
                                 <StyledTreeItem
                                     nodeId={`${index + 5}`}
-                                    labelText={rwo}
-                                    labelIcon={logos[`${rwo.split('/')[2]}`]}
+                                    labelText={rwo.label}
+                                    labelIcon={logos[`${rwo.base}`]}
                                     color="#1a73e8"
                                     bgColor="#e8f0fe"
                                     colorForDarkMode="#B8E7FB"

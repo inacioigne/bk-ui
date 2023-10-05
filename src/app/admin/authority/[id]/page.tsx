@@ -10,7 +10,7 @@ import {
 // BiblioKeia Components
 import BreadcrumbsBK from "src/components/nav/breadcrumbs";
 import DeleteItem from "@/app/admin/authority/[id]/deleteItem";
-import Occupation from "@/components/solr/ccupation";
+// import Occupation from "@/components/solr/ccupation";
 import HasVariant from "@/components/solr/variant";
 import IdentifiesRWO from "@/components/solr/identifiesRWO";
 import FieldOfActivity from "@/components/solr/fieldOfActivity";
@@ -23,7 +23,7 @@ import { CiEdit } from "react-icons/ci";
 import {
   BsFillPersonLinesFill,
   BsFillPersonPlusFill,
-  BsFillPersonXFill,
+  // BsFillPersonXFill,
 } from "react-icons/bs";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
 
@@ -112,8 +112,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 spacing={2}
                 sx={{ alignItems: "flex-start", alignContent: "flex-start" }}
               >
-                <Grid item xs={12}>
-                 
+                <Grid item xs={4}>
                     {doc?.fullerName && (
                       <Box>
                         <Typography
@@ -127,9 +126,8 @@ export default async function Page({ params }: { params: { id: string } }) {
                         </Typography>
                       </Box>
                     )}
-                 
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={8}>
                 <Box
                     sx={{ display: "flex", justifyContent: "flex-start", gap: "2rem" }}
                   >

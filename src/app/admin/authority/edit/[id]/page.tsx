@@ -51,7 +51,6 @@ export default async function Page({ params }: { params: { id: string } }) {
         />
       </Box>
       <EditAuthority doc={doc} />
-      {/* <EditPersonaName doc={doc} id={params.id} /> */}
     </Container>
   );
 }

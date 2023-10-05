@@ -50,13 +50,13 @@ function ParserData(response: any, uri: string) {
     let [metadado] = data.filter(function (elemento: any) {
       return elemento["@id"] === name["@id"];
     });
-    let [type] = metadado["@type"];
+    // let [type] = metadado["@type"];
     let [value] = metadado["http://www.w3.org/2000/01/rdf-schema#label"];
-    let obj = {
-      type: type.split("#")[1],
-      elementValue: { value: value["@value"] },
-    };
-    authority["fullerName"] = obj;
+    // let obj = {
+    //   type: type.split("#")[1],
+    //   elementValue: { value: value["@value"] },
+    // };
+    authority["fullerName"] =  value["@value"];
   }
   // hasVariant
   if (a.hasOwnProperty(`${mads}hasVariant`)) {
@@ -120,14 +120,19 @@ function ParserData(response: any, uri: string) {
     let identifiesRWO = a[`${mads}identifiesRWO`];
 
     let identifies = identifiesRWO.map((rwo: any) => {
-      return rwo["@id"];
+      let base = rwo["@id"].split("/")[2]
+      let obj = {'uri': rwo["@id"], label: rwo["@id"], base:  base}
+      return obj;
     });
     authority["identifiesRWO"] = identifies;
+    
 
-    identifies.forEach((identifier: string) => {
-      if (identifier.split("/")[3] === "rwo") {
+
+    identifies.forEach((identifier: any) => {
+       if (identifier.uri.split("/")[3] === "rwo") {
+
         let [metadado] = data.filter(function (e: any) {
-          return e["@id"] === identifier;
+          return e["@id"] === identifier.uri;
         });
 
         // birthPlace

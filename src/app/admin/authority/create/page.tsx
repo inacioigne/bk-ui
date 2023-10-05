@@ -17,6 +17,14 @@ import {
 
 // BiblioKeia Components
 import BreadcrumbsBK from "src/components/nav/breadcrumbs";
+import FormElementList from "@/components/forms/madsrdf/formElementList"
+import FormAffiliation from "@/components/forms/madsrdf/formAffiliation"
+import FormVariant from "@/components/forms/madsrdf/formVariant"
+import FormHCEA from "@/components/forms/madsrdf/formHCEA"
+import FormRWO from "@/components/forms/madsrdf/formRWO"
+import FormOccupation from "@/components/forms/madsrdf/formOccupation"
+import FormFieldOfActivity from "@/components/forms/madsrdf/formFieldOfActivity"
+import FormFullerName from "@/components/forms/madsrdf/formFullerName"
 
 // BiblioKeia Services
 import { bkapi } from "@/services/api";
@@ -34,7 +42,8 @@ import { IoIosSave } from "react-icons/io";
 import { IoRemove, IoAddOutline } from "react-icons/io5";
 
 // Schema
-import { createAuthoritySchema } from "@/schema/authority/personalName";
+// import { createAuthoritySchema } from "@/schema/authority/personalName";
+import { MadsSchema } from "@/schema/authority/madsSchema"
 
 // Utils
 import { transformAuthority } from "@/utils/authority/personalName/personalName";
@@ -45,9 +54,9 @@ import months from "@/share/months.json" assert { type: "json" };
 // React-Hook-Form
 import {
   useForm,
-  useFieldArray,
+  // useFieldArray,
   Controller,
-  SubmitHandler,
+  // SubmitHandler,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -69,7 +78,8 @@ const previousPaths = [
   },
 ];
 
-type CreateAuthorityData = z.infer<typeof createAuthoritySchema>;
+// type CreateAuthorityData = z.infer<typeof createAuthoritySchema>;
+type SchemaCreateAuthority = z.infer<typeof MadsSchema>;
 
 const headers = {
   accept: "application/json",
@@ -83,53 +93,55 @@ export default function Create() {
   const {
     openSnack,
     setOpenSnack,
-    message, 
+    message,
     setMessage,
     typeAlert,
     setTypeAlert,
   } = useAlert();
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateAuthorityData>({
-    resolver: zodResolver(createAuthoritySchema),
-    defaultValues: {
-      hasVariant: [{ fullNameElement: "", dateNameElement: "" }],
-      hasExactExternalAuthority: [{ value: "", label: "", base: "" }],
-    },
-  });
+  // const {
+  //   control,
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<CreateAuthorityData>({
+  //   resolver: zodResolver(createAuthoritySchema),
+  //   // defaultValues: {
+  //   //   hasVariant: [{ fullNameElement: "", dateNameElement: "" }],
+  //   //   hasExactExternalAuthority: [{ value: "", label: "", base: "" }],
+  //   // },
+  // });
 
-  const {
-    fields: fieldsVariant,
-    append: appendVariant,
-    remove: removeVariant,
-    swap,
-    move,
-    insert,
-  } = useFieldArray({
-    control,
-    name: "hasVariant",
-  });
 
-  const {
-    fields: fieldsExternalAuthority,
-    append: appendExternalAuthority,
-    remove: removeExternalAuthority,
-  } = useFieldArray({
-    control,
-    name: "hasExactExternalAuthority",
-  });
+
+  // const {
+  //   fields: fieldsVariant,
+  //   append: appendVariant,
+  //   remove: removeVariant,
+  //   swap,
+  //   move,
+  //   insert,
+  // } = useFieldArray({
+  //   control,
+  //   name: "hasVariant",
+  // });
+
+  // const {
+  //   fields: fieldsExternalAuthority,
+  //   append: appendExternalAuthority,
+  //   remove: removeExternalAuthority,
+  // } = useFieldArray({
+  //   control,
+  //   name: "hasExactExternalAuthority",
+  // });
 
   useEffect(() => {
     bkapi
-      .get(`/authority/next`)
+      .get(`/thesarus/next_id`)
       .then(function (response) {
-        setId(response.data.id);
+        setId(response.data);
 
-        // console.log(response.data.id);
+        console.log(response.data);
       })
       .catch(function (error) {
         // manipula erros da requisição
@@ -140,35 +152,90 @@ export default function Create() {
       });
   }, [String(id)]);
 
-  const addVariant = () => {
-    appendVariant({
+
+
+  const defaultValues = {
+    elementList: [{
+      type: 'FullNameElement', elementValue: {
+        value: "",// lang: "" 
+      }
+    }],
+    variant: [{
       fullNameElement: "",
-      dateNameElement: "",
-    });
-  };
-  const addOcorrences = () => {
-    appendExternalAuthority({
-      value: "",
+      //   dateNameElement: "",
+    }],
+    hasAffiliation: [{
+      organization: { label: "", uri: "" },
+      affiliationStart: "",
+      affiliationEnd: ""
+    }],
+    occupation: [{
+      uri: "",
       label: "",
-      base: "",
-    });
-  };
+      base: ""
+    }],
+    hasCloseExternalAuthority: [{
+      uri: "",
+      label: "",
+      base: ""
+    }],
+    identifiesRWO: [{
+      uri: "",
+      label: "",
+      base: ""
+    }],
+    fieldOfActivity: [{
+      uri: "",
+      label: "",
+      base: ""
+  }]
+  }
+
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<SchemaCreateAuthority>({
+    resolver: zodResolver(MadsSchema),
+    defaultValues: defaultValues,
+  });
 
   // console.log(errors)
 
   function createAuthority(data: any) {
-    setProgress(true)
-    const personalName = transformAuthority(data, id);
-    // console.log(personalName);
-    // console.log(data);
+    // setProgress(true)
+    
+    let obj = {
+      type: "personaName",
+      identifiersLocal: String(id),
+      adminMetadata: {
+          //   "assigner": "http://id.loc.gov/vocabulary/organizations/brmninpa",
+          //   "descriptionModifier": "http://id.loc.gov/vocabulary/organizations/brmninpa",
+          //   "changeDate": "2023-10-04",
+          // creationDate: doc.creationDate,
+          //   "descriptionLanguage": "http://id.loc.gov/vocabulary/languages/por",
+          //   "generationProcess": "BiblioKeia v.1",
+          //   "generationDate": "2023-10-04T08:13:08",
+          status: {
+              label: "novo",
+              value: "n"
+          },
+      },
+      authoritativeLabel: data.birthYearDate ? 
+      `${data.elementList[0].elementValue.value}, ${data.birthYearDate}` : data.elementList[0].elementValue.value,
+  }
+  const request = { ...obj, ...data };
+  console.log(request);
 
     bkapi
-      .post("http://localhost:8000/authority/personalName/", personalName, {
+      .post("/thesarus/create", request, {
         headers: headers,
       })
       .then(function (response) {
         if (response.status === 201) {
-          // console.log(response);
+          console.log(response);
           setMessage("Registro criado com sucesso!")
           router.push(`/admin/authority/${id}`);
         }
@@ -177,11 +244,14 @@ export default function Create() {
         console.error(error);
       })
       .finally(function () {
-          setProgress(false)
-          setOpenSnack(true)
+        setProgress(false)
+        setOpenSnack(true)
         //   setDoc(null)
       });
   }
+
+
+
 
   return (
     <Container maxWidth="xl">
@@ -207,6 +277,185 @@ export default function Create() {
         <Divider />
         <Paper sx={{ p: "15px", mt: "10px" }}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Autoridade
+              </Typography>
+            </Grid>
+            <FormElementList control={control} register={register} />
+            <Grid item xs={5}>
+              {/* FullerName */}
+              <FormFullerName register={register} />
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="subtitle1" gutterBottom>
+                Nascimento:
+              </Typography>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <TextField
+                  label="Local de Nascimento"
+                  variant="outlined"
+                  size="small"
+                  // focused={doc?.birthPlace ? true : false}
+                  {...register("birthPlace")}
+                />
+                <TextField
+                  label="Dia"
+                  variant="outlined"
+                  size="small"
+                  sx={{ minWidth: 40, maxWidth: 50 }}
+                  // focused={doc?.birthDayDate ? true : false}
+                  {...register("birthDayDate")}
+                />
+                <Controller
+                  name="birthMonthDate"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormControl
+                      // focused={doc?.birthMonthDate ? true : false}
+                      sx={{ minWidth: 80 }}
+                      size="small"
+                    >
+                      <InputLabel id="label-month">Mês</InputLabel>
+                      <Select
+                        {...field}
+                        size="small"
+                        labelId="label-month"
+                        label="Mês"
+                      >
+                        {months.map((mes, index) => (
+                          <MenuItem key={index} value={mes.value}>
+                            {mes.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  )}
+                />
+                <TextField
+                  label="Ano"
+                  variant="outlined"
+                  sx={{ width: 100 }}
+                  size="small"
+                  // focused={doc?.birthYearDate ? true : false}
+                  {...register("birthYearDate")}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="subtitle1" gutterBottom>
+                Falecimento:
+              </Typography>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <TextField
+                  label="Local de Falecimento"
+                  variant="outlined"
+                  size="small"
+                  // focused={doc?.deathPlace ? true : false}
+                  {...register("deathPlace")}
+                />
+                <TextField
+                  label="Dia"
+                  variant="outlined"
+                  sx={{ width: 100 }}
+                  size="small"
+                  // focused={doc?.deathDayDate ? true : false}
+                  {...register("deathDayDate")}
+                />
+                <Controller
+                  name="deathMonthDate"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormControl
+                      sx={{ width: 100 }}
+                      size="small"
+                    // focused={doc?.deathMonthDate ? true : false}
+                    >
+                      <InputLabel id="label-month">Mês</InputLabel>
+                      <Select {...field} labelId="label-month" label="Mês">
+                        {months.map((mes, index) => (
+                          <MenuItem key={index} value={mes.value}>
+                            {mes.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  )}
+                />
+                <TextField
+                  label="Ano"
+                  variant="outlined"
+                  sx={{ width: 100 }}
+                  size="small"
+                  // focused={doc?.deathMonthDate ? true : false}
+                  {...register("deathYearDate")}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Variantes do nome
+              </Typography>
+              <Divider />
+            </Grid>
+            <FormVariant control={control} register={register} />
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Afiliação
+              </Typography>
+              <Divider />
+            </Grid>
+            <FormAffiliation control={control} register={register} />
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Ocupações
+              </Typography>
+              <Divider />
+            </Grid>
+            <FormOccupation control={control} register={register} />
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Campos de atividade
+              </Typography>
+              <Divider />
+            </Grid>
+            <FormFieldOfActivity control={control} register={register} />
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Identificadores
+              </Typography>
+              <Divider />
+            </Grid>
+            <FormRWO control={control} register={register} />
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Ocorrências em outra bases
+              </Typography>
+              <Divider />
+            </Grid>
+            <FormHCEA control={control} register={register} />
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Imagem
+              </Typography>
+              <Divider />
+              <TextField
+                fullWidth
+                size="small"
+                label="Imagem"
+                variant="outlined"
+                {...register("imagem")}
+              />
+            </Grid>
+
+
+          </Grid>
+
+          {/* <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h6" gutterBottom>
                 Autoridade
@@ -462,7 +711,7 @@ export default function Create() {
                 />
 
           </Grid>
-          </Grid>
+          </Grid> */}
         </Paper>
       </form>
     </Container>

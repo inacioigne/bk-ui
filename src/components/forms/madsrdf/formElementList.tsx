@@ -1,13 +1,8 @@
 // MUI
-import {
-    Box,
-    Grid,
-    TextField,
-    IconButton
-} from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 
 // React Icons
-import { IoRemove, IoAddOutline } from "react-icons/io5";
+// import { IoRemove, IoAddOutline } from "react-icons/io5";
 
 interface Props {
     control: any;
@@ -52,9 +47,8 @@ export default function FormElementList({ control, register }: Props) {
                             size="small"
                             {...register(`elementList.${index}.type`)}
                         />
-
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                         <TextField
                             fullWidth
                             label="Nome"
@@ -63,29 +57,15 @@ export default function FormElementList({ control, register }: Props) {
                             {...register(`elementList.${index}.elementValue.value`)}
                         />
                     </Grid>
-
-                    {/* <Grid item xs={2}>
+                    <Grid item xs={1}>
                         <TextField
                             fullWidth
-                            label="Início do vínculo"
+                            label="Idioma"
                             variant="outlined"
                             size="small"
-                            //sx={{ width: 100 }}
-                            {...register(`hasAffiliation.${index}.affiliationStart`)}
+                            {...register(`elementList.${index}.elementValue.lang`)}
                         />
-                    </Grid> */}
-
-                    {/* <Grid item xs={2}>
-                        <TextField
-                            fullWidth
-                            label="Fim do vínculo"
-                            variant="outlined"
-                            size="small"
-                            // sx={{ width: 100 }}
-                            {...register(`hasAffiliation.${index}.affiliationEnd`)}
-                        />
-                    </Grid> */}
-
+                    </Grid>
                     {/* <Grid item xs={2}>
                         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
 

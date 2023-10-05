@@ -185,7 +185,7 @@ export default function CardLoc({ hit, setHit }: Props) {
                   Nome completo:
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                  {hit.fullerName?.elementValue.value}
+                  {hit.fullerName}
                 </Typography>
               </Box>
             </Grid>

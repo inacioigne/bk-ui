@@ -30,11 +30,12 @@ export default function FieldOfActivity({ fieldOfActivity }: Props) {
         aria-label="FieldOfActivity"
         defaultCollapseIcon={<AiOutlineArrowDown />}
         defaultExpandIcon={<AiOutlineArrowUp />}
+        defaultExpanded={["1"]}
         sx={{
           flexGrow: 1,
           maxHeight: 300,
           overflowY: "auto",
-        }}
+        }} 
       >
         <TreeItem
           nodeId="1"

@@ -16,7 +16,7 @@ export function CreateAuthority(
   setOpenSnack: Function,
   router: any
 ) {
-  // console.log(authority);
+  console.log(authority);
   setProgress(true);
   bkapi
     .post("/thesarus/create", authority)

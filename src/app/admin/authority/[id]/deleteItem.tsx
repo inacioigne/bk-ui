@@ -57,13 +57,14 @@ export default function DeleteItem({ id, type }: Props) {
 
     const data = {
       id: id,
-      type: type[0],
+      type: type,
     };
     
 
     const headers = {
       "Content-Type": "application/json",
     };
+    // console.log(data)
 
     bkapi
       .delete("/thesarus/delete", { data, headers })

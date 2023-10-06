@@ -1,12 +1,14 @@
 // MUI
-import { Grid, TextField } from "@mui/material";
+import { Grid, TextField, Typography } from "@mui/material";
 
 // React Icons
 // import { IoRemove, IoAddOutline } from "react-icons/io5";
 
 interface Props {
     control: any;
-    register: any
+    register: any,
+    error: any
+    
 }
 
 // React-Hook-Form
@@ -15,7 +17,8 @@ import { useFieldArray } from "react-hook-form";
 // React
 import { Fragment } from "react";
 
-export default function FormElementList({ control, register }: Props) {
+export default function FormElementList({ control, register, error }: Props) {
+    // console.log(error)
 
     const {
         fields: fieldsElementList,
@@ -47,6 +50,16 @@ export default function FormElementList({ control, register }: Props) {
                             size="small"
                             {...register(`elementList.${index}.type`)}
                         />
+                        {error && (
+                <Typography
+                  variant="caption"
+                  display="block"
+                  gutterBottom
+                  color={"red"}
+                >
+                  {error[index].elementValue.value.message}
+                </Typography>
+              )}
                     </Grid>
                     <Grid item xs={4}>
                         <TextField

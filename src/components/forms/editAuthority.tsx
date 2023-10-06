@@ -106,7 +106,8 @@ function ParserUri(uri: any) {
             return arr
         }
     } else {
-        return null
+        let arr = [{ label: "", uri: "", base: "" }]
+        return arr
     }
 }
 
@@ -129,8 +130,28 @@ function ParserAffiliation(affiliation: any) {
             return [obj]
         }
     } else {
-        return null
+        let arr = [{
+            organization: { label: "", uri: "" },
+            affiliationStart: "", affiliationEnd: ""
+        }]
+        return arr
     }
+}
+
+function ParserVariant(variant: any) {
+    if (variant) {
+        let arr = variant.map((e: string) => {
+            let obj = {
+                fullNameElement: e, //dateNameElement: "" 
+            }
+            return obj
+        })
+        return arr
+    } else {
+        let arr = [{ fullNameElement: "" }]
+        return arr
+    }
+
 }
 
 function TransForm(doc: schemaAuthorityDoc) {
@@ -149,20 +170,15 @@ function TransForm(doc: schemaAuthorityDoc) {
         deathDayDate: doc.deathDayDate,
         deathMonthDate: doc.deathMonthDate,
         deathYearDate: doc.deathYearDate,
-        variant: doc.variant && doc.variant.map((variant: string) => {
-            let obj = { fullNameElement: variant, dateNameElement: "" }
-            return obj
-        }),
+        hasVariant: ParserVariant(doc.variant),
         hasAffiliation: ParserAffiliation(doc.hasAffiliation),
-        hasCloseExternalAuthority: doc.hasCloseExternalAuthority && doc.hasCloseExternalAuthority.map((e: any) => {
-            let obj = { uri: e.uri, label: e.label[0], base: e.base }
-            return obj
-        }),
+        hasCloseExternalAuthority: ParserUri(doc.hasCloseExternalAuthority),
         identifiesRWO: ParserUri(doc.identifiesRWO),
         occupation: ParserUri(doc.occupation),
         fieldOfActivity: ParserUri(doc.fieldOfActivity),
         imagem: doc.imagem
     }
+
     return obj
 }
 
@@ -173,6 +189,9 @@ import { useAlert } from "src/providers/alert";
 // Nextjs
 import { useRouter } from "next/navigation";
 
+// Services BiblioKeia
+import { ParserData } from "src/services/thesarus/parserData"
+
 export default function EditAuthority({ doc }: Props) {
 
     const router = useRouter();
@@ -182,7 +201,7 @@ export default function EditAuthority({ doc }: Props) {
         setMessage,
         // typeAlert,
         // setTypeAlert,
-      } = useAlert();
+    } = useAlert();
 
     const {
         control,
@@ -221,33 +240,35 @@ export default function EditAuthority({ doc }: Props) {
                     value: "n"
                 },
             },
-            authoritativeLabel: data.birthYearDate ? 
-            `${data.elementList[0].elementValue.value}, ${data.birthYearDate}` : data.elementList[0].elementValue.value,
+            authoritativeLabel: data.birthYearDate ?
+                `${data.elementList[0].elementValue.value}, ${data.birthYearDate}` : data.elementList[0].elementValue.value,
         }
 
-        const request = { ...obj, ...data };
-        // console.log('edit:', request)
+        let formData = ParserData(data)
+        
 
-        bkapi.put("thesarus/edit/", request, {
-            headers: headers,
-        })
-            .then(function (response) {
-                console.log(response);
-                if (response.status === 200) {
-                  // console.log(response);
-                  setMessage("Registro criado com sucesso!")
-                  router.push(`/admin/authority/${doc.id}`);
-                }
-            })
-            .catch(function (error) {
-                console.error(error);
-            })
-            .finally(function () {
-                  setProgress(false)
-                //   setOpenSnack(true)
-                //   setDoc(null)
-            });
-        // 
+        const request = { ...obj, ...formData };
+        console.log(request)
+
+        // bkapi.put("thesarus/edit/", request, {
+        //     headers: headers,
+        // })
+        //     .then(function (response) {
+        //         console.log(response);
+        //         if (response.status === 200) {
+        //             // console.log(response);
+        //             setMessage("Registro criado com sucesso!")
+        //             router.push(`/admin/authority/${doc.id}`);
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.error(error);
+        //     })
+        //     .finally(function () {
+        //         setProgress(false)
+        //         //   setOpenSnack(true)
+        //         //   setDoc(null)
+        //     });
     }
 
     return (
@@ -287,7 +308,7 @@ export default function EditAuthority({ doc }: Props) {
                             Autoridade
                         </Typography>
                     </Grid>
-                    <FormElementList control={control} register={register} />
+                    <FormElementList control={control} register={register} error={errors.elementList}/>
                     <Grid item xs={5}>
                         <FormFullerName register={register} />
                     </Grid>
@@ -406,6 +427,7 @@ export default function EditAuthority({ doc }: Props) {
                         </Typography>
                         <Divider />
                     </Grid>
+                    {/* hasVariant */}
                     <FormVariant control={control} register={register} />
                     <Grid item xs={12}>
                         <Typography variant="h6" gutterBottom>

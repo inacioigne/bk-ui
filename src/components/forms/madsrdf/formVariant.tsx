@@ -27,7 +27,7 @@ export default function FormVariant({ control, register }: Props) {
         remove: removeVariant,
     } = useFieldArray({
         control,
-        name: "variant",
+        name: "hasVariant", 
     });
 
     const addVariant = () => {
@@ -46,7 +46,7 @@ export default function FormVariant({ control, register }: Props) {
                             label="Nome"
                             variant="outlined"
                             size="small"
-                            {...register(`variant.${index}.fullNameElement`)}
+                            {...register(`hasVariant.${index}.fullNameElement`)}
                         />
                     </Grid>
                     <Grid item xs={6}>

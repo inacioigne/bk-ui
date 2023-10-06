@@ -8,7 +8,7 @@ import {
   FormControl,
   Paper,
   TextField,
-  IconButton,
+  // IconButton,
   Button,
   InputLabel,
   Select,
@@ -30,7 +30,7 @@ import FormFullerName from "@/components/forms/madsrdf/formFullerName"
 import { bkapi } from "@/services/api";
 
 // React Hooks
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState } from "react";
 
 // Nextjs
 import { useRouter } from "next/navigation";
@@ -39,14 +39,13 @@ import { useRouter } from "next/navigation";
 import { FcHome } from "react-icons/fc";
 import { BsPersonPlus } from "react-icons/bs";
 import { IoIosSave } from "react-icons/io";
-import { IoRemove, IoAddOutline } from "react-icons/io5";
+// import { IoRemove, IoAddOutline } from "react-icons/io5";
 
 // Schema
-// import { createAuthoritySchema } from "@/schema/authority/personalName";
 import { MadsSchema } from "@/schema/authority/madsSchema"
 
 // Utils
-import { transformAuthority } from "@/utils/authority/personalName/personalName";
+// import { transformAuthority } from "@/utils/authority/personalName/personalName";
 
 // Share
 import months from "@/share/months.json" assert { type: "json" };
@@ -64,6 +63,8 @@ import { z } from "zod";
 // Providers BiblioKeia
 import { useProgress } from "src/providers/progress";
 import { useAlert } from "src/providers/alert";
+import { ParserData } from "src/services/thesarus/parserData"
+
 
 const previousPaths = [
   {
@@ -78,7 +79,6 @@ const previousPaths = [
   },
 ];
 
-// type CreateAuthorityData = z.infer<typeof createAuthoritySchema>;
 type SchemaCreateAuthority = z.infer<typeof MadsSchema>;
 
 const headers = {
@@ -98,19 +98,6 @@ export default function Create() {
     typeAlert,
     setTypeAlert,
   } = useAlert();
-
-  // const {
-  //   control,
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<CreateAuthorityData>({
-  //   resolver: zodResolver(createAuthoritySchema),
-  //   // defaultValues: {
-  //   //   hasVariant: [{ fullNameElement: "", dateNameElement: "" }],
-  //   //   hasExactExternalAuthority: [{ value: "", label: "", base: "" }],
-  //   // },
-  // });
 
 
 
@@ -152,15 +139,15 @@ export default function Create() {
       });
   }, [String(id)]);
 
-
-
   const defaultValues = {
     elementList: [{
       type: 'FullNameElement', elementValue: {
         value: "",// lang: "" 
       }
     }],
-    variant: [{
+    hasVariant: [{
+      type: "PersonalName",
+      elementList: [{type: "", elementValue: {value: ""}}],
       fullNameElement: "",
       //   dateNameElement: "",
     }],
@@ -188,7 +175,7 @@ export default function Create() {
       uri: "",
       label: "",
       base: ""
-  }]
+    }]
   }
 
   const {
@@ -204,50 +191,50 @@ export default function Create() {
 
   // console.log(errors)
 
+  
+
   function createAuthority(data: any) {
+
     // setProgress(true)
+    let formData = ParserData(data)
     
+       
     let obj = {
-      type: "personaName",
+      type: "PersonalName",
       identifiersLocal: String(id),
       adminMetadata: {
-          //   "assigner": "http://id.loc.gov/vocabulary/organizations/brmninpa",
-          //   "descriptionModifier": "http://id.loc.gov/vocabulary/organizations/brmninpa",
-          //   "changeDate": "2023-10-04",
-          // creationDate: doc.creationDate,
-          //   "descriptionLanguage": "http://id.loc.gov/vocabulary/languages/por",
-          //   "generationProcess": "BiblioKeia v.1",
-          //   "generationDate": "2023-10-04T08:13:08",
-          status: {
-              label: "novo",
-              value: "n"
-          },
+        status: {
+          label: "novo",
+          value: "n"
+        },
       },
-      authoritativeLabel: data.birthYearDate ? 
-      `${data.elementList[0].elementValue.value}, ${data.birthYearDate}` : data.elementList[0].elementValue.value,
-  }
-  const request = { ...obj, ...data };
-  console.log(request);
+      authoritativeLabel: data.birthYearDate ?
+        `${data.elementList[0].elementValue.value}, ${data.birthYearDate}` : data.elementList[0].elementValue.value,
+    }
 
-    bkapi
-      .post("/thesarus/create", request, {
-        headers: headers,
-      })
-      .then(function (response) {
-        if (response.status === 201) {
-          console.log(response);
-          setMessage("Registro criado com sucesso!")
-          router.push(`/admin/authority/${id}`);
-        }
-      })
-      .catch(function (error) {
-        console.error(error);
-      })
-      .finally(function () {
-        setProgress(false)
-        setOpenSnack(true)
-        //   setDoc(null)
-      });
+    const request = { ...obj, ...formData };
+    // console.log(request)
+
+    // bkapi
+    //   .post("/thesarus/create", request, {
+    //     headers: headers,
+    //   })
+    //   .then(function (response) {
+    //     if (response.status === 201) {
+    //       console.log(response);
+    //       setMessage("Registro criado com sucesso!")
+    //       router.push(`/admin/authority/${response.data.id}`);
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error);
+    //   })
+    //   .finally(function () {
+    //     setProgress(false)
+    //     setOpenSnack(true)
+    //     //   setDoc(null)
+    //   });
+      
   }
 
 
@@ -256,7 +243,7 @@ export default function Create() {
   return (
     <Container maxWidth="xl">
       <Box my={"1rem"}>
-        <BreadcrumbsBK previousPaths={previousPaths} currentPath={id && id} />
+        <BreadcrumbsBK previousPaths={previousPaths} currentPath={id ? id : "1"} />
       </Box>
       <form onSubmit={handleSubmit(createAuthority)}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -282,7 +269,7 @@ export default function Create() {
                 Autoridade
               </Typography>
             </Grid>
-            <FormElementList control={control} register={register} />
+            <FormElementList control={control} register={register} error={errors.elementList} />
             <Grid item xs={5}>
               {/* FullerName */}
               <FormFullerName register={register} />
@@ -296,7 +283,7 @@ export default function Create() {
                   label="Local de Nascimento"
                   variant="outlined"
                   size="small"
-                  // focused={doc?.birthPlace ? true : false}
+                  defaultValue=""
                   {...register("birthPlace")}
                 />
                 <TextField

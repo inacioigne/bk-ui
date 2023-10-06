@@ -5,22 +5,23 @@ export const MadsSchema = z.object({
         z.object({
             type: z.string(),
             elementValue: z.object({
-                value: z.string(), lang: z.string()
+                value: z.string().nonempty("Nome é obrigatório"), lang: z.string()
             })
         })),
-    fullerName: z.string(),
-    birthPlace: z.string(),
-    birthDayDate: z.string(),
-    birthMonthDate: z.string(),
-    birthYearDate: z.string(),
-    deathPlace: z.string(),
-    deathDayDate: z.string(),
-    deathMonthDate: z.string(),
-    deathYearDate: z.string(),
-    variant: z.array(
+    fullerName: z.string().nullable(),
+    birthPlace: z.nullable(z.string()),
+    birthDayDate: z.string().nullable(),
+    birthMonthDate: z.string().nullable(),
+    birthYearDate: z.string().nullable(),
+    deathPlace: z.string().nullable(),
+    deathDayDate: z.string().nullable(),
+    deathMonthDate: z.string().nullable(),
+    deathYearDate: z.string().nullable(),
+    hasVariant: z.array(
         z.object({
-            fullNameElement: z.string(),
-            // dateNameElement: z.string(),
+            type: z.string(),
+            elementList: z.array(z.object({type: z.string(), elementValue: z.object({value: z.string()})})),
+            variantLabel: z.string()
         })
     ),
     hasAffiliation: z.array(

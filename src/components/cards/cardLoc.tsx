@@ -79,7 +79,6 @@ export default function CardLoc({ hit, setHit }: Props) {
                     setOpenSnack,
                     router
                   )
-
             // router.push(`/admin/authority/${id}`);
 
           }

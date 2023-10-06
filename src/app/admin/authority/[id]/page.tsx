@@ -153,7 +153,6 @@ export default async function Page({ params }: { params: { id: string } }) {
                           </Button>
 
                           )}
-                          
                           <Button
                             variant="outlined"
                             startIcon={<FcCalendar />}

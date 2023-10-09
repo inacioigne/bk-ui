@@ -18,7 +18,6 @@ import { useFieldArray } from "react-hook-form";
 import { Fragment } from "react";
 
 export default function FormElementList({ control, register, error }: Props) {
-    // console.log(error)
 
     const {
         fields: fieldsElementList,
@@ -29,13 +28,13 @@ export default function FormElementList({ control, register, error }: Props) {
         name: "elementList",
     });
 
-    const addAffiliation = () => {
-        appendElementList({
-            organization: { label: "", uri: "" },
-            affiliationStart: "",
-            affiliationEnd: ""
-        })
-    };
+    // const addAffiliation = () => {
+    //     appendElementList({
+    //         organization: { label: "", uri: "" },
+    //         affiliationStart: "",
+    //         affiliationEnd: ""
+    //     })
+    // };
 
     return (
         <>

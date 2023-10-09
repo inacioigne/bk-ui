@@ -44,21 +44,22 @@ export default function FormAffiliation({ control, register }: Props) {
             {fieldshasAffiliation.map((field, index) => (
                 <Fragment key={index}>
                     <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            label="Organização"
-                            variant="outlined"
-                            size="small"
-                            {...register(`hasAffiliation.${index}.organization.label`)}
-                        />
-                        <TextField
-                            fullWidth
-                            label="Url"
-                            variant="outlined"
-                            size="small"
-                            {...register(`hasAffiliation.${index}.organization.uri`)}
-                        />
-
+                        <Box sx={{ display: "flex", gap: "10px"}}>
+                            <TextField
+                                fullWidth
+                                label="Organização"
+                                variant="outlined"
+                                size="small"
+                                {...register(`hasAffiliation.${index}.organization.label`)}
+                            />
+                            <TextField
+                                fullWidth
+                                label="Url"
+                                variant="outlined"
+                                size="small"
+                                {...register(`hasAffiliation.${index}.organization.uri`)}
+                            />
+                        </Box>
                     </Grid>
 
                     <Grid item xs={2}>
@@ -67,7 +68,6 @@ export default function FormAffiliation({ control, register }: Props) {
                             label="Início do vínculo"
                             variant="outlined"
                             size="small"
-                            //sx={{ width: 100 }}
                             {...register(`hasAffiliation.${index}.affiliationStart`)}
                         />
                     </Grid>
@@ -78,7 +78,6 @@ export default function FormAffiliation({ control, register }: Props) {
                             label="Fim do vínculo"
                             variant="outlined"
                             size="small"
-                            // sx={{ width: 100 }}
                             {...register(`hasAffiliation.${index}.affiliationEnd`)}
                         />
                     </Grid>

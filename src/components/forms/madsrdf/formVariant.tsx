@@ -10,10 +10,9 @@ import { Fragment } from "react";
 // React Icons
 import { IoRemove, IoAddOutline } from "react-icons/io5";
 
-interface Props {
-  control: any;
-  register: any;
-}
+import FormElementListVariant from "@/components/forms/madsrdf/formElementListVariant"
+
+
 
 interface PropsElementList {
   nestIndex: number;
@@ -28,19 +27,19 @@ function ElementList({ nestIndex, control, register }: PropsElementList) {
     remove: removeElementList,
   } = useFieldArray({
     control,
-    name: `hasVariant.${nestIndex}.elementList`,
+    name: `hasVariant.${nestIndex}.hasVariant`,
   });
 
   const addElement = () => {
     appendElementList({
-      type: "",
-      //   elementList: {type: "FullNameElement", elementValue: {value: ""}}
+      type: "FullNameElement",
+      elementValue: { value: "" }
     });
   };
   return (
     <div>
       {fieldsElementList.map((field, index) => (
-        <Box key={field.id} sx={{display: 'flex'}}>
+        <Box key={field.id} sx={{ display: 'flex' }}>
           <Grid item xs={2}>
             <TextField
               fullWidth
@@ -55,7 +54,7 @@ function ElementList({ nestIndex, control, register }: PropsElementList) {
           <Grid item xs={5}>
             <TextField
               fullWidth
-              disabled={true}
+              // disabled={true}
               //   defaultValue={"FullNameElement"}
               label="Nome"
               variant="outlined"
@@ -67,9 +66,9 @@ function ElementList({ nestIndex, control, register }: PropsElementList) {
           </Grid>
           <Grid item xs={2}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              {/* <IconButton aria-label="add" onClick={addElement} color="primary">
+              <IconButton aria-label="add" onClick={addElement} color="primary">
                 <IoAddOutline />
-              </IconButton> */}
+              </IconButton>
               <IconButton
                 aria-label="add"
                 onClick={() => {
@@ -83,32 +82,40 @@ function ElementList({ nestIndex, control, register }: PropsElementList) {
           </Grid>
         </Box>
       ))}
-      <IconButton aria-label="add" onClick={addElement} color="primary">
-        <IoAddOutline />
-      </IconButton>
     </div>
   );
 }
 
-export default function FormVariant({ control, register }: Props) {
-  const {
-    fields: fieldsVariant,
-    append: appendVariant,
-    remove: removeVariant,
-  } = useFieldArray({
+interface Props {
+  control: any;
+  register: any;
+  getValues: any;
+  setValue: any;
+}
+
+export default function FormVariant({ control, register, getValues, setValue, }: Props) {
+
+
+  const { fields, append, remove, prepend } = useFieldArray({
     control,
-    name: "hasVariant",
+    name: "hasVariant"
   });
 
+
+
   const addVariant = () => {
-    appendVariant({
-      type: "PersonalName",
-      elementList: { type: "FullNameElement", elementValue: { value: "" } },
-    });
+    setValue("hasVariant", [
+      ...(getValues().hasVariant || []),
+      {
+        type: "PersonalName",
+        elementList: [{ type: 'FullNameElement', elementValue: { value: "" } }]
+
+      }
+    ])
   };
   return (
     <>
-      {fieldsVariant.map((field, index) => (
+      {fields.map((field, index) => (
         <Fragment key={index}>
           <Grid item xs={10}>
             <TextField
@@ -137,36 +144,8 @@ export default function FormVariant({ control, register }: Props) {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <ElementList
-              control={control}
-              register={register}
-              nestIndex={index}
-            />
+            <FormElementListVariant nestIndex={index} {...{ control, register }} />
           </Grid>
-
-          {/* <Grid item xs={2}>
-            <TextField
-              fullWidth
-              disabled={true}
-              defaultValue={"FullNameElement"}
-              label="Tipo do Nome"
-              variant="outlined"
-              size="small"
-              {...register(`hasVariant.${index}.elementList.${index}.type`)}
-            />
-          </Grid>
-          <Grid item xs={7}>
-            <TextField
-              fullWidth
-              //   disabled={true}
-              label="Nome"
-              variant="outlined"
-              size="small"
-              {...register(
-                `hasVariant.${index}.elementList.${index}.elementValue.value`
-              )}
-            />
-          </Grid> */}
         </Fragment>
       ))}
     </>

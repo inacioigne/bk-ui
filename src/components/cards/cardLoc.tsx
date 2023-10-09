@@ -26,12 +26,12 @@ import { useAlert } from "src/providers/alert";
 import { CreateAuthority } from "@/services/thesarus/createAuthority"
 
 // BiblioKeia Components
-import IdentifiesRWO from "@/components/madsrdf/identifiesRWO"
-import FieldOfActivity from "@/components/madsrdf/fieldOfActivity"
-import HasAffiliation from "src/components/madsrdf/hasAffiliation";
-import HasVariant from "src/components/madsrdf/hasVariant";
-import Occupation from "src/components/madsrdf/occupation";
-import HasCloseExternalAuthority from "src/components/madsrdf/hasCloseExternalAuthority";
+import IdentifiesRWO from "@/components/madsrdf/view/identifiesRWO"
+import FieldOfActivity from "@/components/madsrdf/view/fieldOfActivity"
+import HasAffiliation from "@/components/madsrdf/view/hasAffiliation";
+import HasVariant from "@/components/madsrdf/view/hasVariant";
+import Occupation from "@/components/madsrdf/view/occupation";
+import HasCloseExternalAuthority from "@/components/madsrdf/view/hasCloseExternalAuthority";
 import BtnIcon from "src/components/buttons/btnIcon";
 
 // React Icons

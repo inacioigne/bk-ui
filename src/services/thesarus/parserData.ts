@@ -1,53 +1,63 @@
 function RemoveNull(obj: any) {
-    const formData = Object.keys(obj).reduce((acc:any, key) => {
-      if (obj[key] !== "") {
-       
-        acc[key] = obj[key];
-      }
-      return acc;
-    }, {});
-    return formData
-  }
+  const formData = Object.keys(obj).reduce((acc: any, key) => {
+    if (obj[key] !== "") {
+      acc[key] = obj[key];
+    }
+    return acc;
+  }, {});
+  return formData;
+}
 
 export function ParserData(data: any) {
-
-  let variants = data['hasVariant']
-  if (variants[0].elementList[0].elementValue.value === '') {
-    delete data.hasVariant
+  // Parser Variant
+  let variants = data["hasVariant"];
+  let v = variants.filter(function (variant: any) {
+    let value = variant.elementList[0].elementValue.value;
+    if (value !== "") {
+      return variant;
+    }
+  });
+  if (v.length === 0) {
+    delete data.hasVariant;
   } else {
-    let arr = variants.map((e: any) => {
-      e['variantLabel'] = e.elementList[0].elementValue.value
-      return e
-    })
-    data['hasVariant'] = arr
+    data["hasVariant"] = v;
   }
 
-    for (const [chave, valor] of Object.entries(data)) {
-      if (Array.isArray(valor)) {
-        let arr = valor.map((e:any) => {
-          for (let [chave, valor] of Object.entries(e)) {
-            if (valor instanceof Object) {
-              let obj = RemoveNull(valor)
-              Object.keys(obj).length === 0 ? e[chave] = "" : e[chave] = obj
-            } 
-          }
-          let obj = RemoveNull(e)
-          if (Object.keys(obj).length === 0 ) {
-            return null
-          } else {
-            return obj
-          }          
-        })
-        if (arr[0] === null) {
-          data[chave] = ""
-        } else {
-          data[chave] = arr
+  let a = data.hasAffiliation;
+  let hasAffiliation = a.filter((e: any) => {
+    if (e.organization.label !== "") {
+      return e;
+    }
+  });
+  if (hasAffiliation.length === 0) {
+    delete data.hasAffiliation;
+  } else {
+    data.hasAffiliation = hasAffiliation;
+  }
+
+  // Parser Uris
+  let uris = [
+    "hasCloseExternalAuthority",
+    "identifiesRWO",
+    "occupation",
+    "fieldOfActivity",
+  ];
+  for (let [k, v] of Object.entries(data)) {
+    if (uris.includes(k)) {
+      let uri = v.filter((e: any) => {
+        if (e.label !== "") {
+          return e;
         }
+      });
+      if (uri.length === 0) {
+        delete data[k];
+      } else {
+        data[k] = uri;
       }
     }
-  
-    let formData = RemoveNull(data)
-
-
-    return formData
   }
+
+  let formData = RemoveNull(data)
+
+  return formData;
+}

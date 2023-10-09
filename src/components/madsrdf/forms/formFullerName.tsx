@@ -12,7 +12,6 @@ export default function FormFullerName({ register }: Props) {
             size="small"
             label="Nome completo"
             variant="outlined"
-            // focused={doc?.fullerName ? true : false}
             {...register("fullerName")}
         />
     )

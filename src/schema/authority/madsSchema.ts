@@ -5,11 +5,11 @@ export const MadsSchema = z.object({
         z.object({
             type: z.string(),
             elementValue: z.object({
-                value: z.string().nonempty("Nome é obrigatório"), lang: z.string()
+                value: z.string().nonempty("Nome é obrigatório"), lang: z.string().nullable()
             })
         })),
     fullerName: z.string().nullable(),
-    birthPlace: z.nullable(z.string()),
+    birthPlace: z.string().nullable(),
     birthDayDate: z.string().nullable(),
     birthMonthDate: z.string().nullable(),
     birthYearDate: z.string().nullable(),
@@ -20,44 +20,45 @@ export const MadsSchema = z.object({
     hasVariant: z.array(
         z.object({
             type: z.string(),
-            elementList: z.array(z.object({type: z.string(), elementValue: z.object({value: z.string()})})),
-            // variantLabel: z.string()
+            elementList: z.array(
+                z.object({ type: z.string(), elementValue: z.object({ value: z.string() }) })
+            )
         })
     ),
     hasAffiliation: z.array(
         z.object({
-            organization: z.object({ label: z.string(), uri: z.string() }),
-            affiliationStart: z.string(),
-            affiliationEnd: z.string(),
+            organization: z.object({ label: z.string(), uri: z.string().nullable() }),
+            affiliationStart: z.string().nullable(),
+            affiliationEnd: z.string().nullable(),
         })
     ),
     hasCloseExternalAuthority: z.array(
         z.object({
-            uri: z.string(),
+            uri: z.string().nullable(),
             label: z.string(),
-            base: z.string()
+            base: z.string().nullable()
         })
     ),
     identifiesRWO: z.array(
         z.object({
-            uri: z.string(),
+            uri: z.string().nullable(),
             label: z.string(),
-            base: z.string()
+            base: z.string().nullable()
         })
     ),
     occupation: z.array(
         z.object({
-            uri: z.string(),
+            uri: z.string().nullable(),
             label: z.string(),
-            base: z.string()
+            base: z.string().nullable()
         })
     ),
     fieldOfActivity: z.array(
         z.object({
-            uri: z.string(),
+            uri: z.string().nullable(),
             label: z.string(),
-            base: z.string()
+            base: z.string().nullable()
         })
     ),
-    imagem: z.string()
+    imagem: z.string().nullable()
 });

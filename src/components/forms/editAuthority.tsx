@@ -46,14 +46,17 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // BiblioKea Components
-import FormElementList from "@/components/forms/madsrdf/formElementList"
-import FormAffiliation from "@/components/forms/madsrdf/formAffiliation"
+import FormElementList from "@/components/madsrdf/forms/formElementList"
+import FormAffiliation from "@/components/madsrdf/forms/formAffiliation"
 import FormVariant from "@/components/forms/madsrdf/formVariant"
-import FormHCEA from "@/components/forms/madsrdf/formHCEA"
-import FormRWO from "@/components/forms/madsrdf/formRWO"
-import FormOccupation from "@/components/forms/madsrdf/formOccupation"
-import FormFieldOfActivity from "@/components/forms/madsrdf/formFieldOfActivity"
-import FormFullerName from "@/components/forms/madsrdf/formFullerName"
+import FormHCEA from "@/components/madsrdf/forms/formHCEA"
+import FormRWO from "@/components/madsrdf/forms/formRWO"
+import FormOccupation from "@/components/madsrdf/forms/formOccupation"
+import FormFieldOfActivity from "@/components/madsrdf/forms/formFieldOfActivity"
+import FormFullerName from "@/components/madsrdf/forms/formFullerName"
+import FormBirth from "@/components/madsrdf/forms/birth"
+import FormDeath from "@/components/madsrdf/forms/death"
+import FormHasVariant from "@/components/madsrdf/forms/formHasVariant"
 
 interface Props {
     doc: schemaAuthorityDoc;
@@ -148,7 +151,10 @@ function ParserVariant(variant: any) {
         })
         return arr
     } else {
-        let arr = [{ fullNameElement: "" }]
+        let arr =  [{
+            type: "PersonalName",
+            elementList: [{ type: "FullNameElement", elementValue: { value: "" } }],
+        }]
         return arr
     }
 
@@ -161,6 +167,7 @@ function TransForm(doc: schemaAuthorityDoc) {
                 value: doc.authority[0],// lang: "" 
             }
         }],
+        identifiersLccn: doc.identifiersLccn && doc.identifiersLccn,
         fullerName: doc.fullerName && doc.fullerName[0],
         birthPlace: doc.birthPlace && doc.birthPlace[0],
         birthDayDate: doc.birthDayDate,
@@ -203,15 +210,18 @@ export default function EditAuthority({ doc }: Props) {
         // setTypeAlert,
     } = useAlert();
 
+    const defaultValues = TransForm(doc)
+
     const {
         control,
         register,
         handleSubmit,
         formState: { errors },
         setValue,
+        getValues
     } = useForm<EditAuthorityData>({
         resolver: zodResolver(MadsSchema),
-        defaultValues: TransForm(doc),
+        defaultValues
     });
     // console.log(errors)
 
@@ -225,7 +235,7 @@ export default function EditAuthority({ doc }: Props) {
 
         let obj = {
             type: doc.type,
-            identifiersLccn: doc.identifiersLccn,
+            
             identifiersLocal: doc.id,
             adminMetadata: {
                 //   "assigner": "http://id.loc.gov/vocabulary/organizations/brmninpa",
@@ -250,25 +260,25 @@ export default function EditAuthority({ doc }: Props) {
         const request = { ...obj, ...formData };
         console.log(request)
 
-        // bkapi.put("thesarus/edit/", request, {
-        //     headers: headers,
-        // })
-        //     .then(function (response) {
-        //         console.log(response);
-        //         if (response.status === 200) {
-        //             // console.log(response);
-        //             setMessage("Registro criado com sucesso!")
-        //             router.push(`/admin/authority/${doc.id}`);
-        //         }
-        //     })
-        //     .catch(function (error) {
-        //         console.error(error);
-        //     })
-        //     .finally(function () {
-        //         setProgress(false)
-        //         //   setOpenSnack(true)
-        //         //   setDoc(null)
-        //     });
+        bkapi.put("thesarus/edit/", request, {
+            headers: headers,
+        })
+            .then(function (response) {
+                console.log(response);
+                if (response.status === 200) {
+                    console.log(response);
+                    setMessage("Registro criado com sucesso!")
+                    router.push(`/admin/authority/${doc.id}`);
+                }
+            })
+            .catch(function (error) {
+                console.error(error);
+            })
+            .finally(function () {
+                setProgress(false)
+                //   setOpenSnack(true)
+                //   setDoc(null)
+            });
     }
 
     return (
@@ -312,7 +322,11 @@ export default function EditAuthority({ doc }: Props) {
                     <Grid item xs={5}>
                         <FormFullerName register={register} />
                     </Grid>
-                    <Grid item xs={6}>
+                     {/* Nascimento */}
+                     <FormBirth {...{ control, register }} />
+                        {/* Falecimento */}
+                        <FormDeath  {...{ control, register }} />
+                    {/* <Grid item xs={6}>
                         <Typography variant="subtitle1" gutterBottom>
                             Nascimento:
                         </Typography>
@@ -420,15 +434,18 @@ export default function EditAuthority({ doc }: Props) {
                                 {...register("deathYearDate")}
                             />
                         </Box>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12}>
                         <Typography variant="h6" gutterBottom>
                             Variantes do nome
                         </Typography>
                         <Divider />
                     </Grid>
+                    <FormHasVariant
+                            {...{ control, register, defaultValues, getValues, setValue, errors }}
+                        />
                     {/* hasVariant */}
-                    <FormVariant control={control} register={register} />
+                    {/* <FormVariant control={control} register={register} /> */}
                     <Grid item xs={12}>
                         <Typography variant="h6" gutterBottom>
                             Afiliação

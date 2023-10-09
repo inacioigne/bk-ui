@@ -9,17 +9,18 @@ function RemoveNull(obj: any) {
     return formData
   }
 
-// function ParserVariant(hasVariant: any) {
-//   let variants = hasVariant.map((e: any) => {
-//     let 
-//   })
-
-// }
-
 export function ParserData(data: any) {
 
-  console.log(data)
-
+  let variants = data['hasVariant']
+  if (variants[0].elementList[0].elementValue.value === '') {
+    delete data.hasVariant
+  } else {
+    let arr = variants.map((e: any) => {
+      e['variantLabel'] = e.elementList[0].elementValue.value
+      return e
+    })
+    data['hasVariant'] = arr
+  }
 
     for (const [chave, valor] of Object.entries(data)) {
       if (Array.isArray(valor)) {

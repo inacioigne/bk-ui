@@ -99,29 +99,6 @@ export default function Create() {
     setTypeAlert,
   } = useAlert();
 
-
-
-  // const {
-  //   fields: fieldsVariant,
-  //   append: appendVariant,
-  //   remove: removeVariant,
-  //   swap,
-  //   move,
-  //   insert,
-  // } = useFieldArray({
-  //   control,
-  //   name: "hasVariant",
-  // });
-
-  // const {
-  //   fields: fieldsExternalAuthority,
-  //   append: appendExternalAuthority,
-  //   remove: removeExternalAuthority,
-  // } = useFieldArray({
-  //   control,
-  //   name: "hasExactExternalAuthority",
-  // });
-
   useEffect(() => {
     bkapi
       .get(`/thesarus/next_id`)
@@ -142,14 +119,12 @@ export default function Create() {
   const defaultValues = {
     elementList: [{
       type: 'FullNameElement', elementValue: {
-        value: "",// lang: "" 
+        value: "", 
       }
     }],
     hasVariant: [{
       type: "PersonalName",
-      elementList: [{type: "", elementValue: {value: ""}}],
-      fullNameElement: "",
-      //   dateNameElement: "",
+      elementList: [{type: "FullNameElement", elementValue: {value: ""}}],
     }],
     hasAffiliation: [{
       organization: { label: "", uri: "" },
@@ -189,14 +164,15 @@ export default function Create() {
     defaultValues: defaultValues,
   });
 
-  // console.log(errors)
+  console.log(errors)
 
   
 
-  function createAuthority(data: any) {
+  function createAuthority(data: any) {    
 
     // setProgress(true)
     let formData = ParserData(data)
+    console.log(formData)
     
        
     let obj = {
@@ -212,9 +188,7 @@ export default function Create() {
         `${data.elementList[0].elementValue.value}, ${data.birthYearDate}` : data.elementList[0].elementValue.value,
     }
 
-    const request = { ...obj, ...formData };
-    // console.log(request)
-
+    // const request = { ...obj, ...formData };
     // bkapi
     //   .post("/thesarus/create", request, {
     //     headers: headers,

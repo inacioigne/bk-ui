@@ -21,7 +21,7 @@ export const MadsSchema = z.object({
         z.object({
             type: z.string(),
             elementList: z.array(z.object({type: z.string(), elementValue: z.object({value: z.string()})})),
-            variantLabel: z.string()
+            // variantLabel: z.string()
         })
     ),
     hasAffiliation: z.array(

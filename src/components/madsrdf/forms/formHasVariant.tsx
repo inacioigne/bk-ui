@@ -48,11 +48,6 @@ export default function FormHasVariant({ control, register, setValue, getValues 
                                 size="small"
                                 {...register(`hasVariant.${index}.type`)}
                             />
-                            {/* <input {...register(`hasVariant.${index}.type`)} /> */}
-
-                            {/* <button type="button" onClick={() => remove(index)}>
-                                Delete
-                            </button> */}
                         </Grid>
                         <Grid item xs={2}>
                             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -62,7 +57,7 @@ export default function FormHasVariant({ control, register, setValue, getValues 
                                 <IconButton
                                     aria-label="add"
                                     onClick={() => {
-                                        removeVariant(index);
+                                        remove(index);
                                     }}
                                     color="primary"
                                 >

@@ -1,9 +1,6 @@
 // Schema
 import { schemaMads } from "@/schema/authority";
-import { MetadataRoute } from "next/types";
-import AppRouterInstance from "next";
-import { NextRouter } from "next/router";
-import { useRouter } from "next/navigation";
+
 
 // BiblioKeia Services
 import { bkapi } from "src/services/api";
@@ -14,9 +11,10 @@ export function CreateAuthority(
   setTypeAlert: Function,
   setMessage: Function,
   setOpenSnack: Function,
-  router: any
+  router: any,
+  setHit: Function
 ) {
-  console.log(authority);
+
   setProgress(true);
   bkapi
     .post("/thesarus/create", authority)
@@ -29,6 +27,7 @@ export function CreateAuthority(
     })
     .catch(function (error) {
       if (error.response.status == 409) {
+        setHit(null)
         setTypeAlert("error");
         setMessage(error.response.data.detail);
         setOpenSnack(true);

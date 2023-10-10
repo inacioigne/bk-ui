@@ -37,7 +37,7 @@ export default function HasCloseExternalAuthority({ hasCloseExternalAuthority }:
                 flexDirection: 'column'}}>
                     {
                         hasCloseExternalAuthority.map((e, index) => (
-                            <Link key={index} href={e.uri} target="_blank">
+                            <Link key={index} href={`${e.uri}`} target="_blank">
                                 <StyledTreeItem
                                     nodeId={`${index + 5}`}
                                     labelText={e.label}

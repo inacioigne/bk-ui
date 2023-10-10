@@ -42,7 +42,7 @@ import { FcCalendar } from "react-icons/fc";
 import { useRouter } from 'next/navigation'
 
 // BiblioKeia Services
-import { bkapi } from "@/services/api";
+// import { bkapi } from "@/services/api";
 
 interface Props {
   hit: schemaMads;
@@ -53,49 +53,45 @@ export default function CardLoc({ hit, setHit }: Props) {
 
   const router = useRouter();
   const { setProgress } = useProgress();
-  const {
-    setOpenSnack,
-    setMessage,
-    setTypeAlert,
-  } = useAlert();
+  const { setOpenSnack, setMessage, setTypeAlert } = useAlert();
 
-  function LocExist(identifiersLccn:any) {
-    setProgress(true)
+  // function LocExist(identifiersLccn:any) {
+  //   setProgress(true)
 
-    bkapi
-      .get(`/import/loc/exist/${identifiersLccn}`)
-      .then(function (response) {
-        if (response.status === 200) {
-          if (response.data) {
-            setTypeAlert("error");
-            setMessage("Registro já existe")
-            setOpenSnack(true);
-          } else {
-            CreateAuthority(
-                    hit,
-                    setProgress,
-                    setTypeAlert,
-                    setMessage,
-                    setOpenSnack,
-                    router
-                  )
-            // router.push(`/admin/authority/${id}`);
+  //   bkapi
+  //     .get(`/import/loc/exist/${identifiersLccn}`)
+  //     .then(function (response) {
+  //       if (response.status === 200) {
+  //         if (response.data) {
+  //           setTypeAlert("error");
+  //           setMessage("Registro já existe")
+  //           setOpenSnack(true);
+  //         } else {
+  //           CreateAuthority(
+  //                   hit,
+  //                   setProgress,
+  //                   setTypeAlert,
+  //                   setMessage,
+  //                   setOpenSnack,
+  //                   router
+  //                 )
+  //           // router.push(`/admin/authority/${id}`);
 
-          }
-          // console.log(response);
-          // setTypeAlert("error");
-        }
-      })
-      .catch(function (error) {
-        console.error(error);
-      })
-      .finally(function () {
-        setProgress(false)
-        //   setOpenSnack(true)
-        //   setDoc(null)
-      });
+  //         }
+  //         // console.log(response);
+  //         // setTypeAlert("error");
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //     })
+  //     .finally(function () {
+  //       setProgress(false)
+  //       //   setOpenSnack(true)
+  //       //   setDoc(null)
+  //     });
 
-  }
+  // }
 
   return (
     <Card variant="outlined">
@@ -119,7 +115,16 @@ export default function CardLoc({ hit, setHit }: Props) {
               <IconButton
                 aria-label="settings"
                 onClick={() => {
-                  LocExist(hit.identifiersLccn)
+                  // LocExist(hit.identifiersLccn)
+                  CreateAuthority(
+                    hit,
+                    setProgress,
+                    setTypeAlert,
+                    setMessage,
+                    setOpenSnack,
+                    router,
+                    setHit
+                  )
                 }}
               >
                 <CiImport />

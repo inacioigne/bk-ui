@@ -75,29 +75,30 @@ interface organizationType {
     //base?: string;
 }
 
-interface affialiationType {
-    organization: organizationType;
-    affiliationStart?: string;
-    affiliationEnd?: string;
-}
+// interface affialiationType {
+//     organization: organizationType;
+//     affiliationStart?: string;
+//     affiliationEnd?: string;
+// }
 
-interface DocType {
-    authority: string;
-    fullerName?: string;
-    birthPlace?: string;
-    birthDayDate: string;
-    birthMonthDate: string;
-    birthYearDate: string;
-    deathPlace: string;
-    deathDayDate: string;
-    deathMonthDate: string;
-    deathYearDate: string;
-    variant: variantType[]
-    hasAffiliation: affialiationType[]
-}
+// interface DocType {
+//     authority: string;
+//     fullerName?: string;
+//     birthPlace?: string;
+//     birthDayDate: string;
+//     birthMonthDate: string;
+//     birthYearDate: string;
+//     deathPlace: string;
+//     deathDayDate: string;
+//     deathMonthDate: string;
+//     deathYearDate: string;
+//     variant: variantType[]
+//     hasAffiliation: affialiationType[]
+// }
 
 function ParserUri(uri: any) {
     if (uri) {
+        
         if (Array.isArray(uri)) {
             let arr = uri.map((e: any) => {
                 let obj = { uri: e.uri, label: e.label[0], base: e.base }
@@ -105,7 +106,8 @@ function ParserUri(uri: any) {
             })
             return arr
         } else {
-            let arr = [{ label: uri.label[0], uri: uri.uri, base: uri.base }]
+            
+            let arr = [{ label: uri.label[0], uri: uri.uri, base: uri.base }]           
             return arr
         }
     } else {
@@ -143,15 +145,17 @@ function ParserAffiliation(affiliation: any) {
 
 function ParserVariant(variant: any) {
     if (variant) {
+
         let arr = variant.map((e: string) => {
             let obj = {
-                fullNameElement: e, //dateNameElement: "" 
+                type: "PersonalName",
+                elementList: [{ type: "FullNameElement", elementValue: { value: e } }],
             }
             return obj
         })
         return arr
     } else {
-        let arr =  [{
+        let arr = [{
             type: "PersonalName",
             elementList: [{ type: "FullNameElement", elementValue: { value: "" } }],
         }]
@@ -161,10 +165,13 @@ function ParserVariant(variant: any) {
 }
 
 function TransForm(doc: schemaAuthorityDoc) {
+    // let rwo = ParserUri(doc.identifiesRWO)
+    // console.log("rwo: ", doc.identifiesRWO)
+
     const obj: any = {
         elementList: [{
             type: 'FullNameElement', elementValue: {
-                value: doc.authority[0],// lang: "" 
+                value: doc.authority[0],
             }
         }],
         identifiersLccn: doc.identifiersLccn && doc.identifiersLccn,
@@ -173,7 +180,7 @@ function TransForm(doc: schemaAuthorityDoc) {
         birthDayDate: doc.birthDayDate,
         birthMonthDate: doc.birthMonthDate,
         birthYearDate: doc.birthYearDate,
-        deathPlace: doc.deathPlace,
+        deathPlace: doc.deathPlace && doc.deathPlace[0],
         deathDayDate: doc.deathDayDate,
         deathMonthDate: doc.deathMonthDate,
         deathYearDate: doc.deathYearDate,
@@ -185,7 +192,6 @@ function TransForm(doc: schemaAuthorityDoc) {
         fieldOfActivity: ParserUri(doc.fieldOfActivity),
         imagem: doc.imagem
     }
-
     return obj
 }
 
@@ -204,11 +210,7 @@ export default function EditAuthority({ doc }: Props) {
     const router = useRouter();
     const { setProgress } = useProgress();
 
-    const {
-        setMessage,
-        // typeAlert,
-        // setTypeAlert,
-    } = useAlert();
+    const { setMessage } = useAlert();
 
     const defaultValues = TransForm(doc)
 
@@ -235,7 +237,7 @@ export default function EditAuthority({ doc }: Props) {
 
         let obj = {
             type: doc.type,
-            
+
             identifiersLocal: doc.id,
             adminMetadata: {
                 //   "assigner": "http://id.loc.gov/vocabulary/organizations/brmninpa",
@@ -255,16 +257,16 @@ export default function EditAuthority({ doc }: Props) {
         }
 
         let formData = ParserData(data)
-        
+
 
         const request = { ...obj, ...formData };
-        console.log(request)
+        // console.log(request)
 
         bkapi.put("thesarus/edit/", request, {
             headers: headers,
         })
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 if (response.status === 200) {
                     console.log(response);
                     setMessage("Registro criado com sucesso!")
@@ -318,123 +320,14 @@ export default function EditAuthority({ doc }: Props) {
                             Autoridade
                         </Typography>
                     </Grid>
-                    <FormElementList control={control} register={register} error={errors.elementList}/>
+                    <FormElementList control={control} register={register} error={errors.elementList} />
                     <Grid item xs={5}>
                         <FormFullerName register={register} />
                     </Grid>
-                     {/* Nascimento */}
-                     <FormBirth {...{ control, register }} />
-                        {/* Falecimento */}
-                        <FormDeath  {...{ control, register }} />
-                    {/* <Grid item xs={6}>
-                        <Typography variant="subtitle1" gutterBottom>
-                            Nascimento:
-                        </Typography>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                            <TextField
-                                label="Local de Nascimento"
-                                variant="outlined"
-                                size="small"
-                                focused={doc?.birthPlace ? true : false}
-                                {...register("birthPlace")}
-                            />
-                            <TextField
-                                label="Dia"
-                                variant="outlined"
-                                size="small"
-                                sx={{ minWidth: 40, maxWidth: 50 }}
-                                focused={doc?.birthDayDate ? true : false}
-                                {...register("birthDayDate")}
-                            />
-                            <Controller
-                                name="birthMonthDate"
-                                control={control}
-                                defaultValue=""
-                                rules={{ required: true }}
-                                render={({ field }) => (
-                                    <FormControl
-                                        focused={doc?.birthMonthDate ? true : false}
-                                        sx={{ minWidth: 80 }}
-                                        size="small"
-                                    >
-                                        <InputLabel id="label-month">Mês</InputLabel>
-                                        <Select
-                                            {...field}
-                                            size="small"
-                                            labelId="label-month"
-                                            label="Mês"
-                                        >
-                                            {months.map((mes, index) => (
-                                                <MenuItem key={index} value={mes.value}>
-                                                    {mes.label}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                )}
-                            />
-                            <TextField
-                                label="Ano"
-                                variant="outlined"
-                                sx={{ width: 100 }}
-                                size="small"
-                                focused={doc?.birthYearDate ? true : false}
-                                {...register("birthYearDate")}
-                            />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant="subtitle1" gutterBottom>
-                            Falecimento:
-                        </Typography>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                            <TextField
-                                label="Local de Falecimento"
-                                variant="outlined"
-                                size="small"
-                                focused={doc?.deathPlace ? true : false}
-                                {...register("deathPlace")}
-                            />
-                            <TextField
-                                label="Dia"
-                                variant="outlined"
-                                sx={{ width: 100 }}
-                                size="small"
-                                focused={doc?.deathDayDate ? true : false}
-                                {...register("deathDayDate")}
-                            />
-                            <Controller
-                                name="deathMonthDate"
-                                control={control}
-                                defaultValue=""
-                                rules={{ required: true }}
-                                render={({ field }) => (
-                                    <FormControl
-                                        sx={{ width: 100 }}
-                                        size="small"
-                                        focused={doc?.deathMonthDate ? true : false}
-                                    >
-                                        <InputLabel id="label-month">Mês</InputLabel>
-                                        <Select {...field} labelId="label-month" label="Mês">
-                                            {months.map((mes, index) => (
-                                                <MenuItem key={index} value={mes.value}>
-                                                    {mes.label}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                )}
-                            />
-                            <TextField
-                                label="Ano"
-                                variant="outlined"
-                                sx={{ width: 100 }}
-                                size="small"
-                                focused={doc?.deathMonthDate ? true : false}
-                                {...register("deathYearDate")}
-                            />
-                        </Box>
-                    </Grid> */}
+                    {/* Nascimento */}
+                    <FormBirth {...{ control, register }} />
+                    {/* Falecimento */}
+                    <FormDeath  {...{ control, register }} />
                     <Grid item xs={12}>
                         <Typography variant="h6" gutterBottom>
                             Variantes do nome
@@ -442,10 +335,9 @@ export default function EditAuthority({ doc }: Props) {
                         <Divider />
                     </Grid>
                     <FormHasVariant
-                            {...{ control, register, defaultValues, getValues, setValue, errors }}
-                        />
+                        {...{ control, register, defaultValues, getValues, setValue, errors }}
+                    />
                     {/* hasVariant */}
-                    {/* <FormVariant control={control} register={register} /> */}
                     <Grid item xs={12}>
                         <Typography variant="h6" gutterBottom>
                             Afiliação

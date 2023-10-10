@@ -14,12 +14,12 @@ import { ParamsAuthorityProvider } from "src/providers/paramsAuthority";
 
 // import NextTopLoader from 'nextjs-toploader';
 
-import Loading from "@/app/loading";
+// import Loading from "@/app/loading";
 import { NavigationEvents } from "@/components/utils/navigation-events";
 
 // React Hooks
 import { Suspense } from "react";
-import ProgressBar from "@/components/loadings/progressBar";
+// import ProgressBar from "@/components/loadings/progressBar";
 
 const inter = Inter({ subsets: ["latin"] });
 

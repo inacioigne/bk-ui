@@ -10,7 +10,6 @@ import {
 // BiblioKeia Components
 import BreadcrumbsBK from "src/components/nav/breadcrumbs";
 import DeleteItem from "@/app/admin/authority/[id]/deleteItem";
-// import Occupation from "@/components/solr/ccupation";
 import HasVariant from "@/components/solr/variant";
 import IdentifiesRWO from "@/components/solr/identifiesRWO";
 import FieldOfActivity from "@/components/solr/fieldOfActivity";
@@ -19,16 +18,13 @@ import HasAffiliation from "src/components/solr/hasAffiliation";
 
 // React Icons
 import { FcHome, FcCalendar } from "react-icons/fc";
-import { CiEdit } from "react-icons/ci";
-import {
-  BsFillPersonLinesFill,
-  BsFillPersonPlusFill,
-  // BsFillPersonXFill,
-} from "react-icons/bs";
+import { CiEdit, CiImport } from "react-icons/ci";
+import { BsFillPersonLinesFill, BsFillPersonPlusFill } from "react-icons/bs";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
+import { GiTombstone } from "react-icons/gi"
 
 // Nextjs
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+// import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -62,7 +58,6 @@ async function getData(id: string) {
 
 export default async function Page({ params }: { params: { id: string } }) {
   const data = await getData(params.id);
-  //   console.log(data);
   const [doc] = data.response.docs;
 
   return (
@@ -76,6 +71,16 @@ export default async function Page({ params }: { params: { id: string } }) {
                 {doc.label}
               </Typography>
               <Box>
+              <Link href={"/admin/authority/importation"}>
+                    <Button
+                      variant="outlined"
+                      sx={{ textTransform: "none", mr: "10px" }}
+                      startIcon={<CiImport />}
+                      // sx={{ lineHeight: 2.65, textTransform: "none" }}
+                    >
+                      Importar
+                    </Button>
+                  </Link>
                 <Link href={"/admin/authority/create"}>
                   <Button
                     sx={{ textTransform: "none" }}
@@ -113,26 +118,26 @@ export default async function Page({ params }: { params: { id: string } }) {
                 sx={{ alignItems: "flex-start", alignContent: "flex-start" }}
               >
                 <Grid item xs={4}>
-                    {doc?.fullerName && (
-                      <Box>
-                        <Typography
-                          variant="subtitle2"
-                          sx={{ fontWeight: "bold" }}
-                        >
-                          Nome completo:
-                        </Typography>
-                        <Typography variant="subtitle1" gutterBottom>
-                          {doc.fullerName}
-                        </Typography>
-                      </Box>
-                    )}
+                  {doc?.fullerName && (
+                    <Box>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ fontWeight: "bold" }}
+                      >
+                        Nome completo:
+                      </Typography>
+                      <Typography variant="subtitle1" gutterBottom>
+                        {doc.fullerName}
+                      </Typography>
+                    </Box>
+                  )}
                 </Grid>
                 <Grid item xs={8}>
-                <Box
+                  <Box
                     sx={{ display: "flex", justifyContent: "flex-start", gap: "2rem" }}
                   >
-                   {/* Nascimento */}
-                   {(doc?.birthPlace || doc?.birthDate) && (
+                    {/* Nascimento */}
+                    {(doc?.birthPlace || doc?.birthDate) && (
                       <Box>
                         <Typography
                           variant="subtitle2"
@@ -141,26 +146,26 @@ export default async function Page({ params }: { params: { id: string } }) {
                           Nascimento:
                         </Typography>
                         <Box sx={{ display: "flex", gap: "5px" }}>
-                          { doc?.birthPlace && (
+                          {doc?.birthPlace && (
                             <Button
-                            startIcon={<LiaBirthdayCakeSolid />}
-                            variant="outlined"
-                            size="small"
-                            sx={{ textTransform: "none" }}
-                          >
-                            {" "}
-                            {doc.birthPlace}
-                          </Button>
+                              startIcon={<LiaBirthdayCakeSolid />}
+                              variant="outlined"
+                              size="small"
+                              sx={{ textTransform: "none" }}
+                            >
+                              {" "}
+                              {doc.birthPlace}
+                            </Button>
 
                           )}
-                          <Button
+                          {doc?.birthDate && <Button
                             variant="outlined"
                             startIcon={<FcCalendar />}
                             size="small"
                           >
-                            {" "}
-                            {doc.birthDate}{" "}
-                          </Button>
+                            {doc.birthDate}
+                          </Button>}
+
                         </Box>
                       </Box>
                     )}
@@ -177,12 +182,11 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <Box sx={{ display: "flex", gap: "5px" }}>
                           {doc.deathPlace && (
                             <Button
-                              startIcon={<LiaBirthdayCakeSolid />}
+                              startIcon={<GiTombstone />}
                               variant="outlined"
                               size="small"
                               sx={{ textTransform: "none" }}
                             >
-                              {" "}
                               {doc.deathPlace}
                             </Button>
                           )}
@@ -200,7 +204,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         </Box>
                       </Box>
                     )}
-                     </Box>
+                  </Box>
 
                 </Grid>
 
@@ -223,7 +227,6 @@ export default async function Page({ params }: { params: { id: string } }) {
                       child={doc.occupation}
                       label={"Ocupações:"}
                     />
-
                   </Grid>
                 )}
                 {/* identifiesRWO */}
@@ -235,7 +238,12 @@ export default async function Page({ params }: { params: { id: string } }) {
                 {/* FieldOfActivity */}
                 {doc?.fieldOfActivity && (
                   <Grid item xs={4}>
-                    <FieldOfActivity fieldOfActivity={doc.fieldOfActivity} />
+                    <ChildUri
+                      child={doc.fieldOfActivity}
+                      label={"Campos de Atividade:"}
+                    />
+
+                    {/* <FieldOfActivity fieldOfActivity={doc.fieldOfActivity} /> */}
                   </Grid>
                 )}
                 {/* hasCloseExternalAuthority */}

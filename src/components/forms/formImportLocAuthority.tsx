@@ -53,7 +53,6 @@ interface Props {
   setHit: Function;
 }
 
-
 export default function FormLCSH( props: Props) {
 
   const { setHit } = props

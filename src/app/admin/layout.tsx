@@ -41,7 +41,7 @@ export default function AdminLayout({ children }) {
         {progress && <LinearProgress />}
       </Box>
       <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity={typeAlert} sx={{ width: "100%" }}>
           {message}
         </Alert>
       </Snackbar>

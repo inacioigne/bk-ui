@@ -43,7 +43,7 @@ import Occupations from "src/components/facets/occupations";
 
 // Providers BiblioKeia
 import { useParmasAutority } from "src/providers/paramsAuthority";
-import { useProgress } from "src/providers/progress";
+// import { useProgress } from "src/providers/progress";
 
 // Nextjs
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
@@ -105,8 +105,8 @@ export default function Authority() {
 
   useEffect(() => {
     // setProgress(true)
-    const url = `${pathname}?${searchParams}`;
-    // console.log(url)
+    // const url = `${pathname}?${searchParams}`;
+
 
     paramsAuthority.set("rows", "3");
     SearchNames(
@@ -267,7 +267,6 @@ export default function Authority() {
                       Novo
                     </Button>
                   </Link>
-
                   <Link href={"/admin/authority/importation"}>
                     <Button
                       variant="outlined"

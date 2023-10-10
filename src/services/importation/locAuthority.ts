@@ -4,12 +4,24 @@ import { schemaMads, schemaAffiliation } from "@/schema/authority";
 
 const mads = "http://www.loc.gov/mads/rdf/v1#";
 
+function ParserElementList(metadado: any) {
+  let [type] = metadado["@type"];
+  // let [value] = metadado[`${mads}elementValue`];
+  let obj = { type: type.split("#")[1], 
+  // elementValue: { value: value["@value"], lang:  value["@language"]} 
+};
+  return obj
+}
+
 function ParserData(response: any, uri: string) {
   const data = response.data;
+  
 
   const [a] = data.filter(function (elemento: any) {
     return elemento["@id"] === uri;
   });
+  // console.log(a)
+
   
   // Type
   const [type] = a["@type"].filter(function (elemento: any) {
@@ -31,7 +43,7 @@ function ParserData(response: any, uri: string) {
     });
     const [type] = metadado["@type"];
     const [value] = metadado[`${mads}elementValue`];
-    const obj = { type: type.split("#")[1], elementValue: { value: value["@value"] } };
+    const obj = { type: type.split("#")[1], elementValue: { value: value["@value"], lang:  value["@language"]} };
     return obj;
   });
 
@@ -44,13 +56,26 @@ function ParserData(response: any, uri: string) {
     authoritativeLabel: authoritativeLabel["@value"],
     elementList: obj,
   };
+  // hasBroaderAuthority
+  if (a.hasOwnProperty(`${mads}hasBroaderAuthority`)) {
+    let [item] = a[`${mads}hasBroaderAuthority`]
+    let [metadado] = data.filter(function (elemento: any) {
+      return elemento["@id"] === item["@id"];
+    });
+    let obj = ParserElementList(metadado)
+
+    //type: str
+    //elementValue
+
+    // console.log("HB:", metadado)
+
+  }
   // fullerName
   if (a.hasOwnProperty(`${mads}fullerName`)) {
     let [name] = a[`${mads}fullerName`];
     let [metadado] = data.filter(function (elemento: any) {
       return elemento["@id"] === name["@id"];
     });
-    // let [type] = metadado["@type"];
     let [value] = metadado["http://www.w3.org/2000/01/rdf-schema#label"];
     // let obj = {
     //   type: type.split("#")[1],
@@ -125,8 +150,6 @@ function ParserData(response: any, uri: string) {
       return obj;
     });
     authority["identifiesRWO"] = identifies;
-    
-
 
     identifies.forEach((identifier: any) => {
        if (identifier.uri.split("/")[3] === "rwo") {
@@ -280,6 +303,7 @@ function ParserData(response: any, uri: string) {
       }
     });
   }
+  console.log(authority)
 
   return authority;
 }

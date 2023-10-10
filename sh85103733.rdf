@@ -1,0 +1,876 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:bf="http://id.loc.gov/ontologies/bibframe/" xmlns:bflc="http://id.loc.gov/ontologies/bflc/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <madsrdf:Topic rdf:about="http://id.loc.gov/authorities/subjects/sh85103733" xmlns:madsrdf="http://www.loc.gov/mads/rdf/v1#">
+    <rdf:type rdf:resource="http://www.loc.gov/mads/rdf/v1#Authority"/>
+    <madsrdf:authoritativeLabel xml:lang="en">Poets</madsrdf:authoritativeLabel>
+    <madsrdf:elementList rdf:parseType="Collection">
+      <madsrdf:TopicElement>
+	<madsrdf:elementValue xml:lang="en">Poets</madsrdf:elementValue>
+      </madsrdf:TopicElement>
+    </madsrdf:elementList>
+    <bflc:marcKey>150  $aPoets</bflc:marcKey>
+    <madsrdf:hasCloseExternalAuthority>
+      <madsrdf:Authority rdf:about="http://datos.bne.es/resource/XX533423">
+	<madsrdf:authoritativeLabel xml:lang="es">Poetas</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasCloseExternalAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85085878">
+	<madsrdf:authoritativeLabel xml:lang="en">Minstrels</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerExternalAuthority>
+      <madsrdf:Authority rdf:about="http://id.worldcat.org/fast/1067783">
+	<madsrdf:authoritativeLabel>Poets--Social conditions</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerExternalAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85085755">
+	<madsrdf:authoritativeLabel xml:lang="en">Minnesingers</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85083349">
+	<madsrdf:authoritativeLabel xml:lang="en">Meistersinger</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasCloseExternalAuthority>
+      <madsrdf:Authority rdf:about="http://www.wikidata.org/entity/Q49757">
+	<madsrdf:authoritativeLabel>poet</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasCloseExternalAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh2006003947">
+	<madsrdf:authoritativeLabel xml:lang="en">Performance poets</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasCloseExternalAuthority>
+      <madsrdf:Authority rdf:about="http://id.worldcat.org/fast/1067778">
+	<madsrdf:authoritativeLabel>Poets</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasCloseExternalAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh2008006247">
+	<madsrdf:authoritativeLabel xml:lang="en">Âşıks</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85147679">
+	<madsrdf:authoritativeLabel xml:lang="en">Women poets</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85138082">
+	<madsrdf:authoritativeLabel xml:lang="en">Troubadours</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerExternalAuthority>
+      <madsrdf:Authority rdf:about="http://id.worldcat.org/fast/1067780">
+	<madsrdf:authoritativeLabel>Poets--Manuscripts</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerExternalAuthority>
+    <madsrdf:hasCloseExternalAuthority>
+      <madsrdf:Authority rdf:about="http://data.bnf.fr/ark:/12148/cb11933176q">
+	<madsrdf:authoritativeLabel xml:lang="fr">Poètes</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasCloseExternalAuthority>
+    <madsrdf:hasCloseExternalAuthority>
+      <madsrdf:Authority rdf:about="http://www.yso.fi/onto/yso/p3490">
+	<madsrdf:authoritativeLabel xml:lang="fi">runoilijat</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasCloseExternalAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85011823">
+	<madsrdf:authoritativeLabel xml:lang="en">Bards and bardism</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85117904">
+	<madsrdf:authoritativeLabel xml:lang="en">Scalds and scaldic poetry</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerExternalAuthority>
+      <madsrdf:Authority rdf:about="http://id.worldcat.org/fast/1067782">
+	<madsrdf:authoritativeLabel>Poets--Psychology</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerExternalAuthority>
+    <madsrdf:hasCloseExternalAuthority>
+      <madsrdf:Authority rdf:about="https://d-nb.info/gnd/4168391-2">
+	<madsrdf:authoritativeLabel xml:lang="de">Lyriker</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasCloseExternalAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh2002009729">
+	<madsrdf:authoritativeLabel xml:lang="en">Indian poets</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85138093">
+	<madsrdf:authoritativeLabel xml:lang="en">Trouvères</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerExternalAuthority>
+      <madsrdf:Authority rdf:about="http://id.worldcat.org/fast/1067779">
+	<madsrdf:authoritativeLabel>Poets--Family relationships</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerExternalAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85103892">
+	<madsrdf:authoritativeLabel xml:lang="en">Poets laureate</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerExternalAuthority>
+      <madsrdf:Authority rdf:about="http://id.worldcat.org/fast/1067781">
+	<madsrdf:authoritativeLabel>Poets--Political and social views</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerExternalAuthority>
+    <madsrdf:hasCloseExternalAuthority>
+      <madsrdf:Authority rdf:about="http://purl.org/bncf/tid/5113">
+	<madsrdf:authoritativeLabel xml:lang="it">Poeti</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasCloseExternalAuthority>
+    <madsrdf:hasBroaderAuthority>
+      <madsrdf:Topic rdf:about="http://id.loc.gov/authorities/subjects/sh85009793">
+	<rdf:type rdf:resource="http://www.loc.gov/mads/rdf/v1#Authority"/>
+	<madsrdf:authoritativeLabel xml:lang="en">Authors</madsrdf:authoritativeLabel>
+	<madsrdf:elementList rdf:parseType="Collection">
+	  <madsrdf:TopicElement>
+	    <madsrdf:elementValue xml:lang="en">Authors</madsrdf:elementValue>
+	  </madsrdf:TopicElement>
+	</madsrdf:elementList>
+      </madsrdf:Topic>
+    </madsrdf:hasBroaderAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85063598">
+	<madsrdf:authoritativeLabel xml:lang="en">Hymn writers</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85079181">
+	<madsrdf:authoritativeLabel xml:lang="en">Lyricists</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerAuthority>
+      <madsrdf:Authority rdf:about="http://id.loc.gov/authorities/subjects/sh85103759">
+	<madsrdf:authoritativeLabel xml:lang="en">Blind poets</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerAuthority>
+    <madsrdf:hasNarrowerExternalAuthority>
+      <madsrdf:Authority rdf:about="http://id.worldcat.org/fast/1067784">
+	<madsrdf:authoritativeLabel>Poets--Study and teaching</madsrdf:authoritativeLabel>
+      </madsrdf:Authority>
+    </madsrdf:hasNarrowerExternalAuthority>
+    <madsrdf:isMemberOfMADSCollection rdf:resource="http://id.loc.gov/authorities/subjects/collection_LCSHAuthorizedHeadings"/>
+    <madsrdf:isMemberOfMADSCollection rdf:resource="http://id.loc.gov/authorities/subjects/collection_LCSH_General"/>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/16555292">
+	<bflc:aap>Abbey, Edwin Austin, 1852-1911 Sappho</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19660635">
+	<bflc:aap>Acevedo, Elizabeth, poet X : a novel</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19456664">
+	<bflc:aap>Alexander, Kwame, Out of wonder : poems celebrating poets</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/10178164">
+	<bflc:aap>Amiet, William Albert, 1890- Shakespeare or two,</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21340618">
+	<bflc:aap>Araghi, Ali The immortals of Tehran</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20456301">
+	<bflc:aap>Arnold, Kevin, 1944- sureness of horses</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/10144508">
+	<bflc:aap>Auslander, Joseph, 1897-1965. winged horse; the story of the poets and their poetry,</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/1704017">
+	<bflc:aap>Auslander, Joseph, 1897-1965. winged horse; the story of the poets and their poetry,</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21835079">
+	<bflc:aap>Baca, Jimmy Santiago, 1952- American orphan</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/18641756">
+	<bflc:aap>Baker, Nicholson, Paul Chowder chronicles : two novels</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19328729">
+	<bflc:aap>Ball, Charlene, Dark lady : a novel of Emilia Bassano Lanyer</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/18038994">
+	<bflc:aap>Berryman, John, 1914-1972 John Berryman papers</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21076695">
+	<bflc:aap>Böhmer, Otto A., 1949- Lichte Momente</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19970272">
+	<bflc:aap>Bolaño, Roberto, 1953-2003, Estrella distante</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/11792247">
+	<bflc:aap>Brodsky, Joseph, 1940-1996 Joseph Brodsky correspondence</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19442973">
+	<bflc:aap>Brooks, Charlotte, 1918-2014 Paul Engle (poet)</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/12992883">
+	<bflc:aap>Bryant, Philip S. Langston Hughes</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21191123">
+	<bflc:aap>Burnside, John, 1955- The music of time</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20568100">
+	<bflc:aap>Carey, Ella, Secret shores</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/16639192">
+	<bflc:aap>Carlstedt, Anna, 1971- Poeter och profeter : från Platon till Mare Kandre</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21445683">
+	<bflc:aap>Charde, Sharon L. I am not a juvenile delinquent</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20164101">
+	<bflc:aap>Charyn, Jerome, loaded gun : Emily Dickinson for the 21st century</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/15842526">
+	<bflc:aap>Cho, Sŏng-yŏn, 1942- Siin ŭn si e michʻyŏya handa 시인 은 시 에 미쳐야 한다</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19604485">
+	<bflc:aap>Cholla needles</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/11240138">
+	<bflc:aap>Contemporary poetry</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20124532">
+	<bflc:aap>Corot, Jean-Baptiste-Camille, 1796-1875 Dante and Virgil</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22330821">
+	<bflc:aap>Critical survey of poetry Contemporary poets</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/18316021">
+	<bflc:aap>Derby, Sally, Jump back, Paul : the life and poems of Paul Laurence Dunbar</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/17343920">
+	<bflc:aap>Ding, Laixian. Shi ren de jia zhi zhi gen = The essential value of poets 诗人的价值之根 = The essential value of poets</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/15223229">
+	<bflc:aap>Doyle, Mike, 1928- Paper trombones : notes on poetics, poets on noetics</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/17625057">
+	<bflc:aap>Doyle, Mike, 1928- Softwood trumpets</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21145205">
+	<bflc:aap>Doyle, Mike, 1928-2016 Riding the pig</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19266734">
+	<bflc:aap>Ekici, Metin, İzmir'de yaşayan âşıklar antolojisi</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21781944">
+	<bflc:aap>Ellenport, Craig Dennis Brutus</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21693368">
+	<bflc:aap>Ellet, E. F. (Elizabeth Fries), 1818-1877 E.F. Ellet correspondence with index</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22358736">
+	<bflc:aap>Fountain, Carrie The poem forest</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20728962">
+	<bflc:aap>From the catbird seat</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21547816">
+	<bflc:aap>George, Erica Words composed of sea and sky</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22254432">
+	<bflc:aap>Goren, Louis M. Louis M. Goren papers</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21450545">
+	<bflc:aap>Greenfield, Eloise Thinker</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/12866512">
+	<bflc:aap>Gregson, Susan R. Francis Scott Key : patriotic poet</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/17958334">
+	<bflc:aap>Gustafson, Klas, 1950- Lyssnarens guide till Cornelis</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21804600">
+	<bflc:aap>Hall, Donald, 1928-2018 Old poets</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21805315">
+	<bflc:aap>Hall, Donald, 1928-2018 Old poets</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/12655652">
+	<bflc:aap>Hasenclever, Walter, 1890-1940 Walter Hasenclever correspondence</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19774991">
+	<bflc:aap>Heine, Stefanie. Transaktualität : ästhetische Dauerhaftigkeit und Flüchtigkeit</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/12667897">
+	<bflc:aap>Hérenger, Alexandre Alexandre Hérenger papers</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19334847">
+	<bflc:aap>Hoffman, Daniel, 1923-2013 Daniel Hoffman papers</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21248381">
+	<bflc:aap>Horydczak, Theodor, approximately 1890-1971 Henry Wadsworth Longfellow statue View of statue of Henry Wadsworth Longfellow</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/17778109">
+	<bflc:aap>Houston, Velina Hasu Velina Hasu Houston collection</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/13262580">
+	<bflc:aap>International who's who in poetry</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/17261685">
+	<bflc:aap>Jacket2</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21726568">
+	<bflc:aap>Jacobs, John Hornor, lush and seething hell : two tales of cosmic horror</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20954321">
+	<bflc:aap>Jin, Ha, 1956- Zi you sheng huo 自由生活</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/17061375">
+	<bflc:aap>Kaminsky, Ilya, 1977- God in the house : poets talk about faith</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/17875010">
+	<bflc:aap>Karlin, Daniel, 1953- figure of the singer</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/12980397">
+	<bflc:aap>Kessler, Milton Milton Kessler papers</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20911348">
+	<bflc:aap>Kirsch, Sarah, Von Haupt- und Nebendrachen ; Von Dichtern und Prosaschreibern : Frankfurter Poetikvorlesungen, 1996/1997</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20040933">
+	<bflc:aap>Kwast, Ernest van der, 1981- The ice-cream makers</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21034001">
+	<bflc:aap>Leav, Lang Poemsia</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22086907">
+	<bflc:aap>Lerner, Bob [Image from LOOK - Job 58-7703 titled Robert Frost]</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22086908">
+	<bflc:aap>Lerner, Bob [Image from LOOK - Job 58-7703 titled Robert Frost]</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22086909">
+	<bflc:aap>Lerner, Bob [Image from LOOK - Job 58-7703 titled Robert Frost]</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22086910">
+	<bflc:aap>Lerner, Bob [Image from LOOK - Job 58-7703 titled Robert Frost]</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22086911">
+	<bflc:aap>Lerner, Bob [Image from LOOK - Job 58-7703 titled Robert Frost]</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20282676">
+	<bflc:aap>Lian, Xi Blood letters</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22371771">
+	<bflc:aap>Lian, Xi Xue shu 血書</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/12668018">
+	<bflc:aap>Lindenberg, Therese, 1893-1980 Therese Lindenberg papers</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21454330">
+	<bflc:aap>Loebinger, Sofia M. Sofia M. Loebinger papers</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22088774">
+	<bflc:aap>Marshall, Jim, 1936-2010 [Image from LOOK - Job 67-3172 titled Jefferson Airplane loves you]</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19394151">
+	<bflc:aap>McDonald, Craig, 1962- Head games : the graphic novel</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21414888">
+	<bflc:aap>Medina, Pablo, 1948- Cuban comedy : a novel</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19121760">
+	<bflc:aap>Mėnd-Ooëo, Gombozhavyn Gol us tungalagshikh t︠s︡ag Гол ус тунгалагших цаг</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20426214">
+	<bflc:aap>Morrison, Blake, executor</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20535286">
+	<bflc:aap>Muñoz, Miguel Angel, 1972- vida constante : conversaciones en el tránsito del milenio</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21575362">
+	<bflc:aap>Nikolić, Lidija Sav moj bol</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/18871555">
+	<bflc:aap>Noll, João Gilberto, Quiet creature on the corner</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/1571938">
+	<bflc:aap>Patterson, Lillie. Francis Scott Key : poet and patriot</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/11837605">
+	<bflc:aap>Poesia</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19150350">
+	<bflc:aap>Poetry &amp; short story reference center</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/16821073">
+	<bflc:aap>Porter, Anne, 1911-2011 Anne Porter papers</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22187088">
+	<bflc:aap>Puthucheary, Rosaly, 1936- The call to poetry</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21998539">
+	<bflc:aap>Ritter, Julius Charles, Mister Misery</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22082067">
+	<bflc:aap>Robertson, Lisa, 1961- The Baudelaire fractal</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22120107">
+	<bflc:aap>Sajé, Natasha, 1955- Terroir</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/18496542">
+	<bflc:aap>San Juan, E. (Epifanio), Jr., 1938- E. San Juan papers</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21712876">
+	<bflc:aap>Sheng, Keyi Death fugue</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21049489">
+	<bflc:aap>Sikoryak, R., Catullus the poet</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21034064">
+	<bflc:aap>Škėma, Antanas, 1911-1961, White shroud</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/17249688">
+	<bflc:aap>Sopaj, Nehas, 1954- Poezia dhe poeti : interpretim &amp; prezantim</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/21439428">
+	<bflc:aap>Tashjian, Janet The case of the missing action figure</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20624441">
+	<bflc:aap>The little book of Shakespeare</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/1743394">
+	<bflc:aap>Thurman, Judith, 1946- I became alone : five women poets, Sappho, Louise Labé, Ann Bradstreet, Juana Ines de la Cruz, Emily Dickinson</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/13074662">
+	<bflc:aap>Untermeyer, Louis, 1885-1977 Untermeyer-Frost collection</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19438878">
+	<bflc:aap>Vachon, John, 1914-1975 Carl Sandburg</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19020574">
+	<bflc:aap>Wang, Chen (Chinese author) Shi jian zui mei de qing lang : Cangyangjiacuo zhuan 世间最美的情郎 : 仓央嘉措传</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/20988277">
+	<bflc:aap>Wells, Stanley, 1930- Shakespeare book</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/19643108">
+	<bflc:aap>Williams, Athol, 1970- Pushing boulders : oppressed to inspired : an autobiography</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/22133073">
+	<bflc:aap>Worlds beyond my window</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <bflc:subjectOf>
+      <bf:Work rdf:about="http://id.loc.gov/resources/works/14685054">
+	<bflc:aap>Zoland poetry</bflc:aap>
+      </bf:Work>
+    </bflc:subjectOf>
+    <madsrdf:isMemberOfMADSScheme rdf:resource="http://id.loc.gov/authorities/subjects"/>
+    <identifiers:lccn xmlns:identifiers="http://id.loc.gov/vocabulary/identifiers/">sh 85103733</identifiers:lccn>
+    <owl:sameAs rdf:resource="info:lc/authorities/sh85103733"/>
+    <owl:sameAs rdf:resource="http://id.loc.gov/authorities/sh85103733#concept"/>
+    <madsrdf:adminMetadata>
+      <ri:RecordInfo xmlns:ri="http://id.loc.gov/ontologies/RecordInfo#">
+	<ri:recordChangeDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1986-02-11T00:00:00</ri:recordChangeDate>
+	<ri:recordStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string">new</ri:recordStatus>
+	<ri:recordContentSource rdf:resource="http://id.loc.gov/vocabulary/organizations/dlc"/>
+      </ri:RecordInfo>
+    </madsrdf:adminMetadata>
+    <madsrdf:adminMetadata>
+      <ri:RecordInfo xmlns:ri="http://id.loc.gov/ontologies/RecordInfo#">
+	<ri:recordChangeDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2013-05-07T16:45:24</ri:recordChangeDate>
+	<ri:recordStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string">revised</ri:recordStatus>
+	<ri:recordContentSource rdf:resource="http://id.loc.gov/vocabulary/organizations/dlc"/>
+      </ri:RecordInfo>
+    </madsrdf:adminMetadata>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">Poets</skos:prefLabel>
+    <skos:broader>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85009793">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Authors</skos:prefLabel>
+      </rdf:Description>
+    </skos:broader>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85085878">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Minstrels</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85085755">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Minnesingers</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85083349">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Meistersinger</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2006003947">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Performance poets</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2008006247">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Âşıks</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85147679">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Women poets</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85138082">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Troubadours</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85011823">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Bards and bardism</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85117904">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Scalds and scaldic poetry</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2002009729">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Indian poets</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85138093">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Trouvères</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85103892">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Poets laureate</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85063598">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Hymn writers</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85079181">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Lyricists</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:narrower>
+      <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85103759">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="en">Blind poets</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrower>
+    <skos:closeMatch>
+      <rdf:Description rdf:about="http://datos.bne.es/resource/XX533423">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="es">Poetas</skos:prefLabel>
+      </rdf:Description>
+    </skos:closeMatch>
+    <skos:closeMatch>
+      <rdf:Description rdf:about="http://www.wikidata.org/entity/Q49757">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel>poet</skos:prefLabel>
+      </rdf:Description>
+    </skos:closeMatch>
+    <skos:closeMatch>
+      <rdf:Description rdf:about="http://id.worldcat.org/fast/1067778">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel>Poets</skos:prefLabel>
+      </rdf:Description>
+    </skos:closeMatch>
+    <skos:closeMatch>
+      <rdf:Description rdf:about="http://data.bnf.fr/ark:/12148/cb11933176q">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="fr">Poètes</skos:prefLabel>
+      </rdf:Description>
+    </skos:closeMatch>
+    <skos:closeMatch>
+      <rdf:Description rdf:about="http://www.yso.fi/onto/yso/p3490">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="fi">runoilijat</skos:prefLabel>
+      </rdf:Description>
+    </skos:closeMatch>
+    <skos:closeMatch>
+      <rdf:Description rdf:about="https://d-nb.info/gnd/4168391-2">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="de">Lyriker</skos:prefLabel>
+      </rdf:Description>
+    </skos:closeMatch>
+    <skos:closeMatch>
+      <rdf:Description rdf:about="http://purl.org/bncf/tid/5113">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel xml:lang="it">Poeti</skos:prefLabel>
+      </rdf:Description>
+    </skos:closeMatch>
+    <skos:narrowMatch>
+      <rdf:Description rdf:about="http://id.worldcat.org/fast/1067783">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel>Poets--Social conditions</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrowMatch>
+    <skos:narrowMatch>
+      <rdf:Description rdf:about="http://id.worldcat.org/fast/1067780">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel>Poets--Manuscripts</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrowMatch>
+    <skos:narrowMatch>
+      <rdf:Description rdf:about="http://id.worldcat.org/fast/1067782">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel>Poets--Psychology</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrowMatch>
+    <skos:narrowMatch>
+      <rdf:Description rdf:about="http://id.worldcat.org/fast/1067779">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel>Poets--Family relationships</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrowMatch>
+    <skos:narrowMatch>
+      <rdf:Description rdf:about="http://id.worldcat.org/fast/1067781">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel>Poets--Political and social views</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrowMatch>
+    <skos:narrowMatch>
+      <rdf:Description rdf:about="http://id.worldcat.org/fast/1067784">
+	<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	<skos:prefLabel>Poets--Study and teaching</skos:prefLabel>
+      </rdf:Description>
+    </skos:narrowMatch>
+    <skos:inScheme rdf:resource="http://id.loc.gov/authorities/subjects"/>
+    <skos:changeNote>
+      <cs:ChangeSet xmlns:cs="http://purl.org/vocab/changeset/schema#">
+	<cs:subjectOfChange rdf:resource="http://id.loc.gov/authorities/subjects/sh85103733"/>
+	<cs:creatorName rdf:resource="http://id.loc.gov/vocabulary/organizations/dlc"/>
+	<cs:createdDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1986-02-11T00:00:00</cs:createdDate>
+	<cs:changeReason rdf:datatype="http://www.w3.org/2001/XMLSchema#string">new</cs:changeReason>
+      </cs:ChangeSet>
+    </skos:changeNote>
+    <skos:changeNote>
+      <cs:ChangeSet xmlns:cs="http://purl.org/vocab/changeset/schema#">
+	<cs:subjectOfChange rdf:resource="http://id.loc.gov/authorities/subjects/sh85103733"/>
+	<cs:creatorName rdf:resource="http://id.loc.gov/vocabulary/organizations/dlc"/>
+	<cs:createdDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2013-05-07T16:45:24</cs:createdDate>
+	<cs:changeReason rdf:datatype="http://www.w3.org/2001/XMLSchema#string">revised</cs:changeReason>
+      </cs:ChangeSet>
+    </skos:changeNote>
+  </madsrdf:Topic>
+</rdf:RDF>

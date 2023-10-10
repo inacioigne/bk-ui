@@ -42,11 +42,12 @@ const FacetTypeNames: React.FC<FacetProps> = ({
   const { paramsAuthority, updateParamsAuthority } = useParmasAutority()
 
   const obj: Types = {
-    personalname: "Nome Pessoal",
+    PersonalName: "Nome Pessoal",
     corporatename: "Nome Coorporativo",
   };
 
   const handleFacet = (facet: Facet, params: URLSearchParams) => {
+    
 
     if (!params.getAll('fq').includes(`type:${facet.name}`)) {
       params.append('fq', `type:${facet.name}`)

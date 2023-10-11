@@ -137,7 +137,6 @@ export default function FormLCSH( props: Props) {
                       <ListItemButton
                       onClick={(e) => {
                         LocAuthority(setHit, hit.uri)
-
                       }}
                       >
                         <ListItemIcon color="primary">

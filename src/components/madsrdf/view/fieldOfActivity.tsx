@@ -1,6 +1,6 @@
 // "use client";
 // MUI Components
-import { Typography, Box } from "@mui/material";
+import { Typography } from "@mui/material";
 import { TreeView } from '@mui/x-tree-view/TreeView';
 // import { TreeItem} from '@mui/x-tree-view/TreeItem';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
@@ -27,28 +27,29 @@ type Props = {
 
 export default function FieldOfActivity({ fieldOfActivity, setHit }: Props) {
   return (
-      <TreeView
-        aria-label="FieldOfActivity"
-        defaultCollapseIcon={<AiOutlineArrowDown />}
-            defaultExpandIcon={<AiOutlineArrowUp />}
-        sx={{
-          flexGrow: 1,
-          maxHeight: 300,
-          overflowY: "auto",
-        }}
+    <TreeView
+      aria-label="FieldOfActivity"
+      defaultCollapseIcon={<AiOutlineArrowDown />}
+      defaultExpandIcon={<AiOutlineArrowUp />}
+      sx={{
+        flexGrow: 1,
+        maxHeight: 300,
+        overflowY: "auto",
+      }}
+    >
+      <TreeItem
+        nodeId="1"
+        label={
+          <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+            Campos de atividade:
+          </Typography>
+        }
       >
-        <TreeItem
-          nodeId="1"
-          label={
-            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              Campos de atividade:
-            </Typography>
-          }
-        >
-          {fieldOfActivity.map((e, index) => (
-            <div key={index} onClick={() => {
-              LocAuthority(setHit, e.uri)
-              console.log(e)}}>
+        {fieldOfActivity.map((e, index) => (
+          <div key={index} onClick={() => {
+            LocAuthority(setHit, e.uri)
+            console.log(e)
+          }}>
             <StyledTreeItem
               nodeId={`${index + 5}`}
               labelText={e.label}
@@ -60,9 +61,8 @@ export default function FieldOfActivity({ fieldOfActivity, setHit }: Props) {
             />
 
           </div>
-          ))}
-        </TreeItem>
-      </TreeView>
-    // </Box>
+        ))}
+      </TreeItem>
+    </TreeView>
   );
 }

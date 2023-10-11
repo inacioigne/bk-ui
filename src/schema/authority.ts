@@ -11,6 +11,7 @@ export type schemaUri = {
     label: string
     base?: string
     uri?: string
+    type?: string
 }
 
 
@@ -56,9 +57,9 @@ export interface schemaMads {
     occupation?: schemaUri[];
     hasCloseExternalAuthority?: schemaUri[]
     hasExactExternalAuthority?: schemaUri[]
-    // // fieldOfActivity?: uri[]
-    // // 
-    // 
+    hasBroaderAuthority?: schemaUri[]
+    hasNarrowerAuthority?: schemaUri[]
+    hasReciprocalAuthority?: schemaUri[]
     // isMemberOfMADSCollection: string;
     // imagem?: string;
   }

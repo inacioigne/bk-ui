@@ -4,33 +4,41 @@ import { schemaMads, schemaAffiliation } from "@/schema/authority";
 
 const mads = "http://www.loc.gov/mads/rdf/v1#";
 
-function ParserElementList(metadado: any) {
-  let [type] = metadado["@type"];
-  // let [value] = metadado[`${mads}elementValue`];
-  let obj = { type: type.split("#")[1], 
-  // elementValue: { value: value["@value"], lang:  value["@language"]} 
-};
-  return obj
+function ParserUri(authority: any, data: any, metadado: string) {
+  let items = authority[`${mads}${metadado}`];
+  let arr = items.map((item: any) => {
+    let [metadado] = data.filter(function (elemento: any) {
+      return elemento["@id"] === item["@id"];
+    });
+    let [type] = metadado["@type"];
+    let [authoritativeLabel] = metadado[`${mads}authoritativeLabel`];
+    let obj = {
+      uri: metadado["@id"],
+      type: type.split("#")[1],
+      label: authoritativeLabel["@value"],
+      lang: authoritativeLabel["@language"],
+      base: "loc",
+    };
+    return obj;
+  });
+  return arr;
 }
 
 function ParserData(response: any, uri: string) {
   const data = response.data;
-  
-
   const [a] = data.filter(function (elemento: any) {
     return elemento["@id"] === uri;
   });
-  // console.log(a)
+  //
 
-  
   // Type
   const [type] = a["@type"].filter(function (elemento: any) {
     return elemento !== `${mads}Authority`;
   });
 
   // identifiersLccn
-  let uriArray = uri.split("/")
-  let identifiersLccn = uriArray[uriArray.length - 1]
+  let uriArray = uri.split("/");
+  let identifiersLccn = uriArray[uriArray.length - 1];
 
   // authoritativeLabel
   let [authoritativeLabel] = a[`${mads}authoritativeLabel`];
@@ -43,14 +51,17 @@ function ParserData(response: any, uri: string) {
     });
     const [type] = metadado["@type"];
     const [value] = metadado[`${mads}elementValue`];
-    const obj = { type: type.split("#")[1], elementValue: { value: value["@value"], lang:  value["@language"]} };
+    const obj = {
+      type: type.split("#")[1],
+      elementValue: { value: value["@value"], lang: value["@language"] },
+    };
     return obj;
   });
 
   const authority: schemaMads = {
     adminMetadata: {
       generationProcess: "BiblioKeia",
-  },
+    },
     type: type.split("#")[1],
     identifiersLccn: identifiersLccn,
     authoritativeLabel: authoritativeLabel["@value"],
@@ -58,18 +69,22 @@ function ParserData(response: any, uri: string) {
   };
   // hasBroaderAuthority
   if (a.hasOwnProperty(`${mads}hasBroaderAuthority`)) {
-    let [item] = a[`${mads}hasBroaderAuthority`]
-    let [metadado] = data.filter(function (elemento: any) {
-      return elemento["@id"] === item["@id"];
-    });
-    let obj = ParserElementList(metadado)
-
-    //type: str
-    //elementValue
-
-    // console.log("HB:", metadado)
-
+    // let hasBroaderAuthority = ParserHasBroaderAuthority(a, data);
+    let hasBroaderAuthority = ParserUri(a, data, 'hasBroaderAuthority')
+    authority["hasBroaderAuthority"] = hasBroaderAuthority;
   }
+  // Narrower Terms
+  if (a.hasOwnProperty(`${mads}hasNarrowerAuthority`)) {
+    let hasNarrowerAuthority = ParserUri(a, data, 'hasNarrowerAuthority')
+    authority["hasNarrowerAuthority"] = hasNarrowerAuthority;
+  }
+  // hasReciprocalAuthority
+  if (a.hasOwnProperty(`${mads}hasReciprocalAuthority`)) {
+    let hasReciprocalAuthority = ParserUri(a, data, 'hasReciprocalAuthority')
+    authority["hasReciprocalAuthority"] = hasReciprocalAuthority;
+  }
+
+
   // fullerName
   if (a.hasOwnProperty(`${mads}fullerName`)) {
     let [name] = a[`${mads}fullerName`];
@@ -77,27 +92,28 @@ function ParserData(response: any, uri: string) {
       return elemento["@id"] === name["@id"];
     });
     let [value] = metadado["http://www.w3.org/2000/01/rdf-schema#label"];
-    // let obj = {
-    //   type: type.split("#")[1],
-    //   elementValue: { value: value["@value"] },
-    // };
-    authority["fullerName"] =  value["@value"];
+    authority["fullerName"] = value["@value"];
   }
   // hasVariant
   if (a.hasOwnProperty(`${mads}hasVariant`)) {
+    
     let hv = a[`${mads}hasVariant`];
     let hasVariant = hv.map((e: any) => {
       let id = e["@id"];
+
       let [obj] = data.filter(function (e: any) {
         return e["@id"] === id;
       });
+      
       let types = obj["@type"];
       let [type] = types.filter((e: string) => {
         return e !== `${mads}Variant`;
       });
-      let [el] = obj[`${mads}elementList`];
+      
+      if (obj.hasOwnProperty(`${mads}elementList`)) {
+        let [el] = obj[`${mads}elementList`];
 
-      let elementList = el["@list"].map((e: any) => {
+        let elementList = el["@list"].map((e: any) => {
         let id = e["@id"];
         let [obj] = data.filter(function (e: any) {
           return e["@id"] === id;
@@ -110,15 +126,48 @@ function ParserData(response: any, uri: string) {
         };
         return element;
       });
+
       let [variantLabel] = obj[`${mads}variantLabel`];
       let hasVariant = {
         type: type.split("#")[1],
         elementList: elementList,
         variantLabel: variantLabel["@value"],
       };
-      // console.log(hasVariant)
-
       return hasVariant;
+
+      } else {
+        let [list] = obj[`${mads}componentList`];
+        let elementList = list['@list'].map((e: any) => {
+          let id = e["@id"];
+          let [obj] = data.filter(function (e: any) {
+            return e["@id"] === id;
+          });
+          let [type] = obj["@type"];
+          let [elementList] = obj[`${mads}elementList`];
+          let [list] = elementList['@list']
+          let [objList] = data.filter(function (e: any) {
+            return e["@id"] === list["@id"];
+          });
+
+          let [typeList] = objList['@type']
+          let [elementValue] = objList[`${mads}elementValue`]
+          let element = {
+            type: typeList.split("#")[1],
+            elementValue: { value: elementValue["@value"], lang: elementValue['@language'] },
+          };
+          return element
+        })
+
+        let [type] = obj['@type']
+        let [variantLabel] = obj[`${mads}variantLabel`];
+
+        let hasVariant = {
+          type: type.split("#")[1],
+          elementList: elementList,
+          variantLabel: variantLabel["@value"],
+        };
+        return hasVariant;     
+      }      
     });
 
     authority["hasVariant"] = hasVariant;
@@ -127,33 +176,32 @@ function ParserData(response: any, uri: string) {
   if (a.hasOwnProperty(`${mads}hasCloseExternalAuthority`)) {
     let hca = a[`${mads}hasCloseExternalAuthority`];
     let hasCloseExternalAuthority = hca.map((e: any) => {
-      let id = e["@id"]
+      let id = e["@id"];
       let [metadado] = data.filter(function (e: any) {
         return e["@id"] === id;
       });
-      let [label] = metadado[`${mads}authoritativeLabel`]
-      let uri = metadado["@id"]
-      let base = uri.split("/")[2]
-      let obj = {label: label['@value'], base: base, uri: uri}
+      let [label] = metadado[`${mads}authoritativeLabel`];
+      let uri = metadado["@id"];
+      let base = uri.split("/")[2];
+      let obj = { label: label["@value"], base: base, uri: uri };
 
-      return obj
-    })
-    authority["hasCloseExternalAuthority"] = hasCloseExternalAuthority
+      return obj;
+    });
+    authority["hasCloseExternalAuthority"] = hasCloseExternalAuthority;
   }
   // identifiesRWO
   if (a.hasOwnProperty(`${mads}identifiesRWO`)) {
     let identifiesRWO = a[`${mads}identifiesRWO`];
 
     let identifies = identifiesRWO.map((rwo: any) => {
-      let base = rwo["@id"].split("/")[2]
-      let obj = {'uri': rwo["@id"], label: rwo["@id"], base:  base}
+      let base = rwo["@id"].split("/")[2];
+      let obj = { uri: rwo["@id"], label: rwo["@id"], base: base };
       return obj;
     });
     authority["identifiesRWO"] = identifies;
 
     identifies.forEach((identifier: any) => {
-       if (identifier.uri.split("/")[3] === "rwo") {
-
+      if (identifier.uri.split("/")[3] === "rwo") {
         let [metadado] = data.filter(function (e: any) {
           return e["@id"] === identifier.uri;
         });
@@ -164,24 +212,25 @@ function ParserData(response: any, uri: string) {
           let [birthPlace] = data.filter(function (elemento: any) {
             return elemento["@id"] === bp["@id"];
           });
-          let [label] =
-            birthPlace["http://www.w3.org/2000/01/rdf-schema#label"];
+          let [label] = birthPlace[
+            "http://www.w3.org/2000/01/rdf-schema#label"
+          ];
           authority["birthPlace"] = label["@value"];
         }
 
         // birthDate
         if (metadado.hasOwnProperty(`${mads}birthDate`)) {
           let [bd] = metadado[`${mads}birthDate`];
-          let date = bd["@value"].split("-")      
+          let date = bd["@value"].split("-");
           if (date.length === 1) {
-            let [year] = date
-            authority["birthYearDate"] = year
-            authority["birthDate"] = year   
-          } else if (date.length === 3 ) {
-            authority["birthYearDate"] = date[0]
-            authority["birthMonthDate"] = date[1]
-            authority["birthDayDate"] = date[2]
-            authority["birthDate"] = `${date[2]}-${date[1]}-${date[0]}` 
+            let [year] = date;
+            authority["birthYearDate"] = year;
+            authority["birthDate"] = year;
+          } else if (date.length === 3) {
+            authority["birthYearDate"] = date[0];
+            authority["birthMonthDate"] = date[1];
+            authority["birthDayDate"] = date[2];
+            authority["birthDate"] = `${date[2]}-${date[1]}-${date[0]}`;
           }
         }
 
@@ -193,17 +242,17 @@ function ParserData(response: any, uri: string) {
         // deathDate
         if (metadado.hasOwnProperty(`${mads}deathDate`)) {
           let [dd] = metadado[`${mads}deathDate`];
-          let date = dd["@value"].split("-")
+          let date = dd["@value"].split("-");
           if (date.length === 1) {
-            let [year] = date
-            authority["deathYearDate"] = year
-            authority["deathDate"] = year   
-          } else if (date.length === 3 ) {
-            authority["deathYearDate"] = date[0]
-            authority["deathMonthDate"] = date[1]
-            authority["deathDayDate"] = date[2]
-            authority["deathDate"] = `${date[2]}-${date[1]}-${date[0]}` 
-          }  
+            let [year] = date;
+            authority["deathYearDate"] = year;
+            authority["deathDate"] = year;
+          } else if (date.length === 3) {
+            authority["deathYearDate"] = date[0];
+            authority["deathMonthDate"] = date[1];
+            authority["deathDayDate"] = date[2];
+            authority["deathDate"] = `${date[2]}-${date[1]}-${date[0]}`;
+          }
         }
 
         // hasAffiliation
@@ -229,8 +278,9 @@ function ParserData(response: any, uri: string) {
               objOrg["uri"] = uri;
               objOrg["label"] = label["@value"];
             } else {
-              let [label] =
-                organization["http://www.w3.org/2000/01/rdf-schema#label"];
+              let [label] = organization[
+                "http://www.w3.org/2000/01/rdf-schema#label"
+              ];
               objOrg["label"] = label["@value"];
             }
 
@@ -298,19 +348,18 @@ function ParserData(response: any, uri: string) {
             }
           });
           authority["occupation"] = occupation;
-         
         }
       }
     });
   }
-  console.log(authority)
+  // 
 
   return authority;
 }
 export function LocAuthority(setHit: Function, uri: string) {
   const url = `${uri}.json`;
 
-  axios
+  axios 
     .get(url)
     .then(function (response) {
       const authority = ParserData(response, uri);

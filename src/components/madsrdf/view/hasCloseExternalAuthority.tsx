@@ -23,10 +23,11 @@ export default function HasCloseExternalAuthority({ hasCloseExternalAuthority }:
             aria-label="IdentifiesRWO"
             defaultCollapseIcon={<AiOutlineArrowDown />}
             defaultExpandIcon={<AiOutlineArrowUp />}
+            defaultExpanded={['1']}
             sx={{
                 flexGrow: 1, overflowY: 'auto'
             }}
-        >
+        > 
 
             <TreeItem nodeId="1" label={
             <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>

@@ -92,8 +92,6 @@ function StyledTreeItem(props) {
   );
 }
 
-
-
 export default function ExternalAuthority(
   {
     externalAuthority

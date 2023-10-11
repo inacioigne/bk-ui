@@ -33,6 +33,11 @@ import HasVariant from "@/components/madsrdf/view/hasVariant";
 import Occupation from "@/components/madsrdf/view/occupation";
 import HasCloseExternalAuthority from "@/components/madsrdf/view/hasCloseExternalAuthority";
 import BtnIcon from "src/components/buttons/btnIcon";
+import HasBroaderAuthority from "@/components/madsrdf/view/hasBroaderAuthority";
+import ListMads from "@/components/madsrdf/view/listMads"
+
+
+
 
 // React Icons
 import { FaTreeCity } from "react-icons/fa6";
@@ -46,10 +51,11 @@ import { useRouter } from 'next/navigation'
 
 interface Props {
   hit: schemaMads;
-  setHit: Function
+  setHit: Function;
+  setForm: Function;
 }
 
-export default function CardLoc({ hit, setHit }: Props) {
+export default function CardLoc({ hit, setHit, setForm }: Props) {
 
   const router = useRouter();
   const { setProgress } = useProgress();
@@ -115,16 +121,19 @@ export default function CardLoc({ hit, setHit }: Props) {
               <IconButton
                 aria-label="settings"
                 onClick={() => {
+                  setForm(true)
+                  console.log(hit)
+
                   // LocExist(hit.identifiersLccn)
-                  CreateAuthority(
-                    hit,
-                    setProgress,
-                    setTypeAlert,
-                    setMessage,
-                    setOpenSnack,
-                    router,
-                    setHit
-                  )
+                  // CreateAuthority(
+                  //   hit,
+                  //   setProgress,
+                  //   setTypeAlert,
+                  //   setMessage,
+                  //   setOpenSnack,
+                  //   router,
+                  //   setHit
+                  // )
                 }}
               >
                 <CiImport />
@@ -203,33 +212,58 @@ export default function CardLoc({ hit, setHit }: Props) {
           )}
 
           {/* identifiesRWO */}
-          {
-            hit?.identifiesRWO && (
-              <Grid item xs={6}>
-                <IdentifiesRWO identifiesRWO={hit?.identifiesRWO} />
-              </Grid>
-            )
-          }
+          {hit?.identifiesRWO && (
+            <Grid item xs={6}>
+              <IdentifiesRWO identifiesRWO={hit?.identifiesRWO} />
+            </Grid>
+          )}
+
           {/* hasAffiliation */}
           {hit?.hasAffiliation && (
             <Grid item xs={6}>
               {/* <Box sx={{ pl: "10px" }}> */}
-                <HasAffiliation hasAffiliation={hit.hasAffiliation} />
+              <HasAffiliation hasAffiliation={hit.hasAffiliation} />
               {/* </Box> */}
             </Grid>
           )}
+
           {/* fieldOfActivity */}
           {hit?.fieldOfActivity && (
             <Grid item xs={6}>
               <FieldOfActivity fieldOfActivity={hit.fieldOfActivity} setHit={setHit} />
             </Grid>
           )}
+
           {/* Occupation */}
           {hit?.occupation && (
             <Grid item xs={6}>
               <Occupation occupation={hit.occupation} setHit={setHit} />
             </Grid>
           )}
+
+          {/* hasReciprocalAuthority */}
+          {hit?.hasReciprocalAuthority && (
+            <Grid item xs={6}>
+              <ListMads label="Termo Relacionado" setHit={setHit} items={hit?.hasReciprocalAuthority} />
+            </Grid>
+          )}
+
+          {/* hasBroaderAuthority  */}
+          {hit?.hasBroaderAuthority && (
+            <Grid item xs={6}>
+              <ListMads label="Termo Geral" setHit={setHit} items={hit?.hasBroaderAuthority} />
+            </Grid>
+          )}
+
+          {/* hasBroaderAuthority */}
+          {hit?.hasNarrowerAuthority && (
+            <Grid item xs={6}>
+              <ListMads label="Termo Específico" setHit={setHit} items={hit?.hasNarrowerAuthority} />
+            </Grid>
+          )}
+
+          
+
           {/* HasCloseExternalAuthority */}
           {hit?.hasCloseExternalAuthority && (
             <Grid item xs={6}>

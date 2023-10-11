@@ -24,6 +24,7 @@ export default function HasVariant({ hasVariant }: Props) {
         aria-label="hasVariant"
         defaultCollapseIcon={<AiOutlineArrowDown />}
         defaultExpandIcon={<AiOutlineArrowUp />}
+        defaultExpanded={['1']}
         sx={{
           flexGrow: 1,
           maxHeight: 300,

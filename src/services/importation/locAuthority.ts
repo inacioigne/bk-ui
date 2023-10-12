@@ -39,6 +39,7 @@ function ParserData(response: any, uri: string) {
   // identifiersLccn
   let uriArray = uri.split("/");
   let identifiersLccn = uriArray[uriArray.length - 1];
+  let collection = uriArray[4]
 
   // authoritativeLabel
   let [authoritativeLabel] = a[`${mads}authoritativeLabel`];
@@ -64,6 +65,7 @@ function ParserData(response: any, uri: string) {
     },
     type: type.split("#")[1],
     identifiersLccn: identifiersLccn,
+    isMemberOfMADSCollection: collection,
     authoritativeLabel: authoritativeLabel["@value"],
     elementList: obj,
   };
@@ -327,8 +329,6 @@ function ParserData(response: any, uri: string) {
             let [obj] = data.filter(function (e: any) {
               return e["@id"] === id;
             });
-            //
-            //
 
             if (id.includes("http://")) {
               let [label] = obj[`${mads}authoritativeLabel`];

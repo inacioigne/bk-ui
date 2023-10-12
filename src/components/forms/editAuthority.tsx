@@ -165,8 +165,6 @@ function ParserVariant(variant: any) {
 }
 
 function TransForm(doc: schemaAuthorityDoc) {
-    // let rwo = ParserUri(doc.identifiesRWO)
-    // console.log("rwo: ", doc.identifiesRWO)
 
     const obj: any = {
         elementList: [{

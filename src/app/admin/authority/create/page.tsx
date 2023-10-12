@@ -25,7 +25,7 @@ import FormOccupation from "@/components/madsrdf/forms/formOccupation"
 import FormFieldOfActivity from "@/components/madsrdf/forms/formFieldOfActivity"
 import FormFullerName from "@/components/madsrdf/forms/formFullerName"
 // teste
-import  FieldArray from "@/app/admin/test/fieldArray"
+// import  FieldArray from "@/app/admin/test/fieldArray"
 // BiblioKeia Services
 import { bkapi } from "@/services/api";
 
@@ -377,9 +377,9 @@ export default function Create() {
               <Divider />
             </Grid>
             <FormVariant control={control} register={register} getValues={getValues} setValue={setValue} />
-            <FieldArray
+            {/* <FieldArray
                 {...{ control, register, defaultValues, getValues, setValue, errors }}
-            />
+            /> */}
             <Grid item xs={12}>
               <Typography variant="h6" gutterBottom>
                 Afiliação

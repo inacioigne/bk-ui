@@ -9,9 +9,6 @@ import {
     Paper,
     TextField,
     Button,
-    InputLabel,
-    Select,
-    MenuItem,
 } from "@mui/material";
 // MUI Icons
 import { FcHome } from "react-icons/fc";
@@ -49,7 +46,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { MadsSchema } from "@/schema/authority/madsSchema"
 
 // Share
-import months from "@/share/months.json" assert { type: "json" };
+// import months from "@/share/months.json" assert { type: "json" };
 
 // Providers BiblioKeia
 import { useProgress } from "src/providers/progress";
@@ -57,7 +54,6 @@ import { useAlert } from "src/providers/alert";
 
 // Nextjs
 import { useRouter } from "next/navigation";
-
 
 const previousPaths = [
     {
@@ -110,8 +106,6 @@ const defaultValues = {
     }]
 }
 
-
-
 export default function CreatePersonalName() {
     const router = useRouter();
     const {
@@ -123,6 +117,7 @@ export default function CreatePersonalName() {
         setTypeAlert,
       } = useAlert();
     const [id, setId] = useState(null);
+
     useEffect(() => {
         bkapi
             .get(`/thesarus/next_id`)

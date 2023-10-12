@@ -60,6 +60,6 @@ export interface schemaMads {
     hasBroaderAuthority?: schemaUri[]
     hasNarrowerAuthority?: schemaUri[]
     hasReciprocalAuthority?: schemaUri[]
-    // isMemberOfMADSCollection: string;
+    isMemberOfMADSCollection: string;
     // imagem?: string;
   }

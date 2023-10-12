@@ -28,14 +28,6 @@ export default function FormElementList({ control, register, error }: Props) {
         name: "elementList",
     });
 
-    // const addAffiliation = () => {
-    //     appendElementList({
-    //         organization: { label: "", uri: "" },
-    //         affiliationStart: "",
-    //         affiliationEnd: ""
-    //     })
-    // };
-
     return (
         <>
             {fieldsElementList.map((field, index) => (
@@ -78,27 +70,6 @@ export default function FormElementList({ control, register, error }: Props) {
                             {...register(`elementList.${index}.elementValue.lang`)}
                         />
                     </Grid>
-                    {/* <Grid item xs={2}>
-                        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-
-                            <IconButton
-                                aria-label="add"
-                                onClick={addAffiliation}
-                                color="primary"
-                            >
-                                <IoAddOutline />
-                            </IconButton>
-                            <IconButton
-                                aria-label="add"
-                                onClick={() => {
-                                    removehasAffiliation(index);
-                                }}
-                                color="primary"
-                            >
-                                <IoRemove />
-                            </IconButton>
-                        </Box>
-                    </Grid> */}
                 </Fragment>
             ))}
         </>

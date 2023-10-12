@@ -4,17 +4,21 @@ import {
   Box,
   Divider,
   Typography,
-  Grid
+  Grid,
+  Button,
 } from "@mui/material";
 
 // BiblioKeia Components
 import BreadcrumbsBK from "src/components/nav/breadcrumbs";
-import FormLCSH from "@/components/forms/formImportLocAuthority"
-import CardLoc from "@/components/cards/cardLoc"
+import FormLCSH from "@/components/forms/formImportLocAuthority";
+import FormLoc from "@/components/forms/formLocCreate";
+import CardLoc from "@/components/cards/cardLoc";
 
 // react-icons
-import { FcHome } from "react-icons/fc";
+import { FcHome, FcCancel } from "react-icons/fc";
 import { BsPersonPlus, BsPersonFillDown } from "react-icons/bs";
+import { IoIosSave } from "react-icons/io";
+
 import { useState } from "react";
 
 const previousPaths = [
@@ -36,16 +40,33 @@ const previousPaths = [
 ];
 
 export default function LOC() {
-  const [hit, setHit] = useState(null)
-  const [form, setForm] = useState(false)
+  const [hit, setHit] = useState(null);
+  const [form, setForm] = useState(false);
   return (
     <Container maxWidth="xl">
       <Box my={"1rem"}>
         <BreadcrumbsBK previousPaths={previousPaths} currentPath="LOC" />
       </Box>
-      <Typography variant="h4" gutterBottom>
-        Importar Autoridades - Library of Congress
-      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h4" gutterBottom>
+          Importar Autoridades - Library of Congress
+        </Typography>
+        {form && (
+          <Box>
+            <Button
+              sx={{ textTransform: "none" }}
+              variant="outlined"
+              startIcon={<FcCancel />}
+              onClick={() => {
+                setForm(!form);
+              }}
+            >
+              Cancelar
+            </Button>
+          </Box>
+        )}
+      </Box>
+
       <Divider />
       <Grid container spacing={2}>
         {!form ? (
@@ -57,13 +78,9 @@ export default function LOC() {
               {hit && <CardLoc hit={hit} setHit={setHit} setForm={setForm} />}
             </Grid>
           </>
-
         ) : (
-          <h1>Forms</h1>
+          <FormLoc hit={hit} />
         )}
-
-
-
       </Grid>
     </Container>
   );

@@ -121,7 +121,7 @@ export default function CardLoc({ hit, setHit, setForm }: Props) {
               <IconButton
                 aria-label="settings"
                 onClick={() => {
-                  setForm(true)
+                  setForm(true) 
                   console.log(hit)
 
                   // LocExist(hit.identifiersLccn)
